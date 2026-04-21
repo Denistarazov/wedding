@@ -227,6 +227,7 @@
 
   /* === MOBILE NAV DRAWER ================================================ */
   .nav-mobile-toggle { display: none; }
+  .nav-drawer[hidden] { display: none !important; }
   .nav-drawer {
     position: fixed; inset: 0; z-index: 80;
     background: var(--bg);
@@ -370,60 +371,63 @@ function TopNav({ dark = false }) {
   ];
 
   return (
-    <header style={{
-      position: 'sticky', top: 0, zIndex: 50,
-      backdropFilter: 'blur(14px) saturate(1.2)',
-      WebkitBackdropFilter: 'blur(14px) saturate(1.2)',
-      background: bg, color: fg,
-      borderBottom: `1px solid ${line}`,
-    }}>
-      <div style={{
-        maxWidth: 'var(--max-w)', margin: '0 auto',
-        padding: '14px var(--pad-x)',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        gap: 16,
+    <React.Fragment>
+      <header style={{
+        position: 'sticky', top: 0, zIndex: 50,
+        backdropFilter: 'blur(14px) saturate(1.2)',
+        WebkitBackdropFilter: 'blur(14px) saturate(1.2)',
+        background: bg, color: fg,
+        borderBottom: `1px solid ${line}`,
       }}>
-        <Link to="/" aria-label="denisixone — на главную" style={{
-          display: 'flex', alignItems: 'baseline', gap: 10,
-          fontFamily: "'Fraunces', serif",
+        <div style={{
+          maxWidth: 'var(--max-w)', margin: '0 auto',
+          padding: '14px var(--pad-x)',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          gap: 16,
         }}>
-          <span style={{ fontSize: 22, fontStyle: 'italic', letterSpacing: '-0.01em' }}>denisixone</span>
-          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, opacity: 0.55, letterSpacing: '0.2em' }}>— СВАДЬБЫ/2026</span>
-        </Link>
+          <Link to="/" aria-label="denisixone — на главную" style={{
+            display: 'flex', alignItems: 'baseline', gap: 10,
+            fontFamily: "'Fraunces', serif",
+          }}>
+            <span style={{ fontSize: 22, fontStyle: 'italic', letterSpacing: '-0.01em' }}>denisixone</span>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, opacity: 0.55, letterSpacing: '0.2em' }}>— СВАДЬБЫ/2026</span>
+          </Link>
 
-        <nav className="nav-desktop" aria-label="Главное меню" style={{
-          display: 'flex', gap: 32, alignItems: 'center', fontSize: 14,
-        }}>
-          {navItems.map(([href, label]) => (
-            <Link key={href} to={href} className="nav-link" style={{ opacity: 0.78 }}>{label}</Link>
-          ))}
-          <Link to="/contact" className="btn" style={{
-            border: `1px solid ${fg}`, padding: '9px 18px', borderRadius: 999,
-            fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-            letterSpacing: '0.12em', textTransform: 'uppercase',
-            transition: 'all 200ms cubic-bezier(.2,.8,.2,1)',
-          }}>Связаться →</Link>
-        </nav>
+          <nav className="nav-desktop" aria-label="Главное меню" style={{
+            display: 'flex', gap: 32, alignItems: 'center', fontSize: 14,
+          }}>
+            {navItems.map(([href, label]) => (
+              <Link key={href} to={href} className="nav-link" style={{ opacity: 0.78 }}>{label}</Link>
+            ))}
+            <Link to="/contact" className="btn" style={{
+              border: `1px solid ${fg}`, padding: '9px 18px', borderRadius: 999,
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+              letterSpacing: '0.12em', textTransform: 'uppercase',
+              transition: 'all 200ms cubic-bezier(.2,.8,.2,1)',
+            }}>Связаться →</Link>
+          </nav>
 
-        <button
-          type="button"
-          className="nav-mobile-toggle btn"
-          aria-expanded={open}
-          aria-controls="nav-drawer"
-          aria-label={open ? 'Закрыть меню' : 'Открыть меню'}
-          onClick={() => setOpen((v) => !v)}
-          style={{
-            background: 'transparent', border: `1px solid ${fg}`,
-            color: fg, padding: '10px 14px', borderRadius: 999,
-            cursor: 'pointer', fontFamily: "'JetBrains Mono', monospace",
-            fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase',
-            display: 'none', alignItems: 'center', gap: 8,
-          }}
-        >
-          {open ? 'Закрыть' : 'Меню'}
-        </button>
-      </div>
+          <button
+            type="button"
+            className="nav-mobile-toggle btn"
+            aria-expanded={open}
+            aria-controls="nav-drawer"
+            aria-label={open ? 'Закрыть меню' : 'Открыть меню'}
+            onClick={() => setOpen((v) => !v)}
+            style={{
+              background: 'transparent', border: `1px solid ${fg}`,
+              color: fg, padding: '10px 14px', borderRadius: 999,
+              cursor: 'pointer', fontFamily: "'JetBrains Mono', monospace",
+              fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase',
+              display: 'none', alignItems: 'center', gap: 8,
+            }}
+          >
+            {open ? 'Закрыть' : 'Меню'}
+          </button>
+        </div>
+      </header>
 
+      {/* Drawer is a sibling of <header> — cannot be trapped by header's backdrop-filter containing block */}
       <div
         id="nav-drawer"
         className="nav-drawer"
@@ -450,7 +454,7 @@ function TopNav({ dark = false }) {
           }}
         >Связаться →</Link>
       </div>
-    </header>
+    </React.Fragment>
   );
 }
 
