@@ -268,12 +268,32 @@
 const { useState, useEffect, useRef, useMemo, useCallback } = React;
 
 // Hash-based router
+// Routes look like /templates, /contact, /templates/editorial, /, /#process, /#pricing, /#faq
+// For /#<id> routes we render Home and then scroll to the element with that id.
+function scrollToRoute(route, smooth) {
+  if (route.startsWith('/#')) {
+    const id = route.slice(2);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+      else window.scrollTo({ top: 0, behavior: 'auto' });
+    }));
+  } else {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+}
+
 function useRoute() {
   const [route, setRoute] = useState(() => window.location.hash.slice(1) || '/');
   useEffect(() => {
+    // Honor deep-link like /#pricing on initial load
+    const initial = window.location.hash.slice(1) || '/';
+    if (initial.startsWith('/#')) scrollToRoute(initial, false);
+
     const onHash = () => {
-      setRoute(window.location.hash.slice(1) || '/');
-      window.scrollTo(0, 0);
+      const newRoute = window.location.hash.slice(1) || '/';
+      setRoute(newRoute);
+      scrollToRoute(newRoute, true);
     };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
@@ -282,6 +302,14 @@ function useRoute() {
 }
 
 function navigate(path) {
+  // If we're already at this hash, hashchange won't fire — trigger the scroll manually.
+  const current = window.location.hash.slice(1) || '/';
+  if (current === path && path.startsWith('/#')) {
+    const id = path.slice(2);
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
   window.location.hash = path;
 }
 
