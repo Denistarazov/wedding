@@ -1,21 +1,29 @@
 # denisixone — свадебные приглашения-сайты
 
-Single-file React-приложение: лендинг студии + 9 уникальных шаблонов свадебных приглашений.
+Next.js-приложение: лендинг студии + 9 уникальных шаблонов свадебных приглашений.
 
 ## Стек
 
-- Один `index.html` — весь сайт (HTML + CSS + JSX)
-- React 18 + Babel-standalone (через CDN, без сборки)
-- Hash-based router
-- Статический хостинг на Vercel
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- App Router, маршруты вида `/templates/<slug>`
 
 ## Запуск
 
-Открыть `index.html` двойным кликом, либо:
+```bash
+npm install
+npm run dev
+```
+
+Проверка production-сборки:
 
 ```bash
-npx serve .
+npm run build
 ```
+
+`index.html` оставлен как legacy-исходник предыдущей single-file версии.
 
 ## 9 шаблонов — 9 уникальных структур
 
@@ -31,4 +39,4 @@ npx serve .
 | polaroid | Super-8 | вертикальный timeline дня |
 | artdeco | Palais | мини-сайт с sticky-табами |
 
-URL для каждого: `/templates/<slug>` (hash-роутинг: `#/templates/editorial`).
+URL для каждого: `/templates/<slug>`, например `/templates/editorial`.

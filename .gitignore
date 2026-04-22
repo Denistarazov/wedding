@@ -1,4 +1,7 @@
 node_modules/
+.next/
+out/
+verification-shots/
 .vercel
 .DS_Store
 Thumbs.db
