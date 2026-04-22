@@ -2,13 +2,32 @@
 
 const { useState, useEffect, useRef, useMemo, useCallback } = React;
 
-// Hash-based router
+// ─── Router ─────────────────────────────────────────────────────────────────
+
+// For /#<id> routes we render Home and then scroll to the element with that id.
+function scrollToRoute(route, smooth) {
+  if (route.startsWith('/#')) {
+    const id = route.slice(2);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+      else window.scrollTo({ top: 0, behavior: 'auto' });
+    }));
+  } else {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+}
+
 function useRoute() {
   const [route, setRoute] = useState(() => window.location.hash.slice(1) || '/');
   useEffect(() => {
+    const initial = window.location.hash.slice(1) || '/';
+    if (initial.startsWith('/#')) scrollToRoute(initial, false);
+
     const onHash = () => {
-      setRoute(window.location.hash.slice(1) || '/');
-      window.scrollTo(0, 0);
+      const newRoute = window.location.hash.slice(1) || '/';
+      setRoute(newRoute);
+      scrollToRoute(newRoute, true);
     };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
@@ -17,9 +36,18 @@ function useRoute() {
 }
 
 function navigate(path) {
+  const current = window.location.hash.slice(1) || '/';
+  if (current === path && path.startsWith('/#')) {
+    const id = path.slice(2);
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
   window.location.hash = path;
 }
 
+// Router primitive — like <a> but for hash-based routes.
+// Accepts className and style because it is a primitive (not a composed component).
 function Link({ to, children, className, style, onClick, ...rest }) {
   return (
     <a
@@ -34,7 +62,8 @@ function Link({ to, children, className, style, onClick, ...rest }) {
   );
 }
 
-// Reveal on scroll
+// ─── Animation ──────────────────────────────────────────────────────────────
+
 function useReveal() {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -50,7 +79,7 @@ function useReveal() {
   return [ref, visible];
 }
 
-function Reveal({ children, delay = 0, y = 14, as = 'div', style, ...rest }) {
+function Reveal({ children, delay = 0, y = 14, as = 'div', ...rest }) {
   const [ref, visible] = useReveal();
   const Tag = as;
   return (
@@ -60,7 +89,6 @@ function Reveal({ children, delay = 0, y = 14, as = 'div', style, ...rest }) {
         opacity: visible ? 1 : 0,
         transform: visible ? 'none' : `translateY(${y}px)`,
         transition: `opacity 0.7s ${delay}s cubic-bezier(.2,.8,.2,1), transform 0.7s ${delay}s cubic-bezier(.2,.8,.2,1)`,
-        ...style,
       }}
       {...rest}
     >
@@ -69,114 +97,185 @@ function Reveal({ children, delay = 0, y = 14, as = 'div', style, ...rest }) {
   );
 }
 
+// ─── Navigation shell ────────────────────────────────────────────────────────
+
 // Global top nav — shown on marketing pages, NOT on /templates/[slug]
 function TopNav({ dark = false }) {
-  const bg = dark ? 'rgba(20,16,10,0.7)' : 'rgba(245,241,234,0.7)';
-  const fg = dark ? '#f5f1ea' : '#2a2418';
+  const [open, setOpen] = useState(false);
+  const route = useRoute();
+
+  useEffect(() => { setOpen(false); }, [route]);
+  useEffect(() => {
+    if (open) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => { document.body.style.overflow = prev; };
+    }
+  }, [open]);
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
+
+  const bg   = dark ? 'rgba(20,16,10,0.72)' : 'rgba(245,241,234,0.72)';
+  const fg   = dark ? '#f5f1ea' : '#2a2418';
   const line = dark ? 'rgba(245,241,234,0.1)' : 'rgba(42,36,24,0.1)';
+
+  const navItems = [
+    ['/templates', 'Дизайны'],
+    ['/#process',  'Процесс'],
+    ['/#pricing',  'Цены'],
+    ['/#faq',      'FAQ'],
+  ];
+
   return (
-    <header style={{
-      position: 'sticky', top: 0, zIndex: 50,
-      backdropFilter: 'blur(14px) saturate(1.2)',
-      WebkitBackdropFilter: 'blur(14px) saturate(1.2)',
-      background: bg, color: fg,
-      borderBottom: `1px solid ${line}`,
-    }}>
-      <div style={{
-        maxWidth: 1360, margin: '0 auto', padding: '18px 40px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+    <React.Fragment>
+      <header style={{
+        position: 'sticky', top: 0, zIndex: 50,
+        backdropFilter: 'blur(14px) saturate(1.2)',
+        WebkitBackdropFilter: 'blur(14px) saturate(1.2)',
+        background: bg, color: fg,
+        borderBottom: `1px solid ${line}`,
       }}>
-        <Link to="/" style={{ display: 'flex', alignItems: 'baseline', gap: 10, fontFamily: "'Fraunces', serif" }}>
-          <span style={{ fontSize: 22, fontStyle: 'italic', letterSpacing: '-0.01em' }}>Canvas</span>
-          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, opacity: 0.55, letterSpacing: '0.2em' }}>— WEDDING/2026</span>
-        </Link>
-        <nav style={{ display: 'flex', gap: 36, alignItems: 'center', fontSize: 14 }}>
-          <Link to="/templates" style={{ opacity: 0.75 }}>Дизайны</Link>
-          <Link to="/#process" style={{ opacity: 0.75 }}>Процесс</Link>
-          <Link to="/#pricing" style={{ opacity: 0.75 }}>Цены</Link>
-          <Link to="/#faq" style={{ opacity: 0.75 }}>FAQ</Link>
-          <Link to="/contact" style={{
-            border: `1px solid ${fg}`, padding: '9px 18px', borderRadius: 999,
-            fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase',
-          }}>Связаться →</Link>
-        </nav>
+        <div style={{
+          maxWidth: 'var(--max-w)', margin: '0 auto',
+          padding: '14px var(--pad-x)',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          gap: 16,
+        }}>
+          <Link to="/" aria-label="denisixone — на главную" style={{
+            display: 'flex', alignItems: 'baseline', gap: 10,
+            fontFamily: "'Fraunces', serif",
+          }}>
+            <span style={{ fontSize: 22, fontStyle: 'italic', letterSpacing: '-0.01em' }}>denisixone</span>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, opacity: 0.55, letterSpacing: '0.2em' }}>— СВАДЬБЫ/2026</span>
+          </Link>
+
+          <nav className="nav-desktop" aria-label="Главное меню" style={{
+            display: 'flex', gap: 32, alignItems: 'center',
+          }}>
+            {navItems.map(([href, label]) => (
+              <NavLink key={href} to={href}>{label}</NavLink>
+            ))}
+            <Button to="/contact" variant="secondary" size="md" tone={dark ? 'light' : 'default'}>
+              Связаться →
+            </Button>
+          </nav>
+
+          <Button
+            className="nav-mobile-toggle"
+            variant="secondary"
+            tone={dark ? 'light' : 'default'}
+            aria-expanded={open}
+            aria-controls="nav-drawer"
+            aria-label={open ? 'Закрыть меню' : 'Открыть меню'}
+            onClick={() => setOpen((v) => !v)}
+          >
+            {open ? 'Закрыть' : 'Меню'}
+          </Button>
+        </div>
+      </header>
+
+      {/* Drawer is a sibling of <header> — avoids backdrop-filter containing block */}
+      <div
+        id="nav-drawer"
+        className="nav-drawer"
+        data-open={open}
+        role="dialog"
+        aria-modal={open}
+        aria-label="Мобильное меню"
+        hidden={!open}
+        style={{ background: dark ? '#14100a' : 'var(--bg)', color: fg }}
+      >
+        {navItems.map(([href, label]) => (
+          <Link key={href} to={href} onClick={() => setOpen(false)}>{label}</Link>
+        ))}
+        <div style={{ marginTop: 32 }}>
+          <Button to="/contact" tone={dark ? 'light' : 'default'} onClick={() => setOpen(false)}>
+            Связаться →
+          </Button>
+        </div>
       </div>
-    </header>
+    </React.Fragment>
   );
 }
 
 function Footer() {
   return (
-    <footer style={{ borderTop: '1px solid var(--line)', padding: '80px 40px 40px', marginTop: 120 }}>
-      <div style={{ maxWidth: 1360, margin: '0 auto', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 60 }}>
+    <footer style={{
+      borderTop: '1px solid var(--line)',
+      padding: 'clamp(56px, 9vw, 80px) var(--pad-x) 40px',
+      marginTop: 'clamp(80px, 12vw, 120px)',
+    }}>
+      <div className="footer-grid" style={{
+        maxWidth: 'var(--max-w)', margin: '0 auto',
+        display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', gap: 60,
+      }}>
         <div>
-          <div style={{ fontFamily: "'Fraunces', serif", fontSize: 48, fontStyle: 'italic', letterSpacing: '-0.02em', lineHeight: 1 }}>Canvas</div>
+          <div className="serif" style={{
+            fontSize: 'clamp(36px, 5vw, 48px)', fontStyle: 'italic',
+            letterSpacing: '-0.02em', lineHeight: 1,
+          }}>denisixone</div>
           <p style={{ marginTop: 24, maxWidth: 360, color: 'var(--muted)', lineHeight: 1.65, fontSize: 14 }}>
             Свадебные сайты-приглашения, которые приятно получать и удобно рассылать.
             Готовые дизайны и кастом под ключ.
           </p>
         </div>
         <FooterCol title="Продукт" links={[['Все дизайны', '/templates'], ['Процесс', '/#process'], ['Цены', '/#pricing'], ['FAQ', '/#faq']]} />
-        <FooterCol title="Контакты" links={[['Форма заявки', '/contact'], ['hello@canvas.wedding', '/contact'], ['@canvas_wedding', '/contact']]} />
-        <FooterCol title="Легал" links={[['Оферта', '/'], ['Приватность', '/'], ['© Canvas Studio 2026', '/']]} />
+        <FooterCol title="Контакты" links={[
+          ['Форма заявки', '/contact'],
+          ['den484411@gmail.com', 'mailto:den484411@gmail.com', true],
+          ['@denisixone', 'https://t.me/denisixone', true],
+        ]} />
+        <FooterCol title="Легал" links={[['Оферта', '/'], ['Приватность', '/'], ['© denisixone 2026', '/']]} />
       </div>
-      <div style={{
-        maxWidth: 1360, margin: '60px auto 0', paddingTop: 24,
+      <div className="footer-bottom" style={{
+        maxWidth: 'var(--max-w)', margin: '60px auto 0', paddingTop: 24,
         borderTop: '1px solid var(--line)',
         display: 'flex', justifyContent: 'space-between',
-        fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase',
+        fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+        color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase',
       }}>
-        <span>Made in Tbilisi · Serving worldwide</span>
+        <span>Made in Perm · Serving worldwide</span>
         <span>V.2026.04</span>
       </div>
     </footer>
   );
 }
+
+// FooterCol styles its own children — Link primitives with fontSize 14 are internal.
 function FooterCol({ title, links }) {
   return (
     <div>
-      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: 20 }}>{title}</div>
+      <div style={{
+        fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+        letterSpacing: '0.14em', textTransform: 'uppercase',
+        color: 'var(--muted)', marginBottom: 20,
+      }}>{title}</div>
       <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {links.map(([label, href]) => (
-          <li key={label}><Link to={href} style={{ fontSize: 14 }}>{label}</Link></li>
+        {links.map(([label, href, external]) => (
+          <li key={label}>
+            {external ? (
+              <a
+                href={href}
+                rel="noopener noreferrer"
+                target={href.startsWith('http') ? '_blank' : undefined}
+                className="nav-link"
+                style={{ fontSize: 14 }}
+              >{label}</a>
+            ) : (
+              <Link to={href} className="nav-link" style={{ fontSize: 14 }}>{label}</Link>
+            )}
+          </li>
         ))}
       </ul>
     </div>
   );
 }
 
-// Primary button
-function Button({ children, to, onClick, variant = 'primary', size = 'md', style, ...rest }) {
-  const base = {
-    display: 'inline-flex', alignItems: 'center', gap: 10,
-    fontFamily: "'JetBrains Mono', monospace", fontSize: size === 'lg' ? 13 : 12,
-    letterSpacing: '0.12em', textTransform: 'uppercase',
-    padding: size === 'lg' ? '18px 28px' : '14px 22px',
-    borderRadius: 999, cursor: 'pointer', border: '1px solid transparent',
-    transition: 'all 0.2s ease', whiteSpace: 'nowrap',
-  };
-  const variants = {
-    primary: { background: 'var(--ink)', color: 'var(--bg)' },
-    secondary: { background: 'transparent', color: 'var(--ink)', borderColor: 'var(--ink)' },
-    ghost: { background: 'transparent', color: 'var(--ink)' },
-  };
-  const finalStyle = { ...base, ...variants[variant], ...style };
-  if (to) return <Link to={to} style={finalStyle} {...rest}>{children}</Link>;
-  return <button onClick={onClick} style={finalStyle} {...rest}>{children}</button>;
-}
-
-// Section eyebrow
-function Eyebrow({ children, number, style }) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 14, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--muted)', ...style }}>
-      {number && <span style={{ opacity: 0.6 }}>{number}</span>}
-      <span style={{ width: 24, height: 1, background: 'currentColor', opacity: 0.4 }} />
-      <span>{children}</span>
-    </div>
-  );
-}
-
 Object.assign(window, {
   useRoute, navigate, Link, useReveal, Reveal,
-  TopNav, Footer, Button, Eyebrow,
+  TopNav, Footer, Button, Eyebrow, Chip, ProcessStep, FaqItem, NavLink,
 });

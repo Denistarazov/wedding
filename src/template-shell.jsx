@@ -59,14 +59,7 @@ function DemoBar({ t, theme = 'light' }) {
         <span style={{ fontStyle: 'italic', fontFamily: "'Fraunces', serif", textTransform: 'none', letterSpacing: 0, fontSize: 14 }}>{t.name}</span>
         <span style={{ marginLeft: 10, opacity: 0.55 }}>· {t.styleRu}</span>
       </span>
-      <Link
-        to="/contact"
-        style={{
-          background: dark ? '#f5f1ea' : '#2a2418',
-          color: dark ? '#2a2418' : '#f5f1ea',
-          padding: '8px 16px', borderRadius: 999, marginLeft: 8,
-        }}
-      >Заказать такой →</Link>
+      <Button to="/contact" size="sm" tone={dark ? 'light' : 'default'}>Заказать такой →</Button>
       <button
         onClick={() => setOpen(false)}
         style={{ background: 'transparent', border: 0, color: 'inherit', cursor: 'pointer', fontSize: 14, opacity: 0.5, padding: '0 6px' }}

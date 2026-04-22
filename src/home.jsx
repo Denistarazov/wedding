@@ -146,7 +146,11 @@ function ValueCard({ n, title, price, bullets, highlight }) {
           </li>
         ))}
       </ul>
-      <Button to={highlight ? '/contact' : '/templates'} variant={highlight ? 'secondary' : 'primary'} style={highlight ? { borderColor: 'var(--bg)', color: 'var(--bg)' } : {}}>
+      <Button
+        to={highlight ? '/contact' : '/templates'}
+        variant={highlight ? 'secondary' : 'primary'}
+        tone={highlight ? 'light' : 'default'}
+      >
         {highlight ? 'Запросить кастом' : 'Посмотреть дизайны'} →
       </Button>
     </div>
@@ -154,7 +158,6 @@ function ValueCard({ n, title, price, bullets, highlight }) {
 }
 
 function Portfolio() {
-  const [hover, setHover] = useState(null);
   return (
     <section style={{ padding: '140px 40px' }}>
       <div style={{ maxWidth: 1360, margin: '0 auto' }}>
@@ -165,56 +168,16 @@ function Portfolio() {
               Девять разных<br/><span style={{ fontStyle: 'italic' }}>миров</span>.
             </h2>
           </div>
-          <Link to="/templates" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', borderBottom: '1px solid currentColor', paddingBottom: 4 }}>
-            Все с фильтрами →
-          </Link>
+          <NavLink to="/templates">Все с фильтрами →</NavLink>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
           {TEMPLATES.map((t, i) => (
-            <TemplateCard key={t.slug} t={t} idx={i} hovered={hover === t.slug} onHover={() => setHover(t.slug)} onLeave={() => setHover(null)} />
+            <TemplateCard key={t.slug} t={t} idx={i} />
           ))}
         </div>
       </div>
     </section>
-  );
-}
-
-function TemplateCard({ t, idx, hovered, onHover, onLeave }) {
-  return (
-    <Link
-      to={`/templates/${t.slug}`}
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      style={{ display: 'block', cursor: 'pointer' }}
-    >
-      <div style={{
-        position: 'relative', aspectRatio: '4/5', overflow: 'hidden',
-        background: t.previewBg, transition: 'transform 0.5s ease',
-        transform: hovered ? 'translateY(-4px)' : 'none',
-      }}>
-        <TemplatePreview template={t} />
-        <div style={{
-          position: 'absolute', top: 16, left: 16, right: 16,
-          display: 'flex', justifyContent: 'space-between',
-          fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase',
-          color: t.slug === 'dark' || t.slug === 'artdeco' ? 'rgba(255,255,255,0.8)' : 'rgba(42,36,24,0.6)',
-        }}>
-          <span>№ 0{idx + 1}</span>
-          <span>{t.styleRu}</span>
-        </div>
-      </div>
-      <div style={{ padding: '18px 2px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-        <div>
-          <div className="serif" style={{ fontSize: 24, fontStyle: 'italic', letterSpacing: '-0.01em' }}>{t.name}</div>
-          <div style={{ fontSize: 13, color: 'var(--muted)', marginTop: 4 }}>{t.tagline}</div>
-        </div>
-        <div style={{
-          fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-          opacity: hovered ? 1 : 0.4, transition: 'opacity 0.2s',
-        }}>→</div>
-      </div>
-    </Link>
   );
 }
 
@@ -333,15 +296,11 @@ function Process() {
         <h2 className="serif" style={{ fontSize: 'clamp(48px, 6vw, 88px)', lineHeight: 0.95, letterSpacing: '-0.025em', margin: '20px 0 80px', fontWeight: 400 }}>
           Пять шагов <span style={{ fontStyle: 'italic' }}>до рассылки</span>.
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 28 }}>
-          {steps.map((s, i) => (
-            <div key={s.n} style={{ borderTop: '1px solid var(--ink)', paddingTop: 22, position: 'relative' }}>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.14em', color: 'var(--muted)' }}>STEP {s.n}</div>
-              <div className="serif" style={{ fontSize: 28, fontWeight: 400, margin: '14px 0 12px', letterSpacing: '-0.01em' }}>{s.title}</div>
-              <p style={{ fontSize: 14, lineHeight: 1.55, color: 'var(--ink-2)', margin: 0 }}>{s.body}</p>
-            </div>
+        <ol style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 28, listStyle: 'none', padding: 0, margin: 0 }}>
+          {steps.map((s) => (
+            <ProcessStep key={s.n} number={s.n} title={s.title} body={s.body} />
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );
@@ -404,7 +363,7 @@ function PriceCard({ t }) {
       <Button
         to={t.name === 'Bespoke' ? '/contact' : '/templates'}
         variant={pop ? 'secondary' : 'primary'}
-        style={pop ? { borderColor: 'var(--bg)', color: 'var(--bg)' } : {}}
+        tone={pop ? 'light' : 'default'}
       >
         {t.name === 'Bespoke' ? 'Обсудить проект' : 'Выбрать шаблон'} →
       </Button>
@@ -429,33 +388,18 @@ function FAQ() {
         <h2 className="serif" style={{ fontSize: 'clamp(48px, 6vw, 88px)', lineHeight: 0.95, letterSpacing: '-0.025em', margin: '20px 0 60px', fontWeight: 400 }}>
           Часто <span style={{ fontStyle: 'italic' }}>спрашивают</span>.
         </h2>
-        <div style={{ borderTop: '1px solid var(--ink)' }}>
-          {items.map((it, i) => {
-            const o = open === i;
-            return (
-              <div key={i} style={{ borderBottom: '1px solid var(--line)' }}>
-                <button
-                  onClick={() => setOpen(o ? -1 : i)}
-                  style={{
-                    width: '100%', textAlign: 'left', background: 'transparent', border: 0, cursor: 'pointer',
-                    padding: '28px 0', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                    fontFamily: 'inherit', color: 'inherit',
-                  }}
-                >
-                  <span className="serif" style={{ fontSize: 24, fontWeight: 400, letterSpacing: '-0.01em' }}>{it.q}</span>
-                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 18, transition: 'transform 0.25s', transform: o ? 'rotate(45deg)' : 'none' }}>+</span>
-                </button>
-                <div style={{
-                  maxHeight: o ? 200 : 0, opacity: o ? 1 : 0, overflow: 'hidden',
-                  transition: 'max-height 0.35s ease, opacity 0.25s ease, padding 0.25s',
-                  padding: o ? '0 0 28px 0' : '0',
-                }}>
-                  <p style={{ margin: 0, fontSize: 16, color: 'var(--ink-2)', lineHeight: 1.6, maxWidth: 720 }}>{it.a}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <dl style={{ borderTop: '1px solid var(--ink)', margin: 0, padding: 0 }}>
+          {items.map((it, i) => (
+            <FaqItem
+              key={i}
+              index={i}
+              question={it.q}
+              answer={it.a}
+              open={open === i}
+              onToggle={() => setOpen(open === i ? -1 : i)}
+            />
+          ))}
+        </dl>
       </div>
     </section>
   );
@@ -465,14 +409,14 @@ function FinalCTA() {
   return (
     <section style={{ padding: '140px 40px', background: 'var(--ink)', color: 'var(--bg)' }}>
       <div style={{ maxWidth: 1360, margin: '0 auto', textAlign: 'center' }}>
-        <Eyebrow number="(07)" style={{ color: 'rgba(245,241,234,0.6)', justifyContent: 'center' }}>Готовы?</Eyebrow>
+        <Eyebrow number="(07)" tone="light" align="center">Готовы?</Eyebrow>
         <h2 className="serif" style={{ fontSize: 'clamp(64px, 10vw, 180px)', lineHeight: 0.92, letterSpacing: '-0.04em', margin: '36px 0', fontWeight: 400, textWrap: 'balance' }}>
           Давайте соберём<br/>
           <span style={{ fontStyle: 'italic', fontWeight: 300 }}>ваш сайт.</span>
         </h2>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Button to="/templates" size="lg" variant="secondary" style={{ borderColor: 'var(--bg)', color: 'var(--bg)' }}>Выбрать дизайн</Button>
-          <Button to="/contact" size="lg" style={{ background: 'var(--bg)', color: 'var(--ink)' }}>Оставить заявку →</Button>
+          <Button to="/templates" size="lg" variant="secondary" tone="light">Выбрать дизайн</Button>
+          <Button to="/contact" size="lg" tone="light">Оставить заявку →</Button>
         </div>
         <p style={{ marginTop: 40, color: 'rgba(245,241,234,0.55)', fontSize: 13, fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.14em', textTransform: 'uppercase' }}>
           · Ответим за 2–3 часа в рабочее время ·
@@ -482,4 +426,4 @@ function FinalCTA() {
   );
 }
 
-Object.assign(window, { Home, TemplatePreview });
+Object.assign(window, { Home, TemplatePreview, TemplateCard });

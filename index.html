@@ -242,17 +242,48 @@
     .hsnap > *:last-child { border-bottom: 0 !important; }
 
     /* === MAISONNEUVE (letterpress) ======================================== */
-    .book-container { padding: 80px 16px 110px !important; }
-    .book-spread { min-height: auto !important; box-shadow: 0 18px 40px rgba(58,42,26,0.22), inset 0 0 0 1px rgba(58,42,26,0.12) !important; }
+    .letterpress-shell { overflow: visible !important; }
+    .book-caption {
+      position: static !important;
+      padding: 76px 20px 0 !important;
+      text-align: center !important;
+    }
+    .book-caption span {
+      display: block;
+      line-height: 1.5;
+      letter-spacing: 0.22em !important;
+    }
+    .book-container {
+      min-height: auto !important;
+      display: block !important;
+      padding: 22px 16px 20px !important;
+    }
+    .book-spread {
+      display: block !important;
+      grid-template-columns: 1fr !important;
+      min-height: auto !important;
+      box-shadow: 0 14px 32px rgba(58,42,26,0.16), inset 0 0 0 1px rgba(58,42,26,0.14) !important;
+    }
     /* Inner pages — each spread component renders two <div> content pages as direct children.
        Flatten their heavy padding on phone. */
-    .book-spread > div { padding: 36px 24px !important; }
+    .book-spread > div {
+      padding: 34px 24px !important;
+      min-height: auto !important;
+      justify-content: flex-start !important;
+    }
     /* The center spine only makes sense in a two-page spread — hide when stacked */
     .book-spine { display: none !important; }
     /* Side arrows: shrink, pin to the edges so they don't cover the page body */
-    .book-arrow { width: 40px !important; height: 40px !important; font-size: 20px !important; }
-    .book-arrow[aria-label*="Предыдущая"] { left: 10px !important; }
-    .book-arrow[aria-label*="Следующая"] { right: 10px !important; }
+    .book-arrow { display: none !important; }
+    .book-indicator {
+      position: static !important;
+      transform: none !important;
+      margin: 0 auto 28px !important;
+      width: max-content !important;
+      max-width: calc(100vw - 32px) !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+    }
 
     /* === PALAIS (artdeco) additional mobile polish ========================= */
     .deco-section { padding-left: 20px !important; padding-right: 20px !important; }
@@ -318,8 +349,13 @@
       padding: 14px 0 !important;
       border-top: 2px solid currentColor !important;
     }
-    .book-container { min-height: auto !important; }
+    .book-caption { padding-top: 28px !important; }
+    .book-container { min-height: auto !important; padding: 14px 14px 16px !important; }
     .book-spread { width: 100% !important; }
+    .book-spread > div { padding: 28px 18px !important; }
+    .book-spread h2 { text-align: left !important; }
+    .book-spread dl { text-align: left !important; }
+    .book-indicator { margin-bottom: 24px !important; padding: 8px 12px !important; gap: 9px !important; }
     .deco-tabs nav > * { min-width: 68px !important; }
     .deco-row { grid-template-columns: 1fr !important; gap: 6px !important; }
     .deco-row > * { grid-column: 1 / -1 !important; text-align: left !important; }
@@ -350,7 +386,9 @@
   }
 
   /* === MOBILE NAV DRAWER ================================================ */
-  .nav-mobile-toggle { display: none; }
+  /* !important is required: Button renders with inline display:inline-flex
+     which has higher specificity than a class rule without !important */
+  .nav-mobile-toggle { display: none !important; }
   .nav-drawer[hidden] { display: none !important; }
   .nav-drawer {
     position: fixed; inset: 0; z-index: 80;
@@ -546,36 +584,27 @@ function TopNav({ dark = false }) {
           </Link>
 
           <nav className="nav-desktop" aria-label="Главное меню" style={{
-            display: 'flex', gap: 32, alignItems: 'center', fontSize: 14,
+            display: 'flex', gap: 32, alignItems: 'center',
           }}>
             {navItems.map(([href, label]) => (
-              <Link key={href} to={href} className="nav-link" style={{ opacity: 0.78 }}>{label}</Link>
+              <NavLink key={href} to={href}>{label}</NavLink>
             ))}
-            <Link to="/contact" className="btn" style={{
-              border: `1px solid ${fg}`, padding: '9px 18px', borderRadius: 999,
-              fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-              letterSpacing: '0.12em', textTransform: 'uppercase',
-              transition: 'all 200ms cubic-bezier(.2,.8,.2,1)',
-            }}>Связаться →</Link>
+            <Button to="/contact" variant="secondary" size="md" tone={dark ? 'light' : 'default'}>
+              Связаться →
+            </Button>
           </nav>
 
-          <button
-            type="button"
-            className="nav-mobile-toggle btn"
+          <Button
+            className="nav-mobile-toggle"
+            variant="secondary"
+            tone={dark ? 'light' : 'default'}
             aria-expanded={open}
             aria-controls="nav-drawer"
             aria-label={open ? 'Закрыть меню' : 'Открыть меню'}
             onClick={() => setOpen((v) => !v)}
-            style={{
-              background: 'transparent', border: `1px solid ${fg}`,
-              color: fg, padding: '10px 14px', borderRadius: 999,
-              cursor: 'pointer', fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase',
-              display: 'none', alignItems: 'center', gap: 8,
-            }}
           >
             {open ? 'Закрыть' : 'Меню'}
-          </button>
+          </Button>
         </div>
       </header>
 
@@ -593,18 +622,11 @@ function TopNav({ dark = false }) {
         {navItems.map(([href, label]) => (
           <Link key={href} to={href} onClick={() => setOpen(false)}>{label}</Link>
         ))}
-        <Link
-          to="/contact"
-          onClick={() => setOpen(false)}
-          style={{
-            marginTop: 32, padding: '16px 22px',
-            background: fg, color: dark ? '#14100a' : 'var(--bg)',
-            borderRadius: 999, textAlign: 'center',
-            fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
-            letterSpacing: '0.12em', textTransform: 'uppercase',
-            fontStyle: 'normal',
-          }}
-        >Связаться →</Link>
+        <div style={{ marginTop: 32 }}>
+          <Button to="/contact" tone={dark ? 'light' : 'default'} onClick={() => setOpen(false)}>
+            Связаться →
+          </Button>
+        </div>
       </div>
     </React.Fragment>
   );
@@ -687,22 +709,35 @@ function FooterCol({ title, links }) {
   );
 }
 // Primary button
-function Button({ children, to, onClick, type = 'button', variant = 'primary', size = 'md', disabled, loading, className, style, ...rest }) {
+// variant = 'primary' | 'secondary' | 'ghost'
+// size    = 'md' | 'lg'
+// tone    = 'default' (ink/bg palette) | 'light' (inverted — for use on dark backgrounds)
+// className is allowed only for responsive/semantic classes (e.g. nav-mobile-toggle), never for cosmetics
+function Button({ children, to, onClick, type = 'button', variant = 'primary', size = 'md', tone = 'default', disabled, loading, className, ...rest }) {
+  const sizeMap = { sm: { fontSize: 11, padding: '8px 14px' }, md: { fontSize: 12, padding: '14px 22px' }, lg: { fontSize: 13, padding: '18px 28px' } };
   const base = {
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-    fontFamily: "'JetBrains Mono', monospace", fontSize: size === 'lg' ? 13 : 12,
+    fontFamily: "'JetBrains Mono', monospace", fontSize: sizeMap[size]?.fontSize ?? 12,
     letterSpacing: '0.12em', textTransform: 'uppercase',
-    padding: size === 'lg' ? '18px 28px' : '14px 22px',
+    padding: sizeMap[size]?.padding ?? '14px 22px',
     borderRadius: 999, cursor: disabled ? 'not-allowed' : 'pointer',
     border: '1px solid transparent', whiteSpace: 'nowrap',
     transition: 'transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease), background var(--t-fast) var(--ease), color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease)',
   };
-  const variants = {
-    primary: { background: 'var(--ink)', color: 'var(--bg)' },
-    secondary: { background: 'transparent', color: 'var(--ink)', borderColor: 'var(--ink)' },
-    ghost: { background: 'transparent', color: 'var(--ink)' },
+  // Two complete colour sets — no overrides needed from outside
+  const colours = {
+    default: {
+      primary:   { background: 'var(--ink)', color: 'var(--bg)' },
+      secondary: { background: 'transparent', color: 'var(--ink)', borderColor: 'var(--ink)' },
+      ghost:     { background: 'transparent', color: 'var(--ink)' },
+    },
+    light: {
+      primary:   { background: 'var(--bg)', color: 'var(--ink)' },
+      secondary: { background: 'transparent', color: 'var(--bg)', borderColor: 'var(--bg)' },
+      ghost:     { background: 'transparent', color: 'var(--bg)' },
+    },
   };
-  const finalStyle = { ...base, ...variants[variant], ...style };
+  const finalStyle = { ...base, ...colours[tone][variant] };
   const cls = ['btn', className].filter(Boolean).join(' ');
   const content = loading ? (
     <>
@@ -731,10 +766,14 @@ function Button({ children, to, onClick, type = 'button', variant = 'primary', s
   );
 }
 
-// Section eyebrow
-function Eyebrow({ children, number, style }) {
+// Section eyebrow label
+// align = 'left' (default) | 'center'
+// tone  = 'default' (muted ink) | 'light' (muted on dark bg)
+function Eyebrow({ children, number, align = 'left', tone = 'default' }) {
+  const color = tone === 'light' ? 'rgba(245,241,234,0.6)' : 'var(--muted)';
+  const justify = align === 'center' ? 'center' : 'flex-start';
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 14, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--muted)', ...style }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: justify, gap: 14, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color }}>
       {number && <span style={{ opacity: 0.6 }}>{number}</span>}
       <span style={{ width: 24, height: 1, background: 'currentColor', opacity: 0.4 }} />
       <span>{children}</span>
@@ -742,9 +781,105 @@ function Eyebrow({ children, number, style }) {
   );
 }
 
+// Pill toggle / filter chip
+// active = boolean
+// Visually self-contained — caller provides only semantic intent (active, onClick, role)
+function Chip({ children, active, onClick, role, 'aria-selected': ariaSelected, 'aria-pressed': ariaPressed, size = 'md' }) {
+  const pad = size === 'sm' ? '5px 12px' : '6px 14px';
+  return (
+    <button
+      type="button"
+      role={role}
+      aria-selected={ariaSelected}
+      aria-pressed={ariaPressed}
+      onClick={onClick}
+      className="chip"
+      style={{
+        background: active ? 'var(--ink)' : 'transparent',
+        color: active ? 'var(--bg)' : 'var(--ink)',
+        border: `1px solid ${active ? 'var(--ink)' : 'var(--line)'}`,
+        borderRadius: 999, padding: pad,
+        fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
+        letterSpacing: '0.1em', textTransform: 'uppercase',
+        cursor: 'pointer', whiteSpace: 'nowrap',
+      }}
+    >{children}</button>
+  );
+}
+
+// Numbered process step card
+// Fully self-contained visual card — layout position controlled by parent grid
+function ProcessStep({ number, title, body }) {
+  return (
+    <li style={{ borderTop: '1px solid var(--ink)', paddingTop: 22 }}>
+      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.14em', color: 'var(--muted)' }}>STEP {number}</div>
+      <div className="serif" style={{ fontSize: 28, fontWeight: 400, margin: '14px 0 12px', letterSpacing: '-0.01em' }}>{title}</div>
+      <p style={{ fontSize: 14, lineHeight: 1.55, color: 'var(--ink-2)', margin: 0 }}>{body}</p>
+    </li>
+  );
+}
+
+// FAQ accordion item
+// All visual state (open/closed animation) is self-contained — caller passes only data + open state
+function FaqItem({ question, answer, open, onToggle, index }) {
+  const panelId = `faq-panel-${index}`;
+  const btnId = `faq-btn-${index}`;
+  return (
+    <div style={{ borderBottom: '1px solid var(--line)' }}>
+      <dt>
+        <button
+          id={btnId}
+          type="button"
+          aria-expanded={open}
+          aria-controls={panelId}
+          onClick={onToggle}
+          style={{
+            width: '100%', textAlign: 'left',
+            background: 'transparent', border: 0, cursor: 'pointer',
+            padding: '28px 0', display: 'flex',
+            justifyContent: 'space-between', alignItems: 'center', gap: 16,
+            fontFamily: 'inherit', color: 'inherit',
+            transition: 'opacity var(--t-fast) var(--ease)',
+          }}
+          onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'}
+          onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+        >
+          <span className="serif" style={{ fontSize: 'clamp(18px, 2vw, 24px)', fontWeight: 400, letterSpacing: '-0.01em' }}>{question}</span>
+          <span aria-hidden="true" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 18, transition: 'transform 0.25s var(--ease)', transform: open ? 'rotate(45deg)' : 'none', flexShrink: 0 }}>+</span>
+        </button>
+      </dt>
+      <dd
+        id={panelId}
+        role="region"
+        aria-labelledby={btnId}
+        hidden={!open}
+        style={{
+          margin: 0,
+          maxHeight: open ? 400 : 0, opacity: open ? 1 : 0, overflow: 'hidden',
+          transition: 'max-height 0.35s ease, opacity 0.25s ease, padding 0.25s',
+          padding: open ? '0 0 28px 0' : '0',
+        }}
+      >
+        <p style={{ margin: 0, fontSize: 16, color: 'var(--ink-2)', lineHeight: 1.6, maxWidth: 720 }}>{answer}</p>
+      </dd>
+    </div>
+  );
+}
+
+// Navigation text link — for use inside header/footer nav lists
+// Encapsulates: underline hover effect, reduced opacity, consistent font size
+// Caller controls only destination (to) and click handler (onClick)
+function NavLink({ to, children, onClick }) {
+  return (
+    <Link to={to} onClick={onClick} className="nav-link" style={{ fontSize: 14, opacity: 0.78 }}>
+      {children}
+    </Link>
+  );
+}
+
 Object.assign(window, {
   useRoute, navigate, Link, useReveal, Reveal,
-  TopNav, Footer, Button, Eyebrow,
+  TopNav, Footer, Button, Eyebrow, Chip, ProcessStep, FaqItem, NavLink,
 });
 
 
@@ -1305,7 +1440,7 @@ function ValueCard({ n, title, price, bullets, highlight }) {
           </li>
         ))}
       </ul>
-      <Button to={highlight ? '/contact' : '/templates'} variant={highlight ? 'secondary' : 'primary'} style={highlight ? { borderColor: 'var(--bg)', color: 'var(--bg)' } : {}}>
+      <Button to={highlight ? '/contact' : '/templates'} variant={highlight ? 'secondary' : 'primary'} tone={highlight ? 'light' : 'default'}>
         {highlight ? 'Запросить кастом' : 'Посмотреть дизайны'} →
       </Button>
     </div>
@@ -1330,13 +1465,7 @@ function Portfolio() {
               Девять разных<br/><span style={{ fontStyle: 'italic' }}>миров</span>.
             </h2>
           </div>
-          <Link to="/templates" className="nav-link" style={{
-            fontFamily: "'JetBrains Mono', monospace", fontSize: 12,
-            letterSpacing: '0.14em', textTransform: 'uppercase',
-            paddingBottom: 4,
-          }}>
-            Все с фильтрами →
-          </Link>
+          <NavLink to="/templates">Все с фильтрами →</NavLink>
         </div>
 
         <div className="grid-3" style={{
@@ -1594,21 +1723,7 @@ function Process() {
           display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 28,
         }}>
           {steps.map((s) => (
-            <li key={s.n} style={{
-              borderTop: '1px solid var(--ink)', paddingTop: 22, position: 'relative',
-            }}>
-              <div style={{
-                fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-                letterSpacing: '0.14em', color: 'var(--muted)',
-              }}>STEP {s.n}</div>
-              <div className="serif" style={{
-                fontSize: 28, fontWeight: 400, margin: '14px 0 12px',
-                letterSpacing: '-0.01em',
-              }}>{s.title}</div>
-              <p style={{
-                fontSize: 14, lineHeight: 1.55, color: 'var(--ink-2)', margin: 0,
-              }}>{s.body}</p>
-            </li>
+            <ProcessStep key={s.n} number={s.n} title={s.title} body={s.body} />
           ))}
         </ol>
       </div>
@@ -1685,7 +1800,7 @@ function PriceCard({ t }) {
       <Button
         to={t.name === 'Кастом' ? '/contact' : '/templates'}
         variant={pop ? 'secondary' : 'primary'}
-        style={pop ? { borderColor: 'var(--bg)', color: 'var(--bg)' } : {}}
+        tone={pop ? 'light' : 'default'}
       >
         {t.name === 'Кастом' ? 'Обсудить проект' : 'Выбрать шаблон'} →
       </Button>
@@ -1717,60 +1832,16 @@ function FAQ() {
           Часто <span style={{ fontStyle: 'italic' }}>спрашивают</span>.
         </h2>
         <dl style={{ borderTop: '1px solid var(--ink)', margin: 0 }}>
-          {items.map((it, i) => {
-            const o = open === i;
-            const panelId = `faq-panel-${i}`;
-            const btnId = `faq-btn-${i}`;
-            return (
-              <div key={i} style={{ borderBottom: '1px solid var(--line)' }}>
-                <dt>
-                  <button
-                    id={btnId}
-                    type="button"
-                    aria-expanded={o}
-                    aria-controls={panelId}
-                    onClick={() => setOpen(o ? -1 : i)}
-                    style={{
-                      width: '100%', textAlign: 'left',
-                      background: 'transparent', border: 0, cursor: 'pointer',
-                      padding: '28px 0', display: 'flex',
-                      justifyContent: 'space-between', alignItems: 'center', gap: 16,
-                      fontFamily: 'inherit', color: 'inherit',
-                      transition: 'opacity var(--t-fast) var(--ease)',
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.opacity = '0.7'}
-                    onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
-                  >
-                    <span className="serif" style={{
-                      fontSize: 'clamp(18px, 2vw, 24px)', fontWeight: 400,
-                      letterSpacing: '-0.01em',
-                    }}>{it.q}</span>
-                    <span aria-hidden="true" style={{
-                      fontFamily: "'JetBrains Mono', monospace", fontSize: 18,
-                      transition: 'transform 0.25s var(--ease)',
-                      transform: o ? 'rotate(45deg)' : 'none', flexShrink: 0,
-                    }}>+</span>
-                  </button>
-                </dt>
-                <dd
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={btnId}
-                  hidden={!o}
-                  style={{
-                    margin: 0,
-                    maxHeight: o ? 400 : 0, opacity: o ? 1 : 0, overflow: 'hidden',
-                    transition: 'max-height 0.35s ease, opacity 0.25s ease, padding 0.25s',
-                    padding: o ? '0 0 28px 0' : '0',
-                  }}>
-                  <p style={{
-                    margin: 0, fontSize: 16, color: 'var(--ink-2)',
-                    lineHeight: 1.6, maxWidth: 720,
-                  }}>{it.a}</p>
-                </dd>
-              </div>
-            );
-          })}
+          {items.map((it, i) => (
+            <FaqItem
+              key={i}
+              index={i}
+              question={it.q}
+              answer={it.a}
+              open={open === i}
+              onToggle={() => setOpen(open === i ? -1 : i)}
+            />
+          ))}
         </dl>
       </div>
     </section>
@@ -1784,9 +1855,7 @@ function FinalCTA() {
       background: 'var(--ink)', color: 'var(--bg)',
     }}>
       <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto', textAlign: 'center' }}>
-        <Eyebrow number="(07)" style={{
-          color: 'rgba(245,241,234,0.6)', justifyContent: 'center',
-        }}>Готовы?</Eyebrow>
+        <Eyebrow number="(07)" tone="light" align="center">Готовы?</Eyebrow>
         <h2 className="serif" style={{
           fontSize: 'clamp(48px, 10vw, 180px)', lineHeight: 0.92,
           letterSpacing: '-0.04em', margin: '36px 0',
@@ -1798,12 +1867,10 @@ function FinalCTA() {
         <div style={{
           display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap',
         }}>
-          <Button to="/templates" size="lg" variant="secondary"
-            style={{ borderColor: 'var(--bg)', color: 'var(--bg)' }}>
+          <Button to="/templates" size="lg" variant="secondary" tone="light">
             Выбрать дизайн
           </Button>
-          <Button to="/contact" size="lg"
-            style={{ background: 'var(--bg)', color: 'var(--ink)' }}>
+          <Button to="/contact" size="lg" tone="light">
             Оставить заявку →
           </Button>
         </div>
@@ -1819,7 +1886,7 @@ function FinalCTA() {
   );
 }
 
-Object.assign(window, { Home, TemplatePreview });
+Object.assign(window, { Home, TemplatePreview, TemplateCard });
 
 
 // ===== src/templates-index.jsx =====
@@ -1877,53 +1944,29 @@ function TemplatesIndex() {
                 letterSpacing: '0.14em', textTransform: 'uppercase',
                 color: 'var(--muted)', marginRight: 8,
               }}>Стиль</span>
-              {styles.map((s) => {
-                const active = filter === s;
-                return (
-                  <button
-                    key={s}
-                    type="button"
-                    role="tab"
-                    aria-selected={active}
-                    onClick={() => setFilter(s)}
-                    className="chip"
-                    style={{
-                      background: active ? 'var(--ink)' : 'transparent',
-                      color: active ? 'var(--bg)' : 'var(--ink)',
-                      border: '1px solid ' + (active ? 'var(--ink)' : 'var(--line)'),
-                      borderRadius: 999, padding: '6px 14px',
-                      fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-                      letterSpacing: '0.1em', textTransform: 'uppercase',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {s === 'all' ? 'Все 09' : s}
-                  </button>
-                );
-              })}
+              {styles.map((s) => (
+                <Chip
+                  key={s}
+                  role="tab"
+                  aria-selected={filter === s}
+                  active={filter === s}
+                  onClick={() => setFilter(s)}
+                >
+                  {s === 'all' ? 'Все 09' : s}
+                </Chip>
+              ))}
             </div>
             <div role="group" aria-label="Вид отображения" style={{ display: 'flex', gap: 4 }}>
-              {['grid', 'list'].map((v) => {
-                const active = view === v;
-                return (
-                  <button
-                    key={v}
-                    type="button"
-                    aria-pressed={active}
-                    onClick={() => setView(v)}
-                    className="chip"
-                    style={{
-                      background: active ? 'var(--ink)' : 'transparent',
-                      color: active ? 'var(--bg)' : 'var(--ink)',
-                      border: '1px solid ' + (active ? 'var(--ink)' : 'var(--line)'),
-                      padding: '6px 14px',
-                      fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-                      letterSpacing: '0.1em', textTransform: 'uppercase',
-                      cursor: 'pointer',
-                    }}
-                  >{v === 'grid' ? '⊞ Сетка' : '≡ Список'}</button>
-                );
-              })}
+              {['grid', 'list'].map((v) => (
+                <Chip
+                  key={v}
+                  aria-pressed={view === v}
+                  active={view === v}
+                  onClick={() => setView(v)}
+                >
+                  {v === 'grid' ? '⊞ Сетка' : '≡ Список'}
+                </Chip>
+              ))}
             </div>
           </div>
         </div>
@@ -1935,7 +1978,7 @@ function TemplatesIndex() {
                 display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28,
               }}>
                 {filtered.map((t) => (
-                  <TemplateCardIndex key={t.slug} t={t} idx={TEMPLATES.indexOf(t)} />
+                  <TemplateCard key={t.slug} t={t} idx={TEMPLATES.indexOf(t)} />
                 ))}
               </div>
             ) : (
@@ -1965,31 +2008,7 @@ function TemplatesIndex() {
   );
 }
 
-function TemplateCardIndex({ t, idx }) {
-  return (
-    <Link to={`/templates/${t.slug}`} style={{ display: 'block' }}>
-      <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', background: t.previewBg, transition: 'transform 0.4s' }}>
-        <TemplatePreview template={t} />
-        <div style={{
-          position: 'absolute', top: 16, left: 16, right: 16,
-          display: 'flex', justifyContent: 'space-between',
-          fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase',
-          color: t.slug === 'dark' || t.slug === 'artdeco' ? 'rgba(255,255,255,0.8)' : 'rgba(42,36,24,0.6)',
-        }}>
-          <span>№ 0{idx + 1}</span>
-          <span>{t.styleRu}</span>
-        </div>
-      </div>
-      <div style={{ padding: '20px 2px 0' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-          <div className="serif" style={{ fontSize: 26, fontStyle: 'italic', letterSpacing: '-0.01em' }}>{t.name}</div>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'var(--muted)', letterSpacing: '0.12em' }}>VIEW →</div>
-        </div>
-        <div style={{ fontSize: 14, color: 'var(--muted)', marginTop: 6 }}>{t.tagline}</div>
-      </div>
-    </Link>
-  );
-}
+// TemplateCardIndex removed — TemplateCard (from home.jsx section) is now used everywhere
 
 function TemplateRow({ t, idx }) {
   const [hov, setHov] = useState(false);
@@ -2098,7 +2117,7 @@ function Contact() {
             justifyContent: 'center', textAlign: 'center',
           }}>
             <div role="status" aria-live="polite">
-              <Eyebrow style={{ justifyContent: 'center' }}>Заявка принята</Eyebrow>
+              <Eyebrow align="center">Заявка принята</Eyebrow>
               <h1 className="serif" style={{
                 fontSize: 'clamp(48px, 9vw, 148px)', lineHeight: 0.92,
                 letterSpacing: '-0.035em', margin: '24px 0 0', fontWeight: 400,
@@ -2194,27 +2213,14 @@ function Contact() {
                   color: 'var(--muted)', marginBottom: 12, padding: 0,
                 }}>Тип проекта</legend>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  {['Готовый', 'Studio', 'Кастом', 'Не знаю'].map((t) => {
-                    const active = form.type === t;
-                    return (
-                      <button
-                        type="button"
-                        key={t}
-                        aria-pressed={active}
-                        onClick={() => update('type', t)}
-                        className="chip"
-                        style={{
-                          background: active ? 'var(--ink)' : 'transparent',
-                          color: active ? 'var(--bg)' : 'var(--ink)',
-                          border: '1px solid ' + (active ? 'var(--ink)' : 'var(--line)'),
-                          borderRadius: 999, padding: '8px 16px',
-                          fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-                          letterSpacing: '0.1em', textTransform: 'uppercase',
-                          cursor: 'pointer',
-                        }}
-                      >{t}</button>
-                    );
-                  })}
+                  {['Готовый', 'Studio', 'Кастом', 'Не знаю'].map((t) => (
+                    <Chip
+                      key={t}
+                      aria-pressed={form.type === t}
+                      active={form.type === t}
+                      onClick={() => update('type', t)}
+                    >{t}</Chip>
+                  ))}
                 </div>
               </fieldset>
 
@@ -2402,14 +2408,9 @@ function DemoBar({ t, theme = 'light' }) {
         <span style={{ fontStyle: 'italic', fontFamily: "'Fraunces', serif", textTransform: 'none', letterSpacing: 0, fontSize: 14 }}>{t.name}</span>
         <span style={{ marginLeft: 10, opacity: 0.55 }}>· {t.styleRu}</span>
       </span>
-      <Link
-        to="/contact"
-        style={{
-          background: dark ? '#f5f1ea' : '#2a2418',
-          color: dark ? '#2a2418' : '#f5f1ea',
-          padding: '8px 16px', borderRadius: 999, marginLeft: 8,
-        }}
-      >Заказать такой →</Link>
+      <Button to="/contact" size="sm" tone={dark ? 'light' : 'default'}>
+        Заказать такой →
+      </Button>
       <button
         onClick={() => setOpen(false)}
         style={{ background: 'transparent', border: 0, color: 'inherit', cursor: 'pointer', fontSize: 14, opacity: 0.5, padding: '0 6px' }}

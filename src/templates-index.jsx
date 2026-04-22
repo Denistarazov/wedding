@@ -40,31 +40,16 @@ function TemplatesIndex() {
           <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
             <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)', marginRight: 8 }}>Стиль</span>
             {styles.map((s) => (
-              <button
-                key={s}
-                onClick={() => setFilter(s)}
-                style={{
-                  background: filter === s ? 'var(--ink)' : 'transparent',
-                  color: filter === s ? 'var(--bg)' : 'var(--ink)',
-                  border: '1px solid ' + (filter === s ? 'var(--ink)' : 'var(--line)'),
-                  borderRadius: 999, padding: '6px 14px',
-                  fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase',
-                  cursor: 'pointer',
-                }}
-              >
+              <Chip key={s} role="tab" aria-selected={filter === s} active={filter === s} onClick={() => setFilter(s)}>
                 {s === 'all' ? 'Все 09' : s}
-              </button>
+              </Chip>
             ))}
           </div>
           <div style={{ display: 'flex', gap: 4 }}>
             {['grid', 'list'].map((v) => (
-              <button key={v} onClick={() => setView(v)} style={{
-                background: view === v ? 'var(--ink)' : 'transparent',
-                color: view === v ? 'var(--bg)' : 'var(--ink)',
-                border: '1px solid ' + (view === v ? 'var(--ink)' : 'var(--line)'),
-                padding: '6px 14px', fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
-                letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'pointer',
-              }}>{v === 'grid' ? '⊞ Сетка' : '≡ Список'}</button>
+              <Chip key={v} aria-pressed={view === v} active={view === v} onClick={() => setView(v)}>
+                {v === 'grid' ? '⊞ Сетка' : '≡ Список'}
+              </Chip>
             ))}
           </div>
         </div>
@@ -74,13 +59,13 @@ function TemplatesIndex() {
         <div style={{ maxWidth: 1360, margin: '0 auto' }}>
           {view === 'grid' ? (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28 }}>
-              {filtered.map((t, i) => (
-                <TemplateCardIndex key={t.slug} t={t} idx={TEMPLATES.indexOf(t)} />
+              {filtered.map((t) => (
+                <TemplateCard key={t.slug} t={t} idx={TEMPLATES.indexOf(t)} />
               ))}
             </div>
           ) : (
             <div style={{ borderTop: '1px solid var(--line)' }}>
-              {filtered.map((t, i) => (
+              {filtered.map((t) => (
                 <TemplateRow key={t.slug} t={t} idx={TEMPLATES.indexOf(t)} />
               ))}
             </div>
@@ -97,31 +82,7 @@ function TemplatesIndex() {
   );
 }
 
-function TemplateCardIndex({ t, idx }) {
-  return (
-    <Link to={`/templates/${t.slug}`} style={{ display: 'block' }}>
-      <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', background: t.previewBg, transition: 'transform 0.4s' }}>
-        <TemplatePreview template={t} />
-        <div style={{
-          position: 'absolute', top: 16, left: 16, right: 16,
-          display: 'flex', justifyContent: 'space-between',
-          fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.15em', textTransform: 'uppercase',
-          color: t.slug === 'dark' || t.slug === 'artdeco' ? 'rgba(255,255,255,0.8)' : 'rgba(42,36,24,0.6)',
-        }}>
-          <span>№ 0{idx + 1}</span>
-          <span>{t.styleRu}</span>
-        </div>
-      </div>
-      <div style={{ padding: '20px 2px 0' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-          <div className="serif" style={{ fontSize: 26, fontStyle: 'italic', letterSpacing: '-0.01em' }}>{t.name}</div>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'var(--muted)', letterSpacing: '0.12em' }}>VIEW →</div>
-        </div>
-        <div style={{ fontSize: 14, color: 'var(--muted)', marginTop: 6 }}>{t.tagline}</div>
-      </div>
-    </Link>
-  );
-}
+// TemplateCardIndex removed — TemplateCard (unified) is now used everywhere.
 
 function TemplateRow({ t, idx }) {
   const [hov, setHov] = useState(false);
@@ -132,7 +93,7 @@ function TemplateRow({ t, idx }) {
       onMouseLeave={() => setHov(false)}
       style={{
         display: 'grid', gridTemplateColumns: '60px 1fr 1fr 1fr 120px 40px', gap: 20, alignItems: 'center',
-        padding: '28px 0', borderBottom: '1px solid var(--line)', cursor: 'pointer',
+        borderBottom: '1px solid var(--line)', cursor: 'pointer',
         background: hov ? 'rgba(42,36,24,0.03)' : 'transparent', transition: 'background 0.2s',
         padding: '28px 12px',
       }}

@@ -17,7 +17,7 @@ function Contact() {
         <TopNav />
         <section style={{ padding: '160px 40px', minHeight: '70vh', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
           <div>
-            <Eyebrow style={{ justifyContent: 'center' }}>Заявка принята</Eyebrow>
+            <Eyebrow align="center">Заявка принята</Eyebrow>
             <h1 className="serif" style={{ fontSize: 'clamp(56px, 9vw, 148px)', lineHeight: 0.92, letterSpacing: '-0.035em', margin: '24px 0 0', fontWeight: 400 }}>
               <span style={{ fontStyle: 'italic' }}>Спасибо</span>,<br/>{form.name || 'гость'}.
             </h1>
@@ -70,14 +70,7 @@ function Contact() {
               <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: 12 }}>Тип проекта</div>
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                 {['Готовый', 'Studio', 'Кастом', 'Не знаю'].map((t) => (
-                  <button type="button" key={t} onClick={() => update('type', t)} style={{
-                    background: form.type === t ? 'var(--ink)' : 'transparent',
-                    color: form.type === t ? 'var(--bg)' : 'var(--ink)',
-                    border: '1px solid ' + (form.type === t ? 'var(--ink)' : 'var(--line)'),
-                    borderRadius: 999, padding: '8px 16px',
-                    fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase',
-                    cursor: 'pointer',
-                  }}>{t}</button>
+                  <Chip key={t} aria-pressed={form.type === t} active={form.type === t} onClick={() => update('type', t)}>{t}</Chip>
                 ))}
               </div>
             </div>
@@ -88,7 +81,7 @@ function Contact() {
               <div style={{ fontSize: 12, color: 'var(--muted)', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.1em' }}>
                 Отправляя, вы принимаете оферту.
               </div>
-              <Button onClick={() => {}} size="lg">Отправить заявку →</Button>
+              <Button size="lg">Отправить заявку →</Button>
             </div>
           </form>
         </div>
