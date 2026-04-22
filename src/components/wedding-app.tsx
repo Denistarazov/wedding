@@ -531,14 +531,14 @@ function Portrait({ label = 'portrait', ratio = '4/5', fg, bg, frame = false, st
   );
 }
 
-function AssetImage({ src, alt = '', ratio = '4/5', fit = 'cover', position = 'center', style, imgStyle, ...rest }) {
+function AssetImage({ src, alt = '', ratio = '4/5', fit = 'cover', position = 'center', sizes = '(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 720px', style, imgStyle, ...rest }) {
   return (
     <div style={{ position: 'relative', aspectRatio: ratio, overflow: 'hidden', ...style }} {...rest}>
       <Image
         src={src}
         alt={alt}
         fill
-        sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 720px"
+        sizes={sizes}
         style={{
           objectFit: fit,
           objectPosition: position,
@@ -3413,8 +3413,9 @@ function TemplateWabiSabi() {
         <AssetImage
           src="/assets/images/wabisabi-ink-washi-bg.png"
           alt=""
-          ratio="16/9"
-          style={{ position: 'absolute', inset: 0, height: '100%', opacity: 0.45 }}
+          ratio="auto"
+          sizes="100vw"
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', aspectRatio: 'auto', opacity: 0.45 }}
           imgStyle={{ filter: 'saturate(0.75)' }}
         />
         <BrushChar char="雲" color={P.ink} style={{
