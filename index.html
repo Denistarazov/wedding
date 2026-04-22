@@ -154,6 +154,13 @@
   /* === RESPONSIVE / MOBILE ============================================== */
   /* Scale large display headings down on small screens */
   @media (max-width: 900px) {
+    #root, main, section, article, aside, header, footer, nav, form { max-width: 100%; }
+    input, textarea, select, button { max-width: 100%; min-width: 0; }
+    button, .btn, a { overflow-wrap: anywhere; }
+    table { width: 100% !important; max-width: 100%; }
+    td, th { overflow-wrap: anywhere; }
+    p { column-count: 1 !important; }
+
     .grid-3 { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
     .grid-2-mobile-1 { grid-template-columns: 1fr !important; gap: 32px !important; }
     .grid-2 { grid-template-columns: 1fr !important; }
@@ -167,6 +174,24 @@
     .contact-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
     .hero-meta-grid { grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
     .hero-deco-vertical { display: none !important; }
+    .demo-bar {
+      left: 12px !important;
+      right: 12px !important;
+      top: 12px !important;
+      transform: none !important;
+      width: auto !important;
+      max-width: none !important;
+      border-radius: 18px !important;
+      padding: 10px 12px !important;
+      gap: 10px !important;
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      text-align: center !important;
+      font-size: 10px !important;
+      line-height: 1.25 !important;
+    }
+    .demo-bar > a, .demo-bar > span, .demo-bar > button { flex: 0 1 auto; }
+    .demo-bar > span:nth-of-type(1) { display: none !important; }
 
     /* Template-specific: split-screen collapses to stacked, sticky disabled */
     .swiss-split { grid-template-columns: 1fr !important; }
@@ -237,9 +262,30 @@
     /* Tabs in the sticky top bar: tighten spacing, keep single row, show only Roman numeral + short label */
     .deco-tabs nav > * { letter-spacing: 0.18em !important; padding: 10px 12px !important; font-size: 10px !important; gap: 8px !important; }
     .deco-tabs { padding: 52px 0 0 !important; }
+    .wabi-program-row { grid-template-columns: 1fr !important; gap: 10px !important; padding-left: 0 !important; }
   }
 
   @media (max-width: 600px) {
+    :root {
+      --pad-x: 18px;
+      --section-y: 64px;
+      --section-y-sm: 44px;
+    }
+    body { min-width: 0; }
+    section { min-width: 0; }
+    form {
+      grid-template-columns: 1fr !important;
+      gap: 14px !important;
+    }
+    form > * { grid-column: 1 / -1 !important; }
+    input, textarea {
+      width: 100% !important;
+      font-size: 16px !important;
+    }
+    button, .btn {
+      white-space: normal !important;
+      text-align: center !important;
+    }
     .grid-3 { grid-template-columns: 1fr !important; }
     .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
     .footer-bottom { flex-direction: column; gap: 12px; align-items: flex-start !important; }
@@ -251,6 +297,46 @@
     .templates-row > :nth-child(4),
     .templates-row > :nth-child(5) { display: none !important; }
     .demo-bar { display: none !important; }
+    .swiss-left { height: auto !important; }
+    .swiss-left nav { flex-direction: row !important; flex-wrap: wrap !important; gap: 12px !important; }
+    .grid-dark-row { grid-template-columns: 1fr !important; gap: 8px !important; text-align: left !important; }
+    .noctis-dots { display: none !important; }
+    .brut-wrap table,
+    .brut-wrap thead,
+    .brut-wrap tbody,
+    .brut-wrap tr,
+    .brut-wrap td {
+      display: block !important;
+      width: 100% !important;
+    }
+    .brut-wrap td {
+      padding: 10px 0 !important;
+      text-align: left !important;
+      border: 0 !important;
+    }
+    .brut-wrap tr {
+      padding: 14px 0 !important;
+      border-top: 2px solid currentColor !important;
+    }
+    .book-container { min-height: auto !important; }
+    .book-spread { width: 100% !important; }
+    .deco-tabs nav > * { min-width: 68px !important; }
+    .deco-row { grid-template-columns: 1fr !important; gap: 6px !important; }
+    .deco-row > * { grid-column: 1 / -1 !important; text-align: left !important; }
+    .poly-timeline { padding-left: 28px !important; }
+    .poly-spine, .poly-spine-fill { left: 14px !important; }
+    .poly-row { grid-template-columns: 34px 1fr !important; }
+    .footer-bottom { text-align: left !important; }
+  }
+
+  @media (max-width: 420px) {
+    :root { --pad-x: 14px; }
+    .hero-meta-grid { grid-template-columns: 1fr !important; }
+    .filter-bar { overflow-x: auto; flex-wrap: nowrap !important; padding-bottom: 4px; }
+    .filter-bar > * { flex: 0 0 auto; }
+    .templates-row { grid-template-columns: 32px 1fr 32px !important; gap: 10px !important; }
+    .templates-row > :nth-child(2) { min-width: 0; }
+    .nav-drawer a { font-size: 24px; }
   }
 
   /* === REDUCED MOTION =================================================== */
@@ -2282,6 +2368,7 @@ function DemoBar({ t, theme = 'light' }) {
     return (
       <button
         onClick={() => setOpen(true)}
+        className="demo-bar"
         style={{
           position: 'fixed', top: 16, right: 16, zIndex: 200,
           background: dark ? 'rgba(20,16,10,0.8)' : 'rgba(245,241,234,0.85)',
@@ -2295,7 +2382,7 @@ function DemoBar({ t, theme = 'light' }) {
     );
   }
   return (
-    <div style={{
+    <div className="demo-bar" style={{
       position: 'fixed', top: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 200,
       background: dark ? 'rgba(15,12,8,0.85)' : 'rgba(245,241,234,0.92)',
       backdropFilter: 'blur(14px)',
@@ -3830,7 +3917,7 @@ function TemplateWabiSabi() {
         <div>
           {t.program.map((p, i) => (
             <WabiReveal key={i} delay={i * 140}>
-              <div style={{
+              <div className="wabi-program-row" style={{
                 display: 'grid',
                 gridTemplateColumns: '100px 1fr 1fr',
                 gap: 40, padding: '26px 0',
