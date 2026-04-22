@@ -401,8 +401,15 @@
     .page-title br { display: none; }
     .page-title span { display: inline !important; }
     .hero-meta-grid { grid-template-columns: 1fr !important; }
-    .filter-bar { overflow-x: auto; flex-wrap: nowrap !important; padding-bottom: 4px; }
-    .filter-bar > * { flex: 0 0 auto; }
+    .filter-bar { overflow: visible; flex-wrap: wrap !important; padding-bottom: 8px; }
+    .filter-bar > * { flex: 1 1 100%; }
+    .filter-bar [role="tablist"] {
+      overflow-x: auto;
+      flex-wrap: nowrap !important;
+      padding-bottom: 4px;
+      scrollbar-width: thin;
+    }
+    .filter-bar [role="group"] { width: 100%; }
     .templates-row { grid-template-columns: 32px 1fr 32px !important; gap: 10px !important; }
     .templates-row > :nth-child(2) { min-width: 0; }
     .nav-drawer a { font-size: 24px; }

@@ -1,6 +1,7 @@
 // @ts-nocheck
 'use client';
 import React from 'react';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 // ===== src/shared.jsx =====
@@ -332,7 +333,7 @@ function Button({ children, to, onClick, type = 'button', variant = 'primary', s
       {children}
     </>
   ) : children;
-  if (to && !disabled) {
+  if (to && !disabled && !loading) {
     return <Link to={to} className={cls} style={finalStyle} {...rest}>{content}</Link>;
   }
   return (
@@ -533,18 +534,14 @@ function Portrait({ label = 'portrait', ratio = '4/5', fg, bg, frame = false, st
 function AssetImage({ src, alt = '', ratio = '4/5', fit = 'cover', position = 'center', style, imgStyle, ...rest }) {
   return (
     <div style={{ position: 'relative', aspectRatio: ratio, overflow: 'hidden', ...style }} {...rest}>
-      <img
+      <Image
         src={src}
         alt={alt}
-        loading="lazy"
+        fill
+        sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 720px"
         style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
           objectFit: fit,
           objectPosition: position,
-          display: 'block',
           ...imgStyle,
         }}
       />
@@ -2957,13 +2954,13 @@ function TemplateBrutalist() {
     return () => io.disconnect();
   }, []);
 
-  const go = (dir) => {
+  const go = React.useCallback((dir) => {
     const el = scroller.current;
     if (!el) return;
     const next = Math.max(0, Math.min(slides.length - 1, idx + dir));
     const target = el.querySelector(`[data-hblock="${next}"]`);
     if (target) target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
-  };
+  }, [idx, slides.length]);
 
   // Keyboard nav
   useEffect(() => {
@@ -2973,7 +2970,7 @@ function TemplateBrutalist() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [idx]);
+  }, [go]);
 
   const block = {
     flex: '0 0 100vw', height: '100vh',
@@ -3966,13 +3963,13 @@ function TemplateArtDeco() {
   const [a, b] = t.couple.split('&').map((s) => s.trim());
   const cd = useCountdown(t.dateIso);
   const rsvp = useRsvp();
-  const TABS = [
+  const TABS = React.useMemo(() => [
     { id: 'deco-home', label: 'HOME', roman: 'I' },
     { id: 'deco-story', label: 'ИСТОРИЯ', roman: 'II' },
     { id: 'deco-program', label: 'ПРОГРАММА', roman: 'III' },
     { id: 'deco-details', label: 'ДЕТАЛИ', roman: 'IV' },
     { id: 'deco-rsvp', label: 'ОТВЕТ', roman: 'V' },
-  ];
+  ], []);
   const [active, setActive] = React.useState('deco-home');
 
   React.useEffect(() => {
@@ -3981,7 +3978,7 @@ function TemplateArtDeco() {
     }, { rootMargin: '-40% 0px -55% 0px' });
     TABS.forEach((tab) => { const el = document.getElementById(tab.id); if (el) obs.observe(el); });
     return () => obs.disconnect();
-  }, []);
+  }, [TABS]);
 
   const goTo = (id) => {
     setActive(id);

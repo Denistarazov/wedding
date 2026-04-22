@@ -2,6 +2,7 @@ node_modules/
 .next/
 out/
 verification-shots/
+tsconfig.tsbuildinfo
 .vercel
 .DS_Store
 Thumbs.db
