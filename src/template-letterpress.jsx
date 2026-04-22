@@ -7,7 +7,9 @@ function TemplateLetterpress() {
   return (
     <div style={{
       background: '#ebe1cc', color: '#3a2a1a', fontFamily: "'EB Garamond', Georgia, serif", minHeight: '100vh',
-      backgroundImage: 'radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, rgba(201,168,120,0.08) 100%)',
+      backgroundImage: 'radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, rgba(201,168,120,0.08) 100%), url(assets/images/letterpress-paper-texture.png)',
+      backgroundSize: 'cover',
+      backgroundAttachment: 'fixed',
     }}>
       <DemoBar t={t} />
 

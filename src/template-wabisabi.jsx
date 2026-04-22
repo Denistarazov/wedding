@@ -10,6 +10,13 @@ function TemplateWabiSabi() {
 
       {/* Hero — asymmetric with huge empty space */}
       <section style={{ minHeight: '90vh', position: 'relative', padding: '120px 40px 80px' }}>
+        <AssetImage
+          src="assets/images/wabisabi-ink-washi-bg.png"
+          alt=""
+          ratio="16/9"
+          style={{ position: 'absolute', inset: 0, height: '100%', opacity: 0.5 }}
+          imgStyle={{ filter: 'saturate(0.75)' }}
+        />
         <div style={{ position: 'absolute', top: '18%', left: '8%', fontFamily: "'Noto Serif JP', serif", fontSize: 'clamp(120px, 18vw, 260px)', fontWeight: 300, color: '#1a1814', lineHeight: 1 }}>結</div>
 
         <InkCircle style={{ position: 'absolute', top: '12%', right: '10%', width: 160, opacity: 0.7 }} />

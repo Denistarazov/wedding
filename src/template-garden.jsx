@@ -54,7 +54,7 @@ function TemplateGarden() {
           </div>
           <div>
             <div style={{ aspectRatio: '3/4', position: 'relative', overflow: 'hidden' }}>
-              <Placeholder label="couple · garden · olive grove" ratio="3/4" fg="#5a6a4a" bg="#d9e2c8" variant="dots" style={{ height: '100%' }} />
+              <AssetImage src="assets/images/garden-olive-grove-couple.png" alt="Ella and Matteo in an olive grove" ratio="3/4" style={{ height: '100%' }} />
             </div>
           </div>
         </div>

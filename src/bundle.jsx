@@ -1,5 +1,6 @@
 
 // ===== src/shared.jsx =====
+
 // Shared components, router, utilities
 
 const { useState, useEffect, useRef, useMemo, useCallback } = React;
@@ -185,6 +186,7 @@ Object.assign(window, {
 
 
 // ===== src/placeholders.jsx =====
+
 // SVG placeholder generators — monochrome, subtle textures, always labeled when helpful
 
 function Placeholder({ label, ratio = '4/5', variant = 'stripes', fg = '#8a7a5a', bg = '#ede4d0', style, ...rest }) {
@@ -249,10 +251,33 @@ function Portrait({ label = 'portrait', ratio = '4/5', fg, bg, frame = false, st
   );
 }
 
-Object.assign(window, { Placeholder, Portrait });
+function AssetImage({ src, alt = '', ratio = '4/5', fit = 'cover', position = 'center', style, imgStyle, ...rest }) {
+  return (
+    <div style={{ position: 'relative', aspectRatio: ratio, overflow: 'hidden', ...style }} {...rest}>
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: fit,
+          objectPosition: position,
+          display: 'block',
+          ...imgStyle,
+        }}
+      />
+    </div>
+  );
+}
+
+Object.assign(window, { Placeholder, Portrait, AssetImage });
 
 
 // ===== src/templates-data.jsx =====
+
 // The 9 template descriptors — used by portfolio grid, /templates index, and demo router
 
 const TEMPLATES = [
@@ -379,6 +404,7 @@ Object.assign(window, { TEMPLATES });
 
 
 // ===== src/home.jsx =====
+
 // Home page
 
 function Home() {
@@ -867,6 +893,7 @@ Object.assign(window, { Home, TemplatePreview });
 
 
 // ===== src/templates-index.jsx =====
+
 // /templates index page — filterable grid
 
 function TemplatesIndex() {
@@ -1020,6 +1047,7 @@ Object.assign(window, { TemplatesIndex });
 
 
 // ===== src/contact.jsx =====
+
 // /contact page
 
 function Contact() {
@@ -1163,6 +1191,7 @@ Object.assign(window, { Contact });
 
 
 // ===== src/template-shell.jsx =====
+
 // Shared utilities used by individual template demos:
 // - Countdown hook
 // - RSVP form (each template styles its own visually, but the state logic here)
@@ -1254,6 +1283,7 @@ Object.assign(window, { useCountdown, DemoBar, useRsvp });
 
 
 // ===== src/template-editorial.jsx =====
+
 // 01 · Editorial — Vogue magazine feel: giant serif wordmark, full-bleed portrait, drop caps, pull quotes
 
 function TemplateEditorial() {
@@ -1299,7 +1329,7 @@ function TemplateEditorial() {
 
       {/* Full-bleed photo */}
       <section style={{ padding: '40px 40px' }}>
-        <Placeholder label="hero · vogue couple portrait · 16:9 · shot on film" ratio="16/9" fg="#6b5d4a" bg="#e5dcc8" variant="stripes" />
+        <AssetImage src="assets/images/editorial-hero-lake-como.png" alt="Алиса и Григорий у озера Комо" ratio="16/9" />
       </section>
 
       {/* Countdown */}
@@ -1412,6 +1442,7 @@ Object.assign(window, { TemplateEditorial });
 
 
 // ===== src/template-swiss.jsx =====
+
 // 02 · Swiss — 12-col grid, Helvetica, meta everywhere, no decoration
 
 function TemplateSwiss() {
@@ -1494,7 +1525,7 @@ function TemplateSwiss() {
       <section style={{ padding: 24, borderTop: '1px solid #111', display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: 16 }}>
         <div style={{ gridColumn: '1 / 4', fontSize: 11, letterSpacing: '0.02em' }}>05 / Figure 01</div>
         <div style={{ gridColumn: '4 / 10' }}>
-          <Placeholder label="couple · figure 01" ratio="3/2" fg="#888" bg="#f2f2f2" variant="grid" />
+          <AssetImage src="assets/images/swiss-figure-portrait.png" alt="Mira and Leo portrait" ratio="3/2" />
         </div>
         <div style={{ gridColumn: '10 / 13', fontSize: 11, lineHeight: 1.6, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
           Figure 01<br/>Mira &amp; Leo<br/>Photographed by<br/>Anna Bühler<br/>Zürich, 2026
@@ -1572,6 +1603,7 @@ Object.assign(window, { TemplateSwiss });
 
 
 // ===== src/template-garden.jsx =====
+
 // 03 · Garden botanical — soft sage, illustrated florals, Cormorant italic, ornament-framed
 
 function TemplateGarden() {
@@ -1628,7 +1660,7 @@ function TemplateGarden() {
           </div>
           <div>
             <div style={{ aspectRatio: '3/4', position: 'relative', overflow: 'hidden' }}>
-              <Placeholder label="couple · garden · olive grove" ratio="3/4" fg="#5a6a4a" bg="#d9e2c8" variant="dots" style={{ height: '100%' }} />
+              <AssetImage src="assets/images/garden-olive-grove-couple.png" alt="Ella and Matteo in an olive grove" ratio="3/4" style={{ height: '100%' }} />
             </div>
           </div>
         </div>
@@ -1725,6 +1757,7 @@ Object.assign(window, { TemplateGarden });
 
 
 // ===== src/template-dark.jsx =====
+
 // 04 · Dark luxe — black/gold, cinematic hero crop, Cormorant italic, serif numbers
 
 function TemplateDark() {
@@ -1738,7 +1771,7 @@ function TemplateDark() {
       {/* Hero — cinematic full-bleed */}
       <section style={{ height: '100vh', minHeight: 700, position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(13,11,8,0) 0%, rgba(13,11,8,0.3) 50%, rgba(13,11,8,0.95) 100%)' }} />
-        <Placeholder label="cinematic · sofia &amp; max · nocturne" ratio="16/9" fg="#d4b87a" bg="#1a1612" variant="stripes" style={{ position: 'absolute', inset: 0, height: '100%' }} />
+        <AssetImage src="assets/images/dark-luxe-hero-paris.png" alt="Sofia and Max in nocturne Paris" ratio="16/9" style={{ position: 'absolute', inset: 0, height: '100%' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(13,11,8,0.55) 0%, rgba(13,11,8,0.2) 50%, rgba(13,11,8,0.95) 100%)' }} />
 
         <div style={{ position: 'absolute', top: 40, left: 0, right: 0, padding: '0 40px', display: 'flex', justifyContent: 'space-between', fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', opacity: 0.7 }}>
@@ -1846,6 +1879,7 @@ Object.assign(window, { TemplateDark });
 
 
 // ===== src/template-brutalist.jsx =====
+
 // 05 · Brutalist — massive Archivo Black, red accent, raw grid, no decoration
 
 function TemplateBrutalist() {
@@ -1853,7 +1887,15 @@ function TemplateBrutalist() {
   const cd = useCountdown('2026-08-03T14:00:00');
   const rsvp = useRsvp();
   return (
-    <div style={{ background: '#eae4d8', color: '#000', fontFamily: "'Inter', sans-serif", minHeight: '100vh' }}>
+    <div style={{
+      background: '#eae4d8',
+      color: '#000',
+      fontFamily: "'Inter', sans-serif",
+      minHeight: '100vh',
+      backgroundImage: 'linear-gradient(rgba(234,228,216,0.88), rgba(234,228,216,0.88)), url(assets/images/brutalist-urban-poster-texture.png)',
+      backgroundSize: 'cover',
+      backgroundAttachment: 'fixed',
+    }}>
       <DemoBar t={t} />
 
       {/* Hero */}
@@ -1969,6 +2011,7 @@ Object.assign(window, { TemplateBrutalist });
 
 
 // ===== src/template-letterpress.jsx =====
+
 // 06 · Letterpress — aged paper, centered classical, EB Garamond, ornaments
 
 function TemplateLetterpress() {
@@ -1978,7 +2021,9 @@ function TemplateLetterpress() {
   return (
     <div style={{
       background: '#ebe1cc', color: '#3a2a1a', fontFamily: "'EB Garamond', Georgia, serif", minHeight: '100vh',
-      backgroundImage: 'radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, rgba(201,168,120,0.08) 100%)',
+      backgroundImage: 'radial-gradient(ellipse at center, rgba(255,255,255,0.3) 0%, rgba(201,168,120,0.08) 100%), url(assets/images/letterpress-paper-texture.png)',
+      backgroundSize: 'cover',
+      backgroundAttachment: 'fixed',
     }}>
       <DemoBar t={t} />
 
@@ -2102,6 +2147,7 @@ Object.assign(window, { TemplateLetterpress });
 
 
 // ===== src/template-wabisabi.jsx =====
+
 // 07 · Wabi-sabi — lots of white, asymmetric placements, ink-brush, Japanese hint
 
 function TemplateWabiSabi() {
@@ -2114,6 +2160,13 @@ function TemplateWabiSabi() {
 
       {/* Hero — asymmetric with huge empty space */}
       <section style={{ minHeight: '90vh', position: 'relative', padding: '120px 40px 80px' }}>
+        <AssetImage
+          src="assets/images/wabisabi-ink-washi-bg.png"
+          alt=""
+          ratio="16/9"
+          style={{ position: 'absolute', inset: 0, height: '100%', opacity: 0.5 }}
+          imgStyle={{ filter: 'saturate(0.75)' }}
+        />
         <div style={{ position: 'absolute', top: '18%', left: '8%', fontFamily: "'Noto Serif JP', serif", fontSize: 'clamp(120px, 18vw, 260px)', fontWeight: 300, color: '#1a1814', lineHeight: 1 }}>結</div>
 
         <InkCircle style={{ position: 'absolute', top: '12%', right: '10%', width: 160, opacity: 0.7 }} />
@@ -2220,6 +2273,7 @@ Object.assign(window, { TemplateWabiSabi });
 
 
 // ===== src/template-polaroid.jsx =====
+
 // 08 · Polaroid — rotated photo cards, tape, handwritten Caveat, scrapbook
 
 function TemplatePolaroid() {
@@ -2242,11 +2296,11 @@ function TemplatePolaroid() {
         </div>
 
         {/* Scattered polaroids */}
-        <PolaroidCard rotate={-8} top="8%" left="4%" size={180} label="montenegro, 2024" variant="stripes" />
-        <PolaroidCard rotate={6} top="12%" right="6%" size={200} label="our first dive" variant="dots" />
-        <PolaroidCard rotate={-4} bottom="10%" left="10%" size={170} label="proposal night" variant="cross" />
-        <PolaroidCard rotate={10} bottom="6%" right="12%" size={190} label="engagement party" variant="grid" />
-        <PolaroidCard rotate={-12} bottom="30%" left="42%" size={160} label="sveti stefan" variant="dots" tape />
+        <PolaroidCard rotate={-8} top="8%" left="4%" size={180} label="montenegro, 2024" src="assets/images/polaroid-montenegro-coast.png" />
+        <PolaroidCard rotate={6} top="12%" right="6%" size={200} label="our first dive" src="assets/images/polaroid-dive.png" />
+        <PolaroidCard rotate={-4} bottom="10%" left="10%" size={170} label="proposal night" src="assets/images/polaroid-proposal-night.png" />
+        <PolaroidCard rotate={10} bottom="6%" right="12%" size={190} label="engagement party" src="assets/images/polaroid-engagement-party.png" />
+        <PolaroidCard rotate={-12} bottom="30%" left="42%" size={160} label="sveti stefan" src="assets/images/polaroid-sveti-stefan-sunset.png" tape />
       </section>
 
       {/* Date card */}
@@ -2266,7 +2320,7 @@ function TemplatePolaroid() {
       <section style={{ padding: '80px 40px', maxWidth: 1000, margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
           <div style={{ position: 'relative' }}>
-            <PolaroidCard rotate={-5} top="0" left="0" size={280} label="how it started · 2021" variant="stripes" tape relative />
+            <PolaroidCard rotate={-5} top="0" left="0" size={280} label="how it started · 2021" src="assets/images/polaroid-beach-dinner.png" tape relative />
           </div>
           <div>
             <div style={{ fontFamily: "'Caveat', cursive", fontSize: 56, lineHeight: 1 }}>Как всё началось</div>
@@ -2327,7 +2381,7 @@ function TemplatePolaroid() {
   );
 }
 
-function PolaroidCard({ rotate = 0, top, left, right, bottom, size = 180, label, variant = 'stripes', tape = false, relative = false }) {
+function PolaroidCard({ rotate = 0, top, left, right, bottom, size = 180, label, variant = 'stripes', src, tape = false, relative = false }) {
   return (
     <div style={{
       position: relative ? 'relative' : 'absolute', top, left, right, bottom,
@@ -2336,7 +2390,7 @@ function PolaroidCard({ rotate = 0, top, left, right, bottom, size = 180, label,
       border: '1px solid rgba(42,36,24,0.08)',
     }}>
       {tape && <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%) rotate(-4deg)', width: 60, height: 18, background: 'rgba(200,180,140,0.55)', border: '1px solid rgba(160,140,100,0.3)' }} />}
-      <Placeholder ratio="1/1" variant={variant} fg="#8a6a4a" bg="#e5dcc8" />
+      {src ? <AssetImage src={src} alt={label} ratio="1/1" /> : <Placeholder ratio="1/1" variant={variant} fg="#8a6a4a" bg="#e5dcc8" />}
       <div style={{ fontFamily: "'Caveat', cursive", fontSize: 18, textAlign: 'center', marginTop: 6, color: '#2a2418' }}>{label}</div>
     </div>
   );
@@ -2363,6 +2417,7 @@ Object.assign(window, { TemplatePolaroid });
 
 
 // ===== src/template-artdeco.jsx =====
+
 // 09 · Art Deco — Cinzel, geometric frames, gold on dark, symmetrical
 
 function TemplateArtDeco() {
@@ -2374,7 +2429,13 @@ function TemplateArtDeco() {
       <DemoBar t={t} theme="dark" />
 
       {/* Hero with deco frame */}
-      <section style={{ padding: '60px 40px', position: 'relative' }}>
+      <section style={{
+        padding: '60px 40px',
+        position: 'relative',
+        backgroundImage: 'linear-gradient(rgba(15,15,24,0.48), rgba(15,15,24,0.82)), url(assets/images/artdeco-gold-geometric-bg.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}>
         <DecoFrame>
           <div style={{ padding: '80px 40px', textAlign: 'center' }}>
             <DecoDivider />
@@ -2529,6 +2590,7 @@ Object.assign(window, { TemplateArtDeco });
 
 
 // ===== src/app.jsx =====
+
 // Root app — routes
 
 function App() {
@@ -2568,4 +2630,3 @@ function NotFound() {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-

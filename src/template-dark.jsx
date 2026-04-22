@@ -11,7 +11,7 @@ function TemplateDark() {
       {/* Hero — cinematic full-bleed */}
       <section style={{ height: '100vh', minHeight: 700, position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(13,11,8,0) 0%, rgba(13,11,8,0.3) 50%, rgba(13,11,8,0.95) 100%)' }} />
-        <Placeholder label="cinematic · sofia &amp; max · nocturne" ratio="16/9" fg="#d4b87a" bg="#1a1612" variant="stripes" style={{ position: 'absolute', inset: 0, height: '100%' }} />
+        <AssetImage src="assets/images/dark-luxe-hero-paris.png" alt="Sofia and Max in nocturne Paris" ratio="16/9" style={{ position: 'absolute', inset: 0, height: '100%' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(13,11,8,0.55) 0%, rgba(13,11,8,0.2) 50%, rgba(13,11,8,0.95) 100%)' }} />
 
         <div style={{ position: 'absolute', top: 40, left: 0, right: 0, padding: '0 40px', display: 'flex', justifyContent: 'space-between', fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', opacity: 0.7 }}>

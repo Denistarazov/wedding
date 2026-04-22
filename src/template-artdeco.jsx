@@ -9,7 +9,13 @@ function TemplateArtDeco() {
       <DemoBar t={t} theme="dark" />
 
       {/* Hero with deco frame */}
-      <section style={{ padding: '60px 40px', position: 'relative' }}>
+      <section style={{
+        padding: '60px 40px',
+        position: 'relative',
+        backgroundImage: 'linear-gradient(rgba(15,15,24,0.48), rgba(15,15,24,0.82)), url(assets/images/artdeco-gold-geometric-bg.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}>
         <DecoFrame>
           <div style={{ padding: '80px 40px', textAlign: 'center' }}>
             <DecoDivider />

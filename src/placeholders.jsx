@@ -62,4 +62,26 @@ function Portrait({ label = 'portrait', ratio = '4/5', fg, bg, frame = false, st
   );
 }
 
-Object.assign(window, { Placeholder, Portrait });
+function AssetImage({ src, alt = '', ratio = '4/5', fit = 'cover', position = 'center', style, imgStyle, ...rest }) {
+  return (
+    <div style={{ position: 'relative', aspectRatio: ratio, overflow: 'hidden', ...style }} {...rest}>
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: fit,
+          objectPosition: position,
+          display: 'block',
+          ...imgStyle,
+        }}
+      />
+    </div>
+  );
+}
+
+Object.assign(window, { Placeholder, Portrait, AssetImage });

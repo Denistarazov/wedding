@@ -199,6 +199,44 @@
     .poly-side-left { order: 3; grid-column: 2 !important; justify-self: start !important; text-align: left !important; max-width: 100% !important; margin-top: 14px; }
     .poly-side-right { order: 2; grid-column: 2 !important; max-width: 100% !important; }
     .poly-side-left:empty, .poly-side-right:empty { display: none; }
+
+    /* === KONKRET (brutalist): horizontal snap -> vertical scrolling page ==== */
+    /* The wrapper was 100vh+overflow:hidden — that chopped everything but the first slide
+       once .hsnap went vertical. Let the whole page scroll naturally. */
+    .brut-wrap { height: auto !important; overflow: visible !important; }
+    .brut-topbar { padding: 8px 14px !important; font-size: 10px !important; gap: 10px; flex-wrap: wrap; }
+    .brut-topbar > span:first-child { font-size: 9px !important; }
+    /* Arrow nav useless when page is vertical — hide it */
+    .brut-botnav { display: none !important; }
+    .hsnap > * {
+      border-right: 0 !important;
+      border-bottom: 2px solid #000 !important;
+      padding: 48px 20px !important;
+      min-height: auto !important;
+    }
+    .hsnap > *:last-child { border-bottom: 0 !important; }
+
+    /* === MAISONNEUVE (letterpress) ======================================== */
+    .book-container { padding: 80px 16px 110px !important; }
+    .book-spread { min-height: auto !important; box-shadow: 0 18px 40px rgba(58,42,26,0.22), inset 0 0 0 1px rgba(58,42,26,0.12) !important; }
+    /* Inner pages — each spread component renders two <div> content pages as direct children.
+       Flatten their heavy padding on phone. */
+    .book-spread > div { padding: 36px 24px !important; }
+    /* The center spine only makes sense in a two-page spread — hide when stacked */
+    .book-spine { display: none !important; }
+    /* Side arrows: shrink, pin to the edges so they don't cover the page body */
+    .book-arrow { width: 40px !important; height: 40px !important; font-size: 20px !important; }
+    .book-arrow[aria-label*="Предыдущая"] { left: 10px !important; }
+    .book-arrow[aria-label*="Следующая"] { right: 10px !important; }
+
+    /* === PALAIS (artdeco) additional mobile polish ========================= */
+    .deco-section { padding-left: 20px !important; padding-right: 20px !important; }
+    .deco-section[id="deco-home"] { padding-top: 24px !important; padding-bottom: 48px !important; min-height: auto !important; }
+    .deco-section[id="deco-rsvp"] { padding-bottom: 72px !important; }
+    .deco-cover-inner { padding: 36px 14px !important; }
+    /* Tabs in the sticky top bar: tighten spacing, keep single row, show only Roman numeral + short label */
+    .deco-tabs nav > * { letter-spacing: 0.18em !important; padding: 10px 12px !important; font-size: 10px !important; gap: 8px !important; }
+    .deco-tabs { padding: 52px 0 0 !important; }
   }
 
   @media (max-width: 600px) {
@@ -525,7 +563,7 @@ function Footer() {
         fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
         color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase',
       }}>
-        <span>Made in Tbilisi · Serving worldwide</span>
+        <span>Made in Perm · Serving worldwide</span>
         <span>V.2026.04</span>
       </div>
     </footer>
@@ -689,7 +727,29 @@ function Portrait({ label = 'portrait', ratio = '4/5', fg, bg, frame = false, st
   );
 }
 
-Object.assign(window, { Placeholder, Portrait });
+function AssetImage({ src, alt = '', ratio = '4/5', fit = 'cover', position = 'center', style, imgStyle, ...rest }) {
+  return (
+    <div style={{ position: 'relative', aspectRatio: ratio, overflow: 'hidden', ...style }} {...rest}>
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: fit,
+          objectPosition: position,
+          display: 'block',
+          ...imgStyle,
+        }}
+      />
+    </div>
+  );
+}
+
+Object.assign(window, { Placeholder, Portrait, AssetImage });
 
 
 // ===== src/templates-data.jsx =====
@@ -1106,7 +1166,7 @@ function Value() {
             gap: 'clamp(20px, 3vw, 40px)',
           }}>
             <ValueCard
-              n="A"
+              n="I"
               title="Готовый дизайн"
               price="4 000 ₽"
               bullets={[
@@ -1118,7 +1178,7 @@ function Value() {
               ]}
             />
             <ValueCard
-              n="B"
+              n="II"
               title="Кастомный проект"
               price="9 000 ₽"
               bullets={[
@@ -1388,7 +1448,7 @@ function TemplatePreview({ template: t }) {
             ))}
           </div>
           <div style={{ flex: 1, transform: 'rotate(-3deg)', background: P.paper || '#fff', padding: 4, paddingBottom: 10, boxShadow: `0 4px 10px ${fg}22`, border: `1px solid ${fg}15` }}>
-            <Placeholder ratio="1/1" variant="dots" fg={P.ink2 || fg} bg={P.bg2 || bg} style={{ height: 'auto' }} />
+            <AssetImage src="assets/images/polaroid-montenegro-coast.png" alt="" ratio="1/1" style={{ height: 'auto' }} />
             <div style={{ fontFamily: "'Caveat', cursive", fontSize: 10, textAlign: 'center', marginTop: 2 }}>{t.dateMono}</div>
           </div>
         </div>
@@ -2372,7 +2432,7 @@ function TemplateEditorial() {
 
       {/* Full-bleed photo */}
       <section style={{ padding: '40px clamp(20px, 4vw, 40px)' }}>
-        <Placeholder label={`hero · ${a} & ${b} · 16:9 · shot on film`} ratio="16/9" fg="#6b5d4a" bg="#e5dcc8" variant="stripes" />
+        <AssetImage src="assets/images/editorial-hero-lake-como.png" alt={`${a} and ${b} at Lake Como`} ratio="16/9" />
       </section>
 
       {/* Countdown */}
@@ -2623,6 +2683,7 @@ function TemplateSwiss() {
             <p style={{ marginTop: 32, fontSize: 15, lineHeight: 1.65, maxWidth: 520, opacity: 0.8 }}>
               Этот сайт — наше письмо. Слева — кто мы и когда. Справа — история, программа, ответ.
             </p>
+            <AssetImage src="assets/images/swiss-figure-portrait.png" alt={`${t.couple} portrait`} ratio="3/2" style={{ marginTop: 36, border: `1px solid ${P.ink}` }} />
           </section>
 
           <section id="swiss-story" style={{ padding: '60px 0', borderBottom: `1px solid ${P.ink}` }}>
@@ -2823,6 +2884,7 @@ function TemplateGarden() {
         {/* Front of the card */}
         <div style={{ textAlign: 'center', paddingTop: 16 }}>
           <BotanicalOrnament style={{ width: 120, opacity: 0.55, margin: '0 auto 20px' }} stroke={P.ink} />
+          <AssetImage src="assets/images/garden-olive-grove-couple.png" alt={`${t.couple} in an olive grove`} ratio="3/4" style={{ maxWidth: 260, margin: '0 auto 28px', borderRadius: 999 }} />
           <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', opacity: 0.65 }}>
             — With joy we invite you —
           </div>
@@ -3047,7 +3109,7 @@ function TemplateDark() {
       }}>
         {/* SLIDE 0: Cover */}
         <section data-slide="0" style={{ ...slideStyle, textAlign: 'center', overflow: 'hidden' }}>
-          <Placeholder label={`${a} & ${b} · cinematic`} ratio="16/9" fg={P.accent} bg="#1a1612" variant="stripes" style={{ position: 'absolute', inset: 0, height: '100%', opacity: 0.3 }} />
+          <AssetImage src="assets/images/dark-luxe-hero-paris.png" alt={`${a} and ${b} in Paris`} ratio="16/9" style={{ position: 'absolute', inset: 0, height: '100%', opacity: 0.5 }} />
           <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, ${P.bg}99 0%, ${P.bg}33 50%, ${P.bg} 100%)` }} />
           <div style={{ position: 'absolute', top: 40, left: 0, right: 0, padding: '0 clamp(24px, 5vw, 80px)', display: 'flex', justifyContent: 'space-between', ...kicker }}>
             <span>{t.city} · MMXXVI</span>
@@ -3252,11 +3314,20 @@ function TemplateBrutalist() {
   const kick = { fontFamily: "'JetBrains Mono', monospace", fontSize: 12, fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.1em' };
 
   return (
-    <div style={{ background: P.bg, color: P.ink, fontFamily: "'Inter', sans-serif", height: '100vh', overflow: 'hidden' }}>
+    <div className="brut-wrap" style={{
+      background: P.bg,
+      color: P.ink,
+      fontFamily: "'Inter', sans-serif",
+      height: '100vh',
+      overflow: 'hidden',
+      backgroundImage: `linear-gradient(${P.bg}e6, ${P.bg}e6), url(assets/images/brutalist-urban-poster-texture.png)`,
+      backgroundSize: 'cover',
+      backgroundAttachment: 'fixed',
+    }}>
       <DemoBar t={t} />
 
       {/* Top status bar */}
-      <div style={{
+      <div className="brut-topbar" style={{
         position: 'fixed', top: 64, left: 0, right: 0, zIndex: 30,
         padding: '10px 20px', display: 'flex', justifyContent: 'space-between',
         background: P.ink, color: P.bg, ...kick,
@@ -3266,7 +3337,7 @@ function TemplateBrutalist() {
       </div>
 
       {/* Bottom nav */}
-      <div style={{
+      <div className="brut-botnav" style={{
         position: 'fixed', bottom: 20, left: '50%', transform: 'translateX(-50%)', zIndex: 30,
         display: 'flex', gap: 10, alignItems: 'center', background: P.ink, color: P.bg, padding: '10px 14px',
       }}>
@@ -3398,6 +3469,7 @@ function TemplateLetterpress() {
   const touch = React.useRef({ x: 0 });
 
   const go = React.useCallback((dir) => setPage((p) => Math.max(0, Math.min(TOTAL - 1, p + dir))), []);
+  const paperTexture = `radial-gradient(ellipse at center, rgba(255,255,255,0.28), rgba(201,168,120,0.08)), url(assets/images/letterpress-paper-texture.png)`;
 
   React.useEffect(() => {
     const onKey = (e) => {
@@ -3419,7 +3491,8 @@ function TemplateLetterpress() {
     <div style={{
       background: P.bg, color: P.ink, fontFamily: "'EB Garamond', Georgia, serif",
       minHeight: '100vh', position: 'relative', overflow: 'hidden',
-      backgroundImage: `radial-gradient(ellipse at center, rgba(255,255,255,0.4) 0%, ${P.bg2} 100%)`,
+      backgroundImage: paperTexture,
+      backgroundSize: 'cover',
     }} onTouchStart={onStart} onTouchEnd={onEnd}>
       <DemoBar t={t} />
 
@@ -3431,7 +3504,7 @@ function TemplateLetterpress() {
       </div>
 
       {/* Spreads container */}
-      <div style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 60px 140px' }}>
+      <div className="book-container" style={{ position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 60px 140px' }}>
         {[0, 1, 2].map((i) => (
           <article key={i} className="book-spread" aria-hidden={page !== i}
             style={{
@@ -3444,7 +3517,7 @@ function TemplateLetterpress() {
               animation: 'fadeIn 480ms ease',
             }}>
             {/* Book spine shadow down the middle */}
-            <div aria-hidden="true" style={{
+            <div className="book-spine" aria-hidden="true" style={{
               position: 'absolute', top: 0, bottom: 0, left: '50%', width: 28, transform: 'translateX(-50%)',
               background: 'linear-gradient(to right, transparent, rgba(58,42,26,0.16) 45%, rgba(58,42,26,0.22) 50%, rgba(58,42,26,0.16) 55%, transparent)',
               pointerEvents: 'none', zIndex: 1,
@@ -3457,10 +3530,10 @@ function TemplateLetterpress() {
       </div>
 
       {/* Arrow buttons */}
-      <button aria-label="Предыдущая страница" onClick={() => go(-1)} disabled={page === 0}
+      <button className="book-arrow" aria-label="Предыдущая страница" onClick={() => go(-1)} disabled={page === 0}
         style={{ position: 'fixed', left: 20, top: '50%', transform: 'translateY(-50%)', width: 52, height: 52,
           borderRadius: '50%', border: `1px solid ${P.ink}`, background: P.paper, color: P.ink, cursor: page === 0 ? 'default' : 'pointer', opacity: page === 0 ? 0.25 : 1, fontSize: 26, lineHeight: 1, zIndex: 50, fontFamily: 'inherit' }}>‹</button>
-      <button aria-label="Следующая страница" onClick={() => go(1)} disabled={page === TOTAL - 1}
+      <button className="book-arrow" aria-label="Следующая страница" onClick={() => go(1)} disabled={page === TOTAL - 1}
         style={{ position: 'fixed', right: 20, top: '50%', transform: 'translateY(-50%)', width: 52, height: 52,
           borderRadius: '50%', border: `1px solid ${P.ink}`, background: P.paper, color: P.ink, cursor: page === TOTAL - 1 ? 'default' : 'pointer', opacity: page === TOTAL - 1 ? 0.25 : 1, fontSize: 26, lineHeight: 1, zIndex: 50, fontFamily: 'inherit' }}>›</button>
 
@@ -3668,6 +3741,13 @@ function TemplateWabiSabi() {
 
       {/* HERO — giant 雲 ink-wash + couple */}
       <section style={{ minHeight: '100vh', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 32px 80px', zIndex: 1 }}>
+        <AssetImage
+          src="assets/images/wabisabi-ink-washi-bg.png"
+          alt=""
+          ratio="16/9"
+          style={{ position: 'absolute', inset: 0, height: '100%', opacity: 0.45 }}
+          imgStyle={{ filter: 'saturate(0.75)' }}
+        />
         <BrushChar char="雲" color={P.ink} style={{
           position: 'absolute', top: '50%', left: '50%',
           transform: `translate(-50%, calc(-50% + ${heroY}px))`,
@@ -3962,6 +4042,14 @@ function TemplatePolaroid() {
   const variants = ['stripes', 'dots', 'cross', 'grid'];
   const tilts = [-3, 4, -5, 3, -2, 5];
   const labels = ['first frame', 'golden hour', 'vows', 'table 01', 'dance floor', 'the last roll'];
+  const images = [
+    'assets/images/polaroid-montenegro-coast.png',
+    'assets/images/polaroid-dive.png',
+    'assets/images/polaroid-proposal-night.png',
+    'assets/images/polaroid-engagement-party.png',
+    'assets/images/polaroid-sveti-stefan-sunset.png',
+    'assets/images/polaroid-beach-dinner.png',
+  ];
 
   return (
     <div style={{
@@ -3998,9 +4086,9 @@ function TemplatePolaroid() {
 
         {/* 3 scattered polaroids at top */}
         <div style={{ position: 'relative', height: 60, marginTop: 40 }}>
-          <PolaroidCard rotate={-8} top={-10} left="6%" size={140} label="2019, сначала" variant="stripes" />
-          <PolaroidCard rotate={6} top={-20} right="8%" size={150} label="наш кот знает" variant="dots" tape />
-          <PolaroidCard rotate={-3} top={10} left="44%" size={130} label="лето, везде" variant="cross" />
+          <PolaroidCard rotate={-8} top={-10} left="6%" size={140} label="2019, сначала" src="assets/images/polaroid-montenegro-coast.png" />
+          <PolaroidCard rotate={6} top={-20} right="8%" size={150} label="наш кот знает" src="assets/images/polaroid-dive.png" tape />
+          <PolaroidCard rotate={-3} top={10} left="44%" size={130} label="лето, везде" src="assets/images/polaroid-proposal-night.png" />
         </div>
       </section>
 
@@ -4008,7 +4096,7 @@ function TemplatePolaroid() {
       <section style={{ padding: '140px 28px 60px', maxWidth: 900, margin: '0 auto' }}>
         <div className="grid-2-mobile-1" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
           <div style={{ position: 'relative', minHeight: 320 }}>
-            <PolaroidCard rotate={-4} top={0} left={20} size={260} label="как всё началось" variant="stripes" tape relative />
+            <PolaroidCard rotate={-4} top={0} left={20} size={260} label="как всё началось" src="assets/images/polaroid-beach-dinner.png" tape relative />
           </div>
           <div>
             <div style={{ fontFamily: "'Caveat', cursive", fontSize: 'clamp(44px, 6vw, 68px)', lineHeight: 1, color: P.ink2 }}>{t.story[0].heading}</div>
@@ -4058,7 +4146,8 @@ function TemplatePolaroid() {
             <PolyTimelineRow key={i} p={p} i={i} total={t.program.length} P={P}
               variant={variants[i % variants.length]}
               tilt={tilts[i % tilts.length]}
-              label={labels[i] || `scene ${i + 1}`} />
+              label={labels[i] || `scene ${i + 1}`}
+              src={images[i % images.length]} />
           ))}
         </div>
       </section>
@@ -4097,7 +4186,7 @@ function TemplatePolaroid() {
   );
 }
 
-function PolyTimelineRow({ p, i, total, P, variant, tilt, label }) {
+function PolyTimelineRow({ p, i, total, P, variant, tilt, label, src }) {
   const ref = React.useRef(null);
   const [on, setOn] = React.useState(false);
   React.useEffect(() => {
@@ -4120,7 +4209,7 @@ function PolyTimelineRow({ p, i, total, P, variant, tilt, label }) {
       <div className="poly-side-left" style={{ justifySelf: 'end', maxWidth: 360, textAlign: 'right' }}>
         {isLeft ? (
           <div style={{ display: 'inline-block', textAlign: 'left' }}>
-            <PolaroidCard rotate={tilt} size={220} label={label} variant={variant} relative tape={i === 0} />
+            <PolaroidCard rotate={tilt} size={220} label={label} variant={variant} src={src} relative tape={i === 0} />
           </div>
         ) : (
           <div style={{ padding: '8px 4px' }}>
@@ -4153,14 +4242,14 @@ function PolyTimelineRow({ p, i, total, P, variant, tilt, label }) {
             {p.note && <div style={{ marginTop: 8, display: 'inline-block', padding: '4px 10px', background: P.accent, fontFamily: "'Caveat', cursive", fontSize: 18, transform: `rotate(${tilt * 0.5}deg)` }}>{p.note}</div>}
           </div>
         ) : (
-          <PolaroidCard rotate={tilt} size={220} label={label} variant={variant} relative tape={i === 1} />
+          <PolaroidCard rotate={tilt} size={220} label={label} variant={variant} src={src} relative tape={i === 1} />
         )}
       </div>
     </div>
   );
 }
 
-function PolaroidCard({ rotate = 0, top, left, right, bottom, size = 180, label, variant = 'stripes', tape = false, relative = false }) {
+function PolaroidCard({ rotate = 0, top, left, right, bottom, size = 180, label, variant = 'stripes', src, tape = false, relative = false }) {
   return (
     <div style={{
       position: relative ? 'relative' : 'absolute', top, left, right, bottom,
@@ -4169,7 +4258,7 @@ function PolaroidCard({ rotate = 0, top, left, right, bottom, size = 180, label,
       border: '1px solid rgba(42,36,24,0.08)',
     }}>
       {tape && <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%) rotate(-4deg)', width: 60, height: 18, background: 'rgba(200,180,140,0.55)', border: '1px solid rgba(160,140,100,0.3)' }} />}
-      <Placeholder ratio="1/1" variant={variant} fg="#8a6a4a" bg="#e5dcc8" />
+      {src ? <AssetImage src={src} alt={label} ratio="1/1" /> : <Placeholder ratio="1/1" variant={variant} fg="#8a6a4a" bg="#e5dcc8" />}
       <div style={{ fontFamily: "'Caveat', cursive", fontSize: 18, textAlign: 'center', marginTop: 6, color: '#2a2418' }}>{label}</div>
     </div>
   );
@@ -4233,6 +4322,10 @@ function TemplateArtDeco() {
       background: P.bg, color: P.accent, fontFamily: "'Cinzel', serif",
       minHeight: '100vh',
       display: 'grid', gridTemplateColumns: '240px 1fr',
+      backgroundImage: `linear-gradient(${P.bg}d9, ${P.bg}f2), url(assets/images/artdeco-gold-geometric-bg.png)`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundAttachment: 'fixed',
     }}>
       <DemoBar t={t} theme="dark" />
 
@@ -4282,12 +4375,12 @@ function TemplateArtDeco() {
       </aside>
 
       {/* CONTENT */}
-      <main>
+      <main className="deco-main">
         {/* HOME */}
-        <section id="deco-home" style={{ padding: '60px 40px 80px', minHeight: 'calc(100vh - 60px)', display: 'flex', alignItems: 'center' }}>
+        <section id="deco-home" className="deco-section" style={{ padding: '60px 40px 80px', minHeight: 'calc(100vh - 60px)', display: 'flex', alignItems: 'center' }}>
           <div style={{ width: '100%' }}>
             <DecoFrame color={P.accent}>
-              <div style={{ padding: '60px 28px', textAlign: 'center' }}>
+              <div className="deco-cover-inner" style={{ padding: '60px 28px', textAlign: 'center' }}>
                 <DecoDivider color={P.accent} />
                 <div style={{ fontSize: 11, letterSpacing: '0.5em', marginTop: 26, opacity: 0.8 }}>— THE CELEBRATION OF THE MARRIAGE —</div>
                 <div style={{ fontSize: 10, letterSpacing: '0.5em', marginTop: 8, opacity: 0.55 }}>OF</div>
@@ -4320,7 +4413,7 @@ function TemplateArtDeco() {
         </section>
 
         {/* STORY */}
-        <section id="deco-story" style={{ padding: '80px 40px', borderTop: `0.5px solid ${P.accent}33` }}>
+        <section id="deco-story" className="deco-section" style={{ padding: '80px 40px', borderTop: `0.5px solid ${P.accent}33` }}>
           <div style={{ maxWidth: 780, margin: '0 auto' }}>
             <DecoHeading roman="II" label="ИСТОРИЯ" color={P.accent} />
             <div style={{ marginTop: 40 }}>
@@ -4339,7 +4432,7 @@ function TemplateArtDeco() {
         </section>
 
         {/* PROGRAM */}
-        <section id="deco-program" style={{ padding: '80px 40px', background: P.bg2, borderTop: `0.5px solid ${P.accent}33` }}>
+        <section id="deco-program" className="deco-section" style={{ padding: '80px 40px', background: P.bg2, borderTop: `0.5px solid ${P.accent}33` }}>
           <div style={{ maxWidth: 900, margin: '0 auto' }}>
             <DecoHeading roman="III" label="ПРОГРАММА" color={P.accent} />
             <div style={{ marginTop: 40 }}>
@@ -4364,7 +4457,7 @@ function TemplateArtDeco() {
         </section>
 
         {/* DETAILS */}
-        <section id="deco-details" style={{ padding: '80px 40px', borderTop: `0.5px solid ${P.accent}33` }}>
+        <section id="deco-details" className="deco-section" style={{ padding: '80px 40px', borderTop: `0.5px solid ${P.accent}33` }}>
           <div style={{ maxWidth: 820, margin: '0 auto' }}>
             <DecoHeading roman="IV" label="ДЕТАЛИ" color={P.accent} />
             <dl className="grid-2-mobile-1" style={{ marginTop: 40, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '28px 36px', padding: '28px 0', borderTop: `1px solid ${P.accent}33`, borderBottom: `1px solid ${P.accent}33` }}>
@@ -4384,7 +4477,7 @@ function TemplateArtDeco() {
         </section>
 
         {/* RSVP */}
-        <section id="deco-rsvp" style={{ padding: '80px 40px 120px', background: P.bg2, borderTop: `0.5px solid ${P.accent}33` }}>
+        <section id="deco-rsvp" className="deco-section" style={{ padding: '80px 40px 120px', background: P.bg2, borderTop: `0.5px solid ${P.accent}33` }}>
           <div style={{ maxWidth: 640, margin: '0 auto' }}>
             <DecoFrame color={P.accent}>
               <div style={{ padding: '40px 24px', textAlign: 'center' }}>

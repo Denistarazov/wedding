@@ -5,7 +5,15 @@ function TemplateBrutalist() {
   const cd = useCountdown('2026-08-03T14:00:00');
   const rsvp = useRsvp();
   return (
-    <div style={{ background: '#eae4d8', color: '#000', fontFamily: "'Inter', sans-serif", minHeight: '100vh' }}>
+    <div style={{
+      background: '#eae4d8',
+      color: '#000',
+      fontFamily: "'Inter', sans-serif",
+      minHeight: '100vh',
+      backgroundImage: 'linear-gradient(rgba(234,228,216,0.88), rgba(234,228,216,0.88)), url(assets/images/brutalist-urban-poster-texture.png)',
+      backgroundSize: 'cover',
+      backgroundAttachment: 'fixed',
+    }}>
       <DemoBar t={t} />
 
       {/* Hero */}

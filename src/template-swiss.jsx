@@ -80,7 +80,7 @@ function TemplateSwiss() {
       <section style={{ padding: 24, borderTop: '1px solid #111', display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: 16 }}>
         <div style={{ gridColumn: '1 / 4', fontSize: 11, letterSpacing: '0.02em' }}>05 / Figure 01</div>
         <div style={{ gridColumn: '4 / 10' }}>
-          <Placeholder label="couple · figure 01" ratio="3/2" fg="#888" bg="#f2f2f2" variant="grid" />
+          <AssetImage src="assets/images/swiss-figure-portrait.png" alt="Mira and Leo portrait" ratio="3/2" />
         </div>
         <div style={{ gridColumn: '10 / 13', fontSize: 11, lineHeight: 1.6, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
           Figure 01<br/>Mira &amp; Leo<br/>Photographed by<br/>Anna Bühler<br/>Zürich, 2026

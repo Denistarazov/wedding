@@ -43,7 +43,7 @@ function TemplateEditorial() {
 
       {/* Full-bleed photo */}
       <section style={{ padding: '40px 40px' }}>
-        <Placeholder label="hero · vogue couple portrait · 16:9 · shot on film" ratio="16/9" fg="#6b5d4a" bg="#e5dcc8" variant="stripes" />
+        <AssetImage src="assets/images/editorial-hero-lake-como.png" alt="Алиса и Григорий у озера Комо" ratio="16/9" />
       </section>
 
       {/* Countdown */}

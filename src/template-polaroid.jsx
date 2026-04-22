@@ -20,11 +20,11 @@ function TemplatePolaroid() {
         </div>
 
         {/* Scattered polaroids */}
-        <PolaroidCard rotate={-8} top="8%" left="4%" size={180} label="montenegro, 2024" variant="stripes" />
-        <PolaroidCard rotate={6} top="12%" right="6%" size={200} label="our first dive" variant="dots" />
-        <PolaroidCard rotate={-4} bottom="10%" left="10%" size={170} label="proposal night" variant="cross" />
-        <PolaroidCard rotate={10} bottom="6%" right="12%" size={190} label="engagement party" variant="grid" />
-        <PolaroidCard rotate={-12} bottom="30%" left="42%" size={160} label="sveti stefan" variant="dots" tape />
+        <PolaroidCard rotate={-8} top="8%" left="4%" size={180} label="montenegro, 2024" src="assets/images/polaroid-montenegro-coast.png" />
+        <PolaroidCard rotate={6} top="12%" right="6%" size={200} label="our first dive" src="assets/images/polaroid-dive.png" />
+        <PolaroidCard rotate={-4} bottom="10%" left="10%" size={170} label="proposal night" src="assets/images/polaroid-proposal-night.png" />
+        <PolaroidCard rotate={10} bottom="6%" right="12%" size={190} label="engagement party" src="assets/images/polaroid-engagement-party.png" />
+        <PolaroidCard rotate={-12} bottom="30%" left="42%" size={160} label="sveti stefan" src="assets/images/polaroid-sveti-stefan-sunset.png" tape />
       </section>
 
       {/* Date card */}
@@ -44,7 +44,7 @@ function TemplatePolaroid() {
       <section style={{ padding: '80px 40px', maxWidth: 1000, margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
           <div style={{ position: 'relative' }}>
-            <PolaroidCard rotate={-5} top="0" left="0" size={280} label="how it started · 2021" variant="stripes" tape relative />
+            <PolaroidCard rotate={-5} top="0" left="0" size={280} label="how it started · 2021" src="assets/images/polaroid-beach-dinner.png" tape relative />
           </div>
           <div>
             <div style={{ fontFamily: "'Caveat', cursive", fontSize: 56, lineHeight: 1 }}>Как всё началось</div>
@@ -105,7 +105,7 @@ function TemplatePolaroid() {
   );
 }
 
-function PolaroidCard({ rotate = 0, top, left, right, bottom, size = 180, label, variant = 'stripes', tape = false, relative = false }) {
+function PolaroidCard({ rotate = 0, top, left, right, bottom, size = 180, label, variant = 'stripes', src, tape = false, relative = false }) {
   return (
     <div style={{
       position: relative ? 'relative' : 'absolute', top, left, right, bottom,
@@ -114,7 +114,7 @@ function PolaroidCard({ rotate = 0, top, left, right, bottom, size = 180, label,
       border: '1px solid rgba(42,36,24,0.08)',
     }}>
       {tape && <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%) rotate(-4deg)', width: 60, height: 18, background: 'rgba(200,180,140,0.55)', border: '1px solid rgba(160,140,100,0.3)' }} />}
-      <Placeholder ratio="1/1" variant={variant} fg="#8a6a4a" bg="#e5dcc8" />
+      {src ? <AssetImage src={src} alt={label} ratio="1/1" /> : <Placeholder ratio="1/1" variant={variant} fg="#8a6a4a" bg="#e5dcc8" />}
       <div style={{ fontFamily: "'Caveat', cursive", fontSize: 18, textAlign: 'center', marginTop: 6, color: '#2a2418' }}>{label}</div>
     </div>
   );
