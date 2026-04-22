@@ -158,7 +158,7 @@ function TopNav({ dark = false }) {
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           gap: 16,
         }}>
-          <Link to="/" aria-label="denisixone — на главную" style={{
+          <Link to="/" aria-label="denisixone — на главную" className="brand-link" style={{
             display: 'flex', alignItems: 'baseline', gap: 10,
             fontFamily: "'Fraunces', serif",
           }}>
@@ -279,11 +279,11 @@ function FooterCol({ title, links }) {
                 href={href}
                 rel="noopener noreferrer"
                 target={href.startsWith('http') ? '_blank' : undefined}
-                className="nav-link"
+                className="nav-link text-link"
                 style={{ fontSize: 14 }}
               >{label}</a>
             ) : (
-              <Link to={href} className="nav-link" style={{ fontSize: 14 }}>{label}</Link>
+              <Link to={href} className="nav-link text-link" style={{ fontSize: 14 }}>{label}</Link>
             )}
           </li>
         ))}
@@ -863,15 +863,15 @@ function Home() {
 
 function Hero() {
   return (
-    <section style={{
-      padding: 'clamp(56px, 10vw, 100px) var(--pad-x) clamp(80px, 12vw, 140px)',
+    <section className="hero-section" style={{
+      padding: 'clamp(52px, 8vw, 88px) var(--pad-x) clamp(68px, 9vw, 104px)',
       position: 'relative', overflow: 'hidden',
     }}>
-      <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto', position: 'relative' }}>
+      <div className="hero-inner" style={{ maxWidth: 'var(--max-w)', margin: '0 auto', position: 'relative' }}>
         <Eyebrow number="(01)">Свадебные сайты · 2026</Eyebrow>
 
         <h1 className="serif page-title" style={{
-          fontSize: 'clamp(48px, 10vw, 164px)',
+          fontSize: 'clamp(48px, 7.2vw, 108px)',
           lineHeight: 0.92, letterSpacing: '-0.035em',
           margin: '36px 0 0', fontWeight: 400,
           textWrap: 'balance',
@@ -906,7 +906,7 @@ function Hero() {
 
         {/* meta row */}
         <div className="hero-meta-grid" style={{
-          marginTop: 'clamp(56px, 10vw, 100px)', paddingTop: 28,
+          marginTop: 'clamp(44px, 7vw, 76px)', paddingTop: 24,
           borderTop: '1px solid var(--line)',
           display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 40,
           fontFamily: "'JetBrains Mono', monospace", fontSize: 11,
@@ -999,7 +999,7 @@ function Value() {
 
 function ValueCard({ n, title, price, bullets, highlight }) {
   return (
-    <div style={{
+    <div className="value-card" style={{
       background: highlight ? 'var(--ink)' : 'var(--bg)',
       color: highlight ? 'var(--bg)' : 'var(--ink)',
       padding: 36, borderRadius: 4,
@@ -1038,7 +1038,7 @@ function Portfolio() {
           <div>
             <Eyebrow number="(03)">Портфолио · 9 дизайнов</Eyebrow>
             <h2 className="serif" style={{
-              fontSize: 'clamp(40px, 6vw, 88px)', lineHeight: 0.95,
+              fontSize: 'clamp(40px, 5vw, 72px)', lineHeight: 0.98,
               letterSpacing: '-0.025em', margin: '20px 0 0', fontWeight: 400,
             }}>
               Девять разных<br/><span style={{ fontStyle: 'italic' }}>миров</span>.
@@ -1048,7 +1048,7 @@ function Portfolio() {
         </div>
 
         <div className="grid-3" style={{
-          display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24,
+          display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 'clamp(18px, 2vw, 24px)',
         }}>
           {TEMPLATES.map((t, i) => (
             <TemplateCard key={t.slug} t={t} idx={i} />
@@ -1087,7 +1087,7 @@ function TemplateCard({ t, idx }) {
         padding: '18px 2px 0', display: 'flex',
         justifyContent: 'space-between', alignItems: 'baseline',
       }}>
-        <div>
+        <div className="template-card-copy">
           <div className="serif" style={{
             fontSize: 24, fontStyle: 'italic', letterSpacing: '-0.01em',
           }}>{t.name}</div>
@@ -1291,7 +1291,7 @@ function Process() {
       <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto' }}>
         <Eyebrow number="(04)">Процесс</Eyebrow>
         <h2 className="serif" style={{
-          fontSize: 'clamp(40px, 6vw, 88px)', lineHeight: 0.95,
+          fontSize: 'clamp(38px, 5vw, 72px)', lineHeight: 0.98,
           letterSpacing: '-0.025em',
           margin: '20px 0 clamp(48px, 8vw, 80px)', fontWeight: 400,
         }}>
@@ -1326,7 +1326,7 @@ function Pricing() {
           <div>
             <Eyebrow number="(05)">Цены</Eyebrow>
             <h2 className="serif" style={{
-              fontSize: 'clamp(40px, 6vw, 88px)', lineHeight: 0.95,
+              fontSize: 'clamp(38px, 5vw, 72px)', lineHeight: 0.98,
               letterSpacing: '-0.025em', margin: '20px 0 0', fontWeight: 400,
             }}>
               Прозрачно.<br/><span style={{ fontStyle: 'italic' }}>Без пакетов-сюрпризов</span>.
@@ -1356,7 +1356,7 @@ function Pricing() {
 function PriceCard({ t }) {
   const pop = t.popular;
   return (
-    <div style={{
+    <div className="price-card" style={{
       padding: 32, borderRadius: 4,
       background: pop ? 'var(--ink)' : 'transparent',
       color: pop ? 'var(--bg)' : 'var(--ink)',
@@ -1404,7 +1404,7 @@ function FAQ() {
       <div style={{ maxWidth: 1000, margin: '0 auto' }}>
         <Eyebrow number="(06)">Вопросы</Eyebrow>
         <h2 className="serif" style={{
-          fontSize: 'clamp(40px, 6vw, 88px)', lineHeight: 0.95,
+          fontSize: 'clamp(38px, 5vw, 72px)', lineHeight: 0.98,
           letterSpacing: '-0.025em',
           margin: '20px 0 clamp(40px, 6vw, 60px)', fontWeight: 400,
         }}>
@@ -1436,7 +1436,7 @@ function FinalCTA() {
       <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto', textAlign: 'center' }}>
         <Eyebrow number="(07)" tone="light" align="center">Готовы?</Eyebrow>
         <h2 className="serif" style={{
-          fontSize: 'clamp(48px, 10vw, 180px)', lineHeight: 0.92,
+          fontSize: 'clamp(44px, 9vw, 128px)', lineHeight: 0.96,
           letterSpacing: '-0.04em', margin: '36px 0',
           fontWeight: 400, textWrap: 'balance',
         }}>
@@ -1482,11 +1482,11 @@ function TemplatesIndex() {
     <div>
       <TopNav />
       <main id="main">
-        <section style={{ padding: 'clamp(48px, 8vw, 80px) var(--pad-x) 40px' }}>
+        <section style={{ padding: 'clamp(48px, 7vw, 72px) var(--pad-x) 36px' }}>
           <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto' }}>
             <Eyebrow>Portfolio · 09 works</Eyebrow>
             <h1 className="serif page-title" style={{
-              fontSize: 'clamp(48px, 9vw, 148px)', lineHeight: 0.92,
+              fontSize: 'clamp(48px, 7.2vw, 108px)', lineHeight: 0.96,
               letterSpacing: '-0.035em', margin: '24px 0 0', fontWeight: 400,
             }}>
               Все <span style={{ fontStyle: 'italic' }}>дизайны</span>.
@@ -1554,7 +1554,7 @@ function TemplatesIndex() {
           <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto' }}>
             {view === 'grid' ? (
               <div className="grid-3" style={{
-                display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28,
+                display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 'clamp(18px, 2vw, 28px)',
               }}>
                 {filtered.map((t) => (
                   <TemplateCard key={t.slug} t={t} idx={TEMPLATES.indexOf(t)} />
@@ -1698,7 +1698,7 @@ function Contact() {
             <div role="status" aria-live="polite">
               <Eyebrow align="center">Заявка принята</Eyebrow>
               <h1 className="serif" style={{
-                fontSize: 'clamp(48px, 9vw, 148px)', lineHeight: 0.92,
+                fontSize: 'clamp(44px, 8vw, 112px)', lineHeight: 0.96,
                 letterSpacing: '-0.035em', margin: '24px 0 0', fontWeight: 400,
               }}>
                 <span style={{ fontStyle: 'italic' }}>Спасибо</span>,<br/>{safeName}.
@@ -1733,7 +1733,7 @@ function Contact() {
             <div>
               <Eyebrow>Связаться</Eyebrow>
               <h1 className="serif" style={{
-                fontSize: 'clamp(48px, 8vw, 128px)', lineHeight: 0.92,
+                fontSize: 'clamp(42px, 7vw, 104px)', lineHeight: 0.96,
                 letterSpacing: '-0.035em', margin: '24px 0 0', fontWeight: 400,
               }}>
                 Напишите<br/><span style={{ fontStyle: 'italic' }}>нам</span>.
@@ -1911,7 +1911,7 @@ function ContactLine({ label, v, href, external }) {
           href={href}
           rel="noopener noreferrer"
           target={external ? '_blank' : undefined}
-          className="nav-link"
+          className="nav-link text-link"
           style={valueStyle}
         >{v}</a>
       ) : (
