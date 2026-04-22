@@ -1,8 +1,26 @@
-// SVG placeholder generators — monochrome, subtle textures, always labeled when helpful
+'use client';
 
-function Placeholder({ label, ratio = '4/5', variant = 'stripes', fg = '#8a7a5a', bg = '#ede4d0', style, ...rest }) {
-  const pid = 'p' + Math.random().toString(36).slice(2, 8);
-  const patterns = {
+import React from 'react';
+import Image from 'next/image';
+
+// ─── Placeholder ──────────────────────────────────────────────────────────────
+
+interface PlaceholderProps {
+  label?: string;
+  ratio?: string;
+  variant?: 'stripes' | 'dots' | 'grid' | 'cross';
+  fg?: string;
+  bg?: string;
+  style?: React.CSSProperties;
+  [key: string]: unknown;
+}
+
+export function Placeholder({
+  label, ratio = '4/5', variant = 'stripes',
+  fg = '#8a7a5a', bg = '#ede4d0', style, ...rest
+}: PlaceholderProps) {
+  const pid = 'p' + React.useId().replace(/:/g, '');
+  const patterns: Record<string, React.ReactNode> = {
     stripes: (
       <pattern id={pid} width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
         <line x1="0" y1="0" x2="0" y2="8" stroke={fg} strokeWidth="0.6" opacity="0.35" />
@@ -26,10 +44,7 @@ function Placeholder({ label, ratio = '4/5', variant = 'stripes', fg = '#8a7a5a'
     ),
   };
   return (
-    <div style={{
-      position: 'relative', aspectRatio: ratio, background: bg,
-      overflow: 'hidden', ...style,
-    }} {...rest}>
+    <div style={{ position: 'relative', aspectRatio: ratio, background: bg, overflow: 'hidden', ...style }} {...rest}>
       <svg width="100%" height="100%" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0 }}>
         <defs>{patterns[variant]}</defs>
         <rect width="100%" height="100%" fill={`url(#${pid})`} />
@@ -47,13 +62,22 @@ function Placeholder({ label, ratio = '4/5', variant = 'stripes', fg = '#8a7a5a'
   );
 }
 
-// Fancier portrait placeholder — silhouette-free, just chroma & frame
-function Portrait({ label = 'portrait', ratio = '4/5', fg, bg, frame = false, style }) {
+// ─── Portrait ─────────────────────────────────────────────────────────────────
+
+interface PortraitProps {
+  label?: string;
+  ratio?: string;
+  fg?: string;
+  bg?: string;
+  frame?: boolean;
+  style?: React.CSSProperties;
+}
+
+export function Portrait({ label = 'portrait', ratio = '4/5', fg, bg, frame = false, style }: PortraitProps) {
   return (
-    <div style={{
+    <div className="letterpress-shell" style={{
       position: 'relative', aspectRatio: ratio, overflow: 'hidden',
-      background: bg || '#e5dcc8',
-      ...style,
+      background: bg || '#e5dcc8', ...style,
     }}>
       <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(160deg, ${bg || '#e5dcc8'} 0%, ${fg || '#c9b890'} 100%)` }} />
       {frame && <div style={{ position: 'absolute', inset: 10, border: `1px solid ${fg || '#8a7a5a'}`, opacity: 0.6 }} />}
@@ -62,26 +86,34 @@ function Portrait({ label = 'portrait', ratio = '4/5', fg, bg, frame = false, st
   );
 }
 
-function AssetImage({ src, alt = '', ratio = '4/5', fit = 'cover', position = 'center', style, imgStyle, ...rest }) {
+// ─── AssetImage ───────────────────────────────────────────────────────────────
+
+interface AssetImageProps {
+  src: string;
+  alt?: string;
+  ratio?: string;
+  fit?: 'cover' | 'contain' | 'fill';
+  position?: string;
+  sizes?: string;
+  style?: React.CSSProperties;
+  imgStyle?: React.CSSProperties;
+  [key: string]: unknown;
+}
+
+export function AssetImage({
+  src, alt = '', ratio = '4/5', fit = 'cover', position = 'center',
+  sizes = '(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 720px',
+  style, imgStyle, ...rest
+}: AssetImageProps) {
   return (
     <div style={{ position: 'relative', aspectRatio: ratio, overflow: 'hidden', ...style }} {...rest}>
-      <img
+      <Image
         src={src}
         alt={alt}
-        loading="lazy"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: fit,
-          objectPosition: position,
-          display: 'block',
-          ...imgStyle,
-        }}
+        fill
+        sizes={sizes}
+        style={{ objectFit: fit, objectPosition: position, ...imgStyle }}
       />
     </div>
   );
 }
-
-Object.assign(window, { Placeholder, Portrait, AssetImage });

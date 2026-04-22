@@ -1,0 +1,12 @@
+export { TemplateEditorial } from './editorial';
+export { TemplateSwiss } from './swiss';
+export { TemplateGarden } from './garden';
+export { TemplateDark } from './dark';
+export { TemplateBrutalist } from './brutalist';
+export { TemplateLetterpress } from './letterpress';
+export { TemplateWabisabi } from './wabisabi';
+export { TemplatePolaroid } from './polaroid';
+export { TemplateArtDeco } from './artdeco';
+export { TemplateNeon } from './neon';
+export { TemplateCottage } from './cottage';
+export { TemplateMemphis } from './memphis';
