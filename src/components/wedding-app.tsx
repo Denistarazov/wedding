@@ -1096,7 +1096,7 @@ function Hero() {
             display: 'flex', gap: 14, flexWrap: 'wrap',
             justifyContent: 'flex-end', alignItems: 'center',
           }}>
-            <Button to="/templates" size="lg">Смотреть 9 дизайнов →</Button>
+            <Button to="/templates" size="lg">Смотреть 15 дизайнов →</Button>
             <Button to="/contact" variant="secondary" size="lg">Связаться</Button>
           </div>
         </div>
@@ -1167,7 +1167,7 @@ function Value() {
               title="Готовый дизайн"
               price="4 000 ₽"
               bullets={[
-                '9 уникальных шаблонов',
+                '15 уникальных шаблонов',
                 'Ваши фото, имена, даты',
                 'RSVP + Google Sheets',
                 'Бесплатный хостинг на Render',
@@ -1233,21 +1233,21 @@ function Portfolio() {
           flexWrap: 'wrap', gap: 20,
         }}>
           <div>
-            <Eyebrow number="(03)">Портфолио · 9 дизайнов</Eyebrow>
+            <Eyebrow number="(03)">Портфолио · 15 дизайнов</Eyebrow>
             <h2 className="serif" style={{
               fontSize: 'clamp(40px, 5vw, 72px)', lineHeight: 0.98,
               letterSpacing: '-0.025em', margin: '20px 0 0', fontWeight: 400,
             }}>
-              Девять разных<br/><span style={{ fontStyle: 'italic' }}>миров</span>.
+              Пятнадцать разных<br/><span style={{ fontStyle: 'italic' }}>миров</span>.
             </h2>
           </div>
           <NavLink to="/templates">Все с фильтрами →</NavLink>
         </div>
 
         <div className="grid-3" style={{
-          display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 'clamp(18px, 2vw, 24px)',
+          display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 'clamp(16px, 1.6vw, 22px)',
         }}>
-          {TEMPLATES.map((t, i) => (
+          {TEMPLATES.slice(0, 12).map((t, i) => (
             <TemplateCard key={t.slug} t={t} idx={i} />
           ))}
         </div>
