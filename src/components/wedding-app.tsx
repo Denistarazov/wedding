@@ -4964,14 +4964,18 @@ function App() {
   // /templates/[slug]
   if (route.startsWith('/templates/')) {
     const slug = route.slice('/templates/'.length);
-    const map = {
-      editorial: TemplateEditorial, swiss: TemplateSwiss, garden: TemplateGarden,
-      dark: TemplateDark, brutalist: TemplateBrutalist, letterpress: TemplateLetterpress,
-      wabisabi: TemplateWabiSabi, polaroid: TemplatePolaroid, artdeco: TemplateArtDeco,
-      bauhaus: TemplateBauhaus, celestial: TemplateCelestial, mediterranean: TemplateMediterranean,
-    };
-    const Tmpl = map[slug];
-    if (Tmpl) return <Tmpl />;
+    if (slug === 'editorial') return <TemplateEditorial />;
+    if (slug === 'swiss') return <TemplateSwiss />;
+    if (slug === 'garden') return <TemplateGarden />;
+    if (slug === 'dark') return <TemplateDark />;
+    if (slug === 'brutalist') return <TemplateBrutalist />;
+    if (slug === 'letterpress') return <TemplateLetterpress />;
+    if (slug === 'wabisabi') return <TemplateWabiSabi />;
+    if (slug === 'polaroid') return <TemplatePolaroid />;
+    if (slug === 'artdeco') return <TemplateArtDeco />;
+    if (slug === 'bauhaus') return <TemplateBauhaus />;
+    if (slug === 'celestial') return <TemplateCelestial />;
+    if (slug === 'mediterranean') return <TemplateMediterranean />;
     return <NotFound />;
   }
 
