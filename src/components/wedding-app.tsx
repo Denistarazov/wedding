@@ -4457,7 +4457,7 @@ function TemplateBauhaus() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const mono = { fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.15em', textTransform: 'uppercase' as const };
+  const mono = { fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.15em', textTransform: 'uppercase' };
   const black = { fontFamily: "'Archivo Black', sans-serif" };
 
   return (
@@ -4564,7 +4564,7 @@ function TemplateBauhaus() {
 function BauhausRSVP({ rsvp, t }) {
   const P = t.palette;
   const black = { fontFamily: "'Archivo Black', sans-serif" };
-  const mono = { fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.15em', textTransform: 'uppercase' as const };
+  const mono = { fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.15em', textTransform: 'uppercase' };
   if (rsvp.sent) return <div style={{ ...black, fontSize: 'clamp(24px, 4vw, 48px)', lineHeight: 1.1 }}>DANKE, {(rsvp.state.name || 'ГОСТЬ').toUpperCase()}.<br /><span style={{ color: P.yellow }}>ЖДЁМ ВАС.</span></div>;
   return (
     <form onSubmit={rsvp.submit} style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 480 }}>
@@ -4589,7 +4589,7 @@ Object.assign(browserGlobal, { TemplateBauhaus });
 
 const STARS = [[8,12],[15,28],[22,8],[35,42],[48,15],[52,68],[61,32],[70,10],[78,55],[85,22],[90,38],[28,72],[42,85],[68,78],[55,5],[5,60],[94,65],[38,18]];
 
-function Constellation({ style }: { style?: React.CSSProperties }) {
+function Constellation({ style }) {
   return (
     <svg viewBox="0 0 100 100" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', ...style }} aria-hidden="true">
       {STARS.map(([x, y], i) => (
@@ -4602,7 +4602,7 @@ function Constellation({ style }: { style?: React.CSSProperties }) {
   );
 }
 
-function MoonSVG({ color, size = 56 }: { color: string; size?: number }) {
+function MoonSVG({ color, size = 56 }) {
   return (
     <svg viewBox="0 0 56 56" style={{ width: size, height: size }} aria-hidden="true">
       <circle cx="28" cy="28" r="24" fill="none" stroke={color} strokeWidth="1" opacity="0.3" />
@@ -4630,26 +4630,26 @@ function TemplateCelestial() {
   ];
 
   useEffect(() => {
-    const el = scrollerRef.current as HTMLElement | null;
+    const el = scrollerRef.current;
     if (!el) return;
     const sections = el.querySelectorAll('[data-cel]');
     const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => { if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.cel)); });
+      entries.forEach((e) => { if (e.isIntersecting) setActive(Number(e.target.dataset.cel)); });
     }, { root: el, threshold: 0.5 });
     sections.forEach((s) => io.observe(s));
     return () => io.disconnect();
   }, []);
 
-  const goTo = (i: number) => {
-    const el = scrollerRef.current as HTMLElement | null;
+  const goTo = (i) => {
+    const el = scrollerRef.current;
     if (!el) return;
-    const target = el.querySelector(`[data-cel="${i}"]`) as HTMLElement | null;
+    const target = el.querySelector(`[data-cel="${i}"]`);
     if (target) target.scrollIntoView({ behavior: 'smooth' });
   };
 
   const serif = { fontFamily: "'Cormorant Garamond', serif" };
   const mono = { fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.2em' };
-  const slide = { minHeight: '100vh', scrollSnapAlign: 'start' as const, display: 'flex' as const, flexDirection: 'column' as const, justifyContent: 'center' as const, padding: 'clamp(60px, 8vw, 100px) clamp(40px, 6vw, 80px)', position: 'relative' as const, overflow: 'hidden' as const };
+  const slide = { minHeight: '100vh', scrollSnapAlign: 'start', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 'clamp(60px, 8vw, 100px) clamp(40px, 6vw, 80px)', position: 'relative', overflow: 'hidden' };
 
   return (
     <div style={{ background: P.bg, color: P.ink }}>
@@ -4672,20 +4672,20 @@ function TemplateCelestial() {
             {a}<br /><span style={{ color: P.accent, fontSize: '0.55em' }}>&amp;</span><br />{b}
           </div>
           <div style={{ ...mono, fontSize: 10, color: P.accent, opacity: 0.8 }}>{t.dateMono}</div>
-          <div style={{ ...mono, fontSize: 9, color: P.ink2, marginTop: 8, textTransform: 'uppercase' as const }}>{t.venue}</div>
+          <div style={{ ...mono, fontSize: 9, color: P.ink2, marginTop: 8, textTransform: 'uppercase' }}>{t.venue}</div>
         </section>
 
         {/* 1 — Invite */}
         <section data-cel="1" style={{ ...slide }}>
           <Constellation style={{ opacity: 0.4 }} />
-          <div style={{ ...mono, fontSize: 9, color: P.accent, opacity: 0.7, marginBottom: 24, textTransform: 'uppercase' as const }}>— Приглашение —</div>
+          <div style={{ ...mono, fontSize: 9, color: P.accent, opacity: 0.7, marginBottom: 24, textTransform: 'uppercase' }}>— Приглашение —</div>
           <div style={{ ...serif, fontSize: 'clamp(20px, 3vw, 28px)', fontStyle: 'italic', lineHeight: 1.55, color: P.ink, maxWidth: 560, marginBottom: 36 }}>
             {a} и {b} приглашают вас разделить с ними этот особый вечер — в ночь летнего солнцестояния, под звёздным небом Крыма.
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: P.accent + '33', maxWidth: 480 }}>
             {[['Дата', t.dateLong], ['Место', t.venue], ['Дресскод', t.details.dressCode], ['Трансфер', t.details.transfer]].map(([k, v]) => (
               <div key={k} style={{ background: P.bg2, padding: 'clamp(14px, 2vw, 20px)' }}>
-                <div style={{ ...mono, fontSize: 8, color: P.accent, opacity: 0.8, marginBottom: 6, textTransform: 'uppercase' as const }}>{k}</div>
+                <div style={{ ...mono, fontSize: 8, color: P.accent, opacity: 0.8, marginBottom: 6, textTransform: 'uppercase' }}>{k}</div>
                 <div style={{ ...serif, fontSize: 15, color: P.ink }}>{v}</div>
               </div>
             ))}
@@ -4695,7 +4695,7 @@ function TemplateCelestial() {
         {/* 2 — Story */}
         <section data-cel="2" style={{ ...slide, background: P.bg2 }}>
           <Constellation style={{ opacity: 0.5 }} />
-          <div style={{ ...mono, fontSize: 9, color: P.accent, opacity: 0.7, marginBottom: 32, textTransform: 'uppercase' as const }}>— История —</div>
+          <div style={{ ...mono, fontSize: 9, color: P.accent, opacity: 0.7, marginBottom: 32, textTransform: 'uppercase' }}>— История —</div>
           {t.story.map((s, i) => (
             <div key={i} style={{ marginBottom: 36, paddingLeft: 24, borderLeft: `1px solid ${P.accent}55` }}>
               <div style={{ ...serif, fontSize: 'clamp(22px, 3.5vw, 36px)', fontStyle: 'italic', color: P.accent, marginBottom: 10 }}>{s.heading}</div>
@@ -4708,12 +4708,12 @@ function TemplateCelestial() {
         {/* 3 — Countdown */}
         <section data-cel="3" style={{ ...slide, alignItems: 'center', textAlign: 'center' }}>
           <Constellation />
-          <div style={{ ...mono, fontSize: 9, color: P.accent, opacity: 0.7, marginBottom: 32, textTransform: 'uppercase' as const }}>— До события —</div>
+          <div style={{ ...mono, fontSize: 9, color: P.accent, opacity: 0.7, marginBottom: 32, textTransform: 'uppercase' }}>— До события —</div>
           <div style={{ display: 'flex', gap: 'clamp(20px, 4vw, 48px)', justifyContent: 'center' }}>
             {[['дней', cd.days], ['часов', cd.hours], ['минут', cd.minutes], ['секунд', cd.seconds]].map(([k, v]) => (
               <div key={k} style={{ textAlign: 'center' }}>
                 <div style={{ ...serif, fontSize: 'clamp(52px, 9vw, 100px)', fontStyle: 'italic', color: P.accent, lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{String(v).padStart(2, '0')}</div>
-                <div style={{ ...mono, fontSize: 8, color: P.ink2, opacity: 0.7, marginTop: 6, textTransform: 'uppercase' as const }}>{k}</div>
+                <div style={{ ...mono, fontSize: 8, color: P.ink2, opacity: 0.7, marginTop: 6, textTransform: 'uppercase' }}>{k}</div>
               </div>
             ))}
           </div>
@@ -4723,13 +4723,13 @@ function TemplateCelestial() {
         {/* 4 — Program */}
         <section data-cel="4" style={{ ...slide }}>
           <Constellation style={{ opacity: 0.35 }} />
-          <div style={{ ...mono, fontSize: 9, color: P.accent, opacity: 0.7, marginBottom: 32, textTransform: 'uppercase' as const }}>— Вечер —</div>
+          <div style={{ ...mono, fontSize: 9, color: P.accent, opacity: 0.7, marginBottom: 32, textTransform: 'uppercase' }}>— Вечер —</div>
           {t.program.map((p, i) => (
             <div key={i} style={{ display: 'flex', gap: 24, marginBottom: 28, paddingBottom: 28, borderBottom: `1px solid ${P.accent}22` }}>
               <div style={{ ...serif, fontSize: 'clamp(22px, 3vw, 32px)', color: P.accent, fontStyle: 'italic', minWidth: 80 }}>{p.time}</div>
               <div>
                 <div style={{ ...serif, fontSize: 'clamp(18px, 2.5vw, 26px)', color: P.ink, fontStyle: 'italic' }}>{p.title}</div>
-                <div style={{ ...mono, fontSize: 9, color: P.ink2, opacity: 0.7, marginTop: 4, textTransform: 'uppercase' as const }}>{p.place}</div>
+                <div style={{ ...mono, fontSize: 9, color: P.ink2, opacity: 0.7, marginTop: 4, textTransform: 'uppercase' }}>{p.place}</div>
               </div>
             </div>
           ))}
@@ -4739,7 +4739,7 @@ function TemplateCelestial() {
         <section data-cel="5" style={{ ...slide, alignItems: 'center', textAlign: 'center' }}>
           <Constellation />
           <MoonSVG color={P.accent} size={48} />
-          <div style={{ ...mono, fontSize: 9, color: P.accent, opacity: 0.7, marginBottom: 20, textTransform: 'uppercase' as const }}>— Ответьте до {t.rsvpDeadline} —</div>
+          <div style={{ ...mono, fontSize: 9, color: P.accent, opacity: 0.7, marginBottom: 20, textTransform: 'uppercase' }}>— Ответьте до {t.rsvpDeadline} —</div>
           <div style={{ ...serif, fontSize: 'clamp(32px, 5vw, 60px)', fontStyle: 'italic', color: P.ink, marginBottom: 36 }}>Вы придёте?</div>
           <CelestialRSVP rsvp={rsvp} t={t} />
         </section>
@@ -4751,7 +4751,7 @@ function TemplateCelestial() {
 function CelestialRSVP({ rsvp, t }) {
   const P = t.palette;
   const serif = { fontFamily: "'Cormorant Garamond', serif" };
-  const mono = { fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.18em', textTransform: 'uppercase' as const };
+  const mono = { fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.18em', textTransform: 'uppercase' };
   if (rsvp.sent) return <div style={{ ...serif, fontSize: 'clamp(22px, 3.5vw, 36px)', fontStyle: 'italic', color: P.accent }}>Благодарим, {rsvp.state.name || 'друг'}.<br />Ждём вас под звёздами.</div>;
   return (
     <form onSubmit={rsvp.submit} style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 400, textAlign: 'left' }}>
@@ -4791,7 +4791,7 @@ function TemplateMediterranean() {
     { id: 'rsvp', label: 'RSVP' },
   ];
 
-  const goTo = (id: string) => {
+  const goTo = (id) => {
     const el = document.getElementById(`riva-${id}`);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
     setMenuOpen(false);
@@ -4810,7 +4810,7 @@ function TemplateMediterranean() {
         <div className="riva-navlinks" style={{ display: 'flex', gap: 'clamp(12px, 2vw, 28px)' }}>
           {sections.map((s) => (
             <button key={s.id} type="button" onClick={() => goTo(s.id)}
-              style={{ background: 'none', border: 0, cursor: 'pointer', ...mono, fontSize: 10, textTransform: 'uppercase' as const, color: P.ink2, padding: 0 }}>{s.label}</button>
+              style={{ background: 'none', border: 0, cursor: 'pointer', ...mono, fontSize: 10, textTransform: 'uppercase', color: P.ink2, padding: 0 }}>{s.label}</button>
           ))}
         </div>
       </nav>
@@ -4825,13 +4825,13 @@ function TemplateMediterranean() {
           <path d="M10 200 L10 80 Q10 10 80 10 Q150 10 150 80 L150 200Z" fill={P.sea} />
         </svg>
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ ...mono, fontSize: 10, color: P.accent, textTransform: 'uppercase' as const, marginBottom: 16, opacity: 0.8 }}>{t.city} · {t.dateMono}</div>
+          <div style={{ ...mono, fontSize: 10, color: P.accent, textTransform: 'uppercase', marginBottom: 16, opacity: 0.8 }}>{t.city} · {t.dateMono}</div>
           <h1 style={{ ...serif, fontSize: 'clamp(56px, 10vw, 140px)', fontStyle: 'italic', fontWeight: 300, lineHeight: 0.9, margin: '0 0 32px', letterSpacing: '-0.02em' }}>
             {a}<br /><span style={{ color: P.accent }}>&</span><br />{b}
           </h1>
           <div style={{ display: 'flex', gap: 12 }}>
-            <button type="button" onClick={() => goTo('invitation')} style={{ padding: '14px 28px', background: P.accent, color: '#fff', border: 0, cursor: 'pointer', ...mono, fontSize: 10, textTransform: 'uppercase' as const }}>Открыть приглашение →</button>
-            <button type="button" onClick={() => goTo('rsvp')} style={{ padding: '14px 28px', background: 'transparent', color: P.accent, border: `1px solid ${P.accent}`, cursor: 'pointer', ...mono, fontSize: 10, textTransform: 'uppercase' as const }}>RSVP</button>
+            <button type="button" onClick={() => goTo('invitation')} style={{ padding: '14px 28px', background: P.accent, color: '#fff', border: 0, cursor: 'pointer', ...mono, fontSize: 10, textTransform: 'uppercase' }}>Открыть приглашение →</button>
+            <button type="button" onClick={() => goTo('rsvp')} style={{ padding: '14px 28px', background: 'transparent', color: P.accent, border: `1px solid ${P.accent}`, cursor: 'pointer', ...mono, fontSize: 10, textTransform: 'uppercase' }}>RSVP</button>
           </div>
         </div>
         {/* Sea stripe at bottom */}
@@ -4840,7 +4840,7 @@ function TemplateMediterranean() {
 
       {/* Invitation */}
       <section id="riva-invitation" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(40px, 6vw, 80px)', borderTop: `4px solid ${P.accent}` }}>
-        <div style={{ ...mono, fontSize: 9, color: P.accent, textTransform: 'uppercase' as const, marginBottom: 24, opacity: 0.8 }}>— Приглашение —</div>
+        <div style={{ ...mono, fontSize: 9, color: P.accent, textTransform: 'uppercase', marginBottom: 24, opacity: 0.8 }}>— Приглашение —</div>
         <div style={{ maxWidth: 680 }}>
           <p style={{ ...serif, fontSize: 'clamp(20px, 2.5vw, 28px)', fontStyle: 'italic', lineHeight: 1.6, color: P.ink, margin: '0 0 32px' }}>
             {a} и {b} рады пригласить вас разделить радость их свадьбы в {t.venue} {t.dateLong} года.
@@ -4848,7 +4848,7 @@ function TemplateMediterranean() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 2, background: P.accent + '22' }}>
             {[['Дата', t.dateLong], ['Место', t.venue], ['Дресскод', t.details.dressCode], ['Трансфер', t.details.transfer]].map(([k, v]) => (
               <div key={k} style={{ background: P.bg, padding: 'clamp(16px, 2.5vw, 24px)' }}>
-                <div style={{ ...mono, fontSize: 8, color: P.accent, textTransform: 'uppercase' as const, marginBottom: 6 }}>{k}</div>
+                <div style={{ ...mono, fontSize: 8, color: P.accent, textTransform: 'uppercase', marginBottom: 6 }}>{k}</div>
                 <div style={{ ...serif, fontStyle: 'italic', fontSize: 17, color: P.ink, lineHeight: 1.4 }}>{v}</div>
               </div>
             ))}
@@ -4858,7 +4858,7 @@ function TemplateMediterranean() {
 
       {/* Story */}
       <section id="riva-story" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(40px, 6vw, 80px)', background: P.bg2 }}>
-        <div style={{ ...mono, fontSize: 9, color: P.accent, textTransform: 'uppercase' as const, marginBottom: 24, opacity: 0.8 }}>— История —</div>
+        <div style={{ ...mono, fontSize: 9, color: P.accent, textTransform: 'uppercase', marginBottom: 24, opacity: 0.8 }}>— История —</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'clamp(24px, 4vw, 48px)' }}>
           {t.story.map((s, i) => (
             <div key={i} style={{ borderTop: `3px solid ${P.accent}`, paddingTop: 20 }}>
@@ -4869,7 +4869,7 @@ function TemplateMediterranean() {
         </div>
         <blockquote style={{ ...serif, fontStyle: 'italic', fontSize: 'clamp(20px, 2.5vw, 28px)', color: P.ink, borderLeft: `4px solid ${P.accent}`, paddingLeft: 24, margin: 'clamp(36px, 5vw, 60px) 0 0' }}>
           «{t.quote.text}»
-          <footer style={{ ...mono, fontSize: 9, color: P.accent, marginTop: 10, fontStyle: 'normal', textTransform: 'uppercase' as const }}>{t.quote.author}</footer>
+          <footer style={{ ...mono, fontSize: 9, color: P.accent, marginTop: 10, fontStyle: 'normal', textTransform: 'uppercase' }}>{t.quote.author}</footer>
         </blockquote>
       </section>
 
@@ -4878,21 +4878,21 @@ function TemplateMediterranean() {
         {[['дней', cd.days], ['часов', cd.hours], ['минут', cd.minutes]].map(([k, v]) => (
           <div key={k} style={{ textAlign: 'center' }}>
             <div style={{ ...serif, fontSize: 'clamp(52px, 9vw, 96px)', fontStyle: 'italic', color: P.accent, lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{String(v).padStart(2, '0')}</div>
-            <div style={{ ...mono, fontSize: 9, color: P.ink2, textTransform: 'uppercase' as const, marginTop: 6 }}>{k}</div>
+            <div style={{ ...mono, fontSize: 9, color: P.ink2, textTransform: 'uppercase', marginTop: 6 }}>{k}</div>
           </div>
         ))}
       </section>
 
       {/* Program */}
       <section id="riva-program" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(40px, 6vw, 80px)' }}>
-        <div style={{ ...mono, fontSize: 9, color: P.accent, textTransform: 'uppercase' as const, marginBottom: 32, opacity: 0.8 }}>— Программа вечера —</div>
+        <div style={{ ...mono, fontSize: 9, color: P.accent, textTransform: 'uppercase', marginBottom: 32, opacity: 0.8 }}>— Программа вечера —</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 0, maxWidth: 600 }}>
           {t.program.map((p, i) => (
             <div key={i} style={{ display: 'grid', gridTemplateColumns: '100px 1fr', gap: 20, padding: 'clamp(18px, 2.5vw, 24px) 0', borderBottom: `1px solid ${P.accent}22` }}>
               <div style={{ ...mono, fontSize: 13, color: P.accent }}>{p.time}</div>
               <div>
                 <div style={{ ...serif, fontStyle: 'italic', fontSize: 'clamp(18px, 2.5vw, 24px)', color: P.ink }}>{p.title}</div>
-                <div style={{ ...mono, fontSize: 9, color: P.ink2, opacity: 0.7, marginTop: 4, textTransform: 'uppercase' as const }}>{p.place}</div>
+                <div style={{ ...mono, fontSize: 9, color: P.ink2, opacity: 0.7, marginTop: 4, textTransform: 'uppercase' }}>{p.place}</div>
               </div>
             </div>
           ))}
@@ -4901,11 +4901,11 @@ function TemplateMediterranean() {
 
       {/* Details */}
       <section id="riva-details" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(40px, 6vw, 80px)', background: P.accent, color: '#fff' }}>
-        <div style={{ ...mono, fontSize: 9, textTransform: 'uppercase' as const, marginBottom: 32, opacity: 0.8 }}>— Детали —</div>
+        <div style={{ ...mono, fontSize: 9, textTransform: 'uppercase', marginBottom: 32, opacity: 0.8 }}>— Детали —</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'clamp(20px, 3vw, 32px)' }}>
           {[['Дресскод', t.details.dressCode], ['Пожелание', t.details.gift], ['Гости', t.details.kids], ['Трансфер', t.details.transfer]].map(([k, v]) => (
             <div key={k}>
-              <div style={{ ...mono, fontSize: 8, opacity: 0.75, marginBottom: 8, textTransform: 'uppercase' as const }}>{k}</div>
+              <div style={{ ...mono, fontSize: 8, opacity: 0.75, marginBottom: 8, textTransform: 'uppercase' }}>{k}</div>
               <div style={{ ...serif, fontStyle: 'italic', fontSize: 18, lineHeight: 1.4 }}>{v}</div>
             </div>
           ))}
@@ -4914,14 +4914,14 @@ function TemplateMediterranean() {
 
       {/* RSVP */}
       <section id="riva-rsvp" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(40px, 6vw, 80px)', textAlign: 'center' }}>
-        <div style={{ ...mono, fontSize: 9, color: P.accent, textTransform: 'uppercase' as const, marginBottom: 20, opacity: 0.8 }}>— Ответьте до {t.rsvpDeadline} —</div>
+        <div style={{ ...mono, fontSize: 9, color: P.accent, textTransform: 'uppercase', marginBottom: 20, opacity: 0.8 }}>— Ответьте до {t.rsvpDeadline} —</div>
         <h2 style={{ ...serif, fontStyle: 'italic', fontSize: 'clamp(36px, 6vw, 72px)', fontWeight: 300, margin: '0 0 40px', color: P.ink }}>Ждём вас у моря</h2>
         <RivaRSVP rsvp={rsvp} t={t} />
       </section>
 
       <footer style={{ padding: 'clamp(24px, 3vw, 32px) clamp(40px, 6vw, 80px)', borderTop: `2px solid ${P.accent}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ ...serif, fontStyle: 'italic', fontSize: 18, color: P.accent }}>{t.name}</span>
-        <span style={{ ...mono, fontSize: 9, color: P.ink2, opacity: 0.6, textTransform: 'uppercase' as const }}>{t.city} · {t.dateMono}</span>
+        <span style={{ ...mono, fontSize: 9, color: P.ink2, opacity: 0.6, textTransform: 'uppercase' }}>{t.city} · {t.dateMono}</span>
       </footer>
     </div>
   );
@@ -4930,7 +4930,7 @@ function TemplateMediterranean() {
 function RivaRSVP({ rsvp, t }) {
   const P = t.palette;
   const serif = { fontFamily: "'Fraunces', serif" };
-  const mono = { fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.14em', textTransform: 'uppercase' as const };
+  const mono = { fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.14em', textTransform: 'uppercase' };
   if (rsvp.sent) return (
     <div style={{ ...serif, fontStyle: 'italic', fontSize: 'clamp(22px, 3.5vw, 36px)', color: P.accent }}>
       Спасибо, {rsvp.state.name || 'дорогой гость'}.<br />
