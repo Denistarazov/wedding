@@ -11,3 +11,9 @@ Thumbs.db
 .env.local
 
 .vercel
+.claude/
+scraps/
+marketplace-images-final/
+upwork-design-cards/
+assets/
+index.html

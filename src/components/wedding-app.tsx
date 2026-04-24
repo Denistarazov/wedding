@@ -137,6 +137,7 @@ function TopNav({ dark = false }) {
   const line = dark ? 'rgba(245,241,234,0.1)' : 'rgba(42,36,24,0.1)';
 
   const navItems = [
+    ['/shop', 'Магазин'],
     ['/templates', 'Дизайны'],
     ['/#process', 'Процесс'],
     ['/#pricing', 'Цены'],
@@ -239,13 +240,13 @@ function Footer() {
             Готовые дизайны и кастом под ключ.
           </p>
         </div>
-        <FooterCol title="Продукт" links={[['Все дизайны', '/templates'], ['Процесс', '/#process'], ['Цены', '/#pricing'], ['FAQ', '/#faq']]} />
+        <FooterCol title="Продукт" links={[['Магазин', '/shop'], ['Все дизайны', '/templates'], ['Процесс', '/#process'], ['Цены', '/#pricing'], ['FAQ', '/#faq']]} />
         <FooterCol title="Контакты" links={[
           ['Форма заявки', '/contact'],
           ['den484411@gmail.com', 'mailto:den484411@gmail.com', true],
           ['@denisixone', 'https://t.me/denisixone', true],
         ]} />
-        <FooterCol title="Легал" links={[['Оферта', '/'], ['Приватность', '/'], ['© denisixone 2026', '/']]} />
+        <FooterCol title="Легал" links={[['Оферта', '/terms'], ['Приватность', '/privacy'], ['© denisixone 2026', '/']]} />
       </div>
       <div className="footer-bottom" style={{
         maxWidth: 'var(--max-w)', margin: '60px auto 0', paddingTop: 24,
@@ -1019,8 +1020,8 @@ function ValueCard({ n, title, price, bullets, highlight }) {
           </li>
         ))}
       </ul>
-      <Button to={highlight ? '/contact' : '/templates'} variant={highlight ? 'secondary' : 'primary'} tone={highlight ? 'light' : 'default'}>
-        {highlight ? 'Запросить кастом' : 'Посмотреть дизайны'} →
+      <Button to={highlight ? '/order/design-package' : '/order/wedding-template'} variant={highlight ? 'secondary' : 'primary'} tone={highlight ? 'light' : 'default'}>
+        {highlight ? 'Купить дизайн-пакет' : 'Купить шаблон'} →
       </Button>
     </div>
   );
@@ -1242,7 +1243,7 @@ function TemplatePreview({ template: t }) {
             ))}
           </div>
           <div style={{ flex: 1, transform: 'rotate(-3deg)', background: P.paper || '#fff', padding: 4, paddingBottom: 10, boxShadow: `0 4px 10px ${fg}22`, border: `1px solid ${fg}15` }}>
-            <AssetImage src="/assets/images/polaroid-montenegro-coast.png" alt="" ratio="1/1" style={{ height: 'auto' }} />
+            <AssetImage src="/assets/images/polaroid-montenegro-coast.webp" alt="" ratio="1/1" style={{ height: 'auto' }} />
             <div style={{ fontFamily: "'Caveat', cursive", fontSize: 10, textAlign: 'center', marginTop: 2 }}>{t.dateMono}</div>
           </div>
         </div>
@@ -1377,11 +1378,11 @@ function PriceCard({ t }) {
         ))}
       </ul>
       <Button
-        to={t.name === 'Кастом' ? '/contact' : '/templates'}
+        to={t.name === 'Кастом' ? '/order/design-package' : '/order/wedding-template'}
         variant={pop ? 'secondary' : 'primary'}
         tone={pop ? 'light' : 'default'}
       >
-        {t.name === 'Кастом' ? 'Обсудить проект' : 'Выбрать шаблон'} →
+        {t.name === 'Кастом' ? 'Купить дизайн-пакет' : 'Купить шаблон'} →
       </Button>
     </div>
   );
@@ -1666,7 +1667,7 @@ function Contact() {
     return e;
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     const v = validate();
     setErrors(v);
@@ -1679,8 +1680,27 @@ function Contact() {
       return;
     }
     setSubmitting(true);
-    // simulate submit
-    setTimeout(() => { setSubmitting(false); setSent(true); }, 600);
+    try {
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          contact: form.contact,
+          type: form.type,
+          message: form.message,
+          source: 'legacy_contact_page',
+        }),
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        setErrors({ contact: payload.error || 'Не удалось отправить заявку' });
+        return;
+      }
+      setSent(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (sent) {
@@ -2101,7 +2121,7 @@ function TemplateEditorial() {
 
       {/* Full-bleed photo */}
       <section style={{ padding: '40px clamp(20px, 4vw, 40px)' }}>
-        <AssetImage src="/assets/images/editorial-hero-lake-como.png" alt={`${a} and ${b} at Lake Como`} ratio="16/9" />
+        <AssetImage src="/assets/images/editorial-hero-lake-como.webp" alt={`${a} and ${b} at Lake Como`} ratio="16/9" />
       </section>
 
       {/* Countdown */}
@@ -2352,7 +2372,7 @@ function TemplateSwiss() {
             <p style={{ marginTop: 32, fontSize: 15, lineHeight: 1.65, maxWidth: 520, opacity: 0.8 }}>
               Этот сайт — наше письмо. Слева — кто мы и когда. Справа — история, программа, ответ.
             </p>
-            <AssetImage src="/assets/images/swiss-figure-portrait.png" alt={`${t.couple} portrait`} ratio="3/2" style={{ marginTop: 36, border: `1px solid ${P.ink}` }} />
+            <AssetImage src="/assets/images/swiss-figure-portrait.webp" alt={`${t.couple} portrait`} ratio="3/2" style={{ marginTop: 36, border: `1px solid ${P.ink}` }} />
           </section>
 
           <section id="swiss-story" style={{ padding: '60px 0', borderBottom: `1px solid ${P.ink}` }}>
@@ -2553,7 +2573,7 @@ function TemplateGarden() {
         {/* Front of the card */}
         <div style={{ textAlign: 'center', paddingTop: 16 }}>
           <BotanicalOrnament style={{ width: 120, opacity: 0.55, margin: '0 auto 20px' }} stroke={P.ink} />
-          <AssetImage src="/assets/images/garden-olive-grove-couple.png" alt={`${t.couple} in an olive grove`} ratio="3/4" style={{ maxWidth: 260, margin: '0 auto 28px', borderRadius: 999 }} />
+          <AssetImage src="/assets/images/garden-olive-grove-couple.webp" alt={`${t.couple} in an olive grove`} ratio="3/4" style={{ maxWidth: 260, margin: '0 auto 28px', borderRadius: 999 }} />
           <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', opacity: 0.65 }}>
             — With joy we invite you —
           </div>
@@ -2778,7 +2798,7 @@ function TemplateDark() {
       }}>
         {/* SLIDE 0: Cover */}
         <section data-slide="0" style={{ ...slideStyle, textAlign: 'center', overflow: 'hidden' }}>
-          <AssetImage src="/assets/images/dark-luxe-hero-paris.png" alt={`${a} and ${b} in Paris`} ratio="16/9" style={{ position: 'absolute', inset: 0, height: '100%', opacity: 0.5 }} />
+          <AssetImage src="/assets/images/dark-luxe-hero-paris.webp" alt={`${a} and ${b} in Paris`} ratio="16/9" style={{ position: 'absolute', inset: 0, height: '100%', opacity: 0.5 }} />
           <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(180deg, ${P.bg}99 0%, ${P.bg}33 50%, ${P.bg} 100%)` }} />
           <div style={{ position: 'absolute', top: 40, left: 0, right: 0, padding: '0 clamp(24px, 5vw, 80px)', display: 'flex', justifyContent: 'space-between', ...kicker }}>
             <span>{t.city} · MMXXVI</span>
@@ -2989,7 +3009,7 @@ function TemplateBrutalist() {
       fontFamily: "'Inter', sans-serif",
       height: '100vh',
       overflow: 'hidden',
-      backgroundImage: `linear-gradient(${P.bg}e6, ${P.bg}e6), url(/assets/images/brutalist-urban-poster-texture.png)`,
+      backgroundImage: `linear-gradient(${P.bg}e6, ${P.bg}e6), url(/assets/images/brutalist-urban-poster-texture.webp)`,
       backgroundSize: 'cover',
       backgroundAttachment: 'fixed',
     }}>
@@ -3138,7 +3158,7 @@ function TemplateLetterpress() {
   const touch = React.useRef({ x: 0 });
 
   const go = React.useCallback((dir) => setPage((p) => Math.max(0, Math.min(TOTAL - 1, p + dir))), []);
-  const paperTexture = `radial-gradient(ellipse at center, rgba(255,255,255,0.28), rgba(201,168,120,0.08)), url(/assets/images/letterpress-paper-texture.png)`;
+  const paperTexture = `radial-gradient(ellipse at center, rgba(255,255,255,0.28), rgba(201,168,120,0.08)), url(/assets/images/letterpress-paper-texture.webp)`;
 
   React.useEffect(() => {
     const onKey = (e) => {
@@ -3411,7 +3431,7 @@ function TemplateWabiSabi() {
       {/* HERO — giant 雲 ink-wash + couple */}
       <section style={{ minHeight: '100vh', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 32px 80px', zIndex: 1 }}>
         <AssetImage
-          src="/assets/images/wabisabi-ink-washi-bg.png"
+          src="/assets/images/wabisabi-ink-washi-bg.webp"
           alt=""
           ratio="auto"
           sizes="100vw"
@@ -3713,12 +3733,12 @@ function TemplatePolaroid() {
   const tilts = [-3, 4, -5, 3, -2, 5];
   const labels = ['first frame', 'golden hour', 'vows', 'table 01', 'dance floor', 'the last roll'];
   const images = [
-    '/assets/images/polaroid-montenegro-coast.png',
-    '/assets/images/polaroid-dive.png',
-    '/assets/images/polaroid-proposal-night.png',
-    '/assets/images/polaroid-engagement-party.png',
-    '/assets/images/polaroid-sveti-stefan-sunset.png',
-    '/assets/images/polaroid-beach-dinner.png',
+    '/assets/images/polaroid-montenegro-coast.webp',
+    '/assets/images/polaroid-dive.webp',
+    '/assets/images/polaroid-proposal-night.webp',
+    '/assets/images/polaroid-engagement-party.webp',
+    '/assets/images/polaroid-sveti-stefan-sunset.webp',
+    '/assets/images/polaroid-beach-dinner.webp',
   ];
 
   return (
@@ -3756,9 +3776,9 @@ function TemplatePolaroid() {
 
         {/* 3 scattered polaroids at top */}
         <div style={{ position: 'relative', height: 60, marginTop: 40 }}>
-          <PolaroidCard rotate={-8} top={-10} left="6%" size={140} label="2019, сначала" src="/assets/images/polaroid-montenegro-coast.png" />
-          <PolaroidCard rotate={6} top={-20} right="8%" size={150} label="наш кот знает" src="/assets/images/polaroid-dive.png" tape />
-          <PolaroidCard rotate={-3} top={10} left="44%" size={130} label="лето, везде" src="/assets/images/polaroid-proposal-night.png" />
+          <PolaroidCard rotate={-8} top={-10} left="6%" size={140} label="2019, сначала" src="/assets/images/polaroid-montenegro-coast.webp" />
+          <PolaroidCard rotate={6} top={-20} right="8%" size={150} label="наш кот знает" src="/assets/images/polaroid-dive.webp" tape />
+          <PolaroidCard rotate={-3} top={10} left="44%" size={130} label="лето, везде" src="/assets/images/polaroid-proposal-night.webp" />
         </div>
       </section>
 
@@ -3766,7 +3786,7 @@ function TemplatePolaroid() {
       <section style={{ padding: '140px 28px 60px', maxWidth: 900, margin: '0 auto' }}>
         <div className="grid-2-mobile-1" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
           <div style={{ position: 'relative', minHeight: 320 }}>
-            <PolaroidCard rotate={-4} top={0} left={20} size={260} label="как всё началось" src="/assets/images/polaroid-beach-dinner.png" tape relative />
+            <PolaroidCard rotate={-4} top={0} left={20} size={260} label="как всё началось" src="/assets/images/polaroid-beach-dinner.webp" tape relative />
           </div>
           <div>
             <div style={{ fontFamily: "'Caveat', cursive", fontSize: 'clamp(44px, 6vw, 68px)', lineHeight: 1, color: P.ink2 }}>{t.story[0].heading}</div>
@@ -3992,7 +4012,7 @@ function TemplateArtDeco() {
       background: P.bg, color: P.accent, fontFamily: "'Cinzel', serif",
       minHeight: '100vh',
       display: 'grid', gridTemplateColumns: '240px 1fr',
-      backgroundImage: `linear-gradient(${P.bg}d9, ${P.bg}f2), url(/assets/images/artdeco-gold-geometric-bg.png)`,
+      backgroundImage: `linear-gradient(${P.bg}d9, ${P.bg}f2), url(/assets/images/artdeco-gold-geometric-bg.webp)`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundAttachment: 'fixed',

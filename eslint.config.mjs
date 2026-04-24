@@ -4,8 +4,7 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = [
   {
     ignores: [
-      "src/**/*.jsx",
-      "src/bundle.jsx",
+      ".next/**",
     ],
   },
   ...nextVitals,

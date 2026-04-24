@@ -1,0 +1,14 @@
+.git
+.next
+node_modules
+*.log
+debug.log
+next-*.log
+dev-server*.log
+codex-dev-server*.log
+verification-shots
+scraps
+.claude
+marketplace-images-final
+upwork-design-cards
+tsconfig.tsbuildinfo
