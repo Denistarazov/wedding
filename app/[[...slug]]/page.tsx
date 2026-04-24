@@ -16,6 +16,7 @@ const templateSlugs = [
   "groovy",
   "neon",
   "botanical",
+  "odyssey",
 ];
 
 export const dynamicParams = false;

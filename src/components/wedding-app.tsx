@@ -1032,6 +1032,37 @@ const TEMPLATES = [
     ],
     details: { dressCode: 'Botanical garden · пастель, зелень, белое', gift: 'Редкое растение или книга о природе', kids: 'Дети добро пожаловать', transfer: 'Метро Университет · 10 мин' },
   },
+  {
+    slug: 'odyssey',
+    name: 'Odyssey',
+    style: 'Adventure / Love Map',
+    styleRu: 'Приключение',
+    structure: 'Скрапбук путешественников: полароиды, штампы, карты, маршрут пунктиром',
+    tagline: 'Карты, паспортные штампы, полароиды — милая любовная одиссея',
+    couple: 'Лера & Миша',
+    coupleShort: 'Л · М',
+    date: '18.07.2026',
+    dateIso: '2026-07-18T14:00:00',
+    dateLong: '18 июля 2026',
+    dateMono: '18.07.2026',
+    venue: 'Глэмпинг на берегу озера',
+    city: 'Карелия',
+    rsvpDeadline: '30 июня 2026',
+    palette: { bg: '#fdf6ea', bg2: '#f5e8cf', ink: '#2a3142', ink2: '#5f6377', accent: '#e36b4c', paper: '#fffaf0', coral: '#e36b4c', ocean: '#5b8ea8', mustard: '#e4a11b', forest: '#5c7a4f', cream: '#fffaf0' },
+    accent: '#e36b4c', ink: '#2a3142', previewBg: '#fdf6ea',
+    quote: { text: 'Любовь — это не место назначения, а способ путешествовать.', author: 'Л · М' },
+    story: [
+      { heading: 'Где-то по дороге', body: 'Лера — картограф в душе, Миша — тот, кто читает атласы перед сном. Познакомились в аэропорту Стамбула — оба опоздали на один рейс, в итоге полетели в Грузию.' },
+      { heading: '47 маршрутов вдвоём', body: 'От Хибин до Лиссабона, от Байкала до Марокко. У них общий блокнот со штампами, карта на холодильнике и один любимый маршрут — друг к другу, каждый вечер.' },
+    ],
+    program: [
+      { time: '13:00', title: 'Прибытие', place: 'Экспедиция · встреча на причале' },
+      { time: '14:00', title: 'Церемония', place: 'На лесной поляне' },
+      { time: '17:00', title: 'Пикник', place: 'У костра · фольклорный ужин' },
+      { time: '22:00', title: 'Звёзды', place: 'Наблюдение за небом · чай у озера' },
+    ],
+    details: { dressCode: 'Путешественник · тёплые тона, комфортная обувь', gift: 'Открытка из города, где вы были счастливы', kids: 'Дети — любимые спутники', transfer: 'Трансфер от ж/д Петрозаводск · 2 часа' },
+  },
 ];
 
 Object.assign(browserGlobal, { TEMPLATES });
@@ -1096,7 +1127,7 @@ function Hero() {
             display: 'flex', gap: 14, flexWrap: 'wrap',
             justifyContent: 'flex-end', alignItems: 'center',
           }}>
-            <Button to="/templates" size="lg">Смотреть 15 дизайнов →</Button>
+            <Button to="/templates" size="lg">Смотреть 16 дизайнов →</Button>
             <Button to="/contact" variant="secondary" size="lg">Связаться</Button>
           </div>
         </div>
@@ -1167,7 +1198,7 @@ function Value() {
               title="Готовый дизайн"
               price="4 000 ₽"
               bullets={[
-                '15 уникальных шаблонов',
+                '16 уникальных шаблонов',
                 'Ваши фото, имена, даты',
                 'RSVP + Google Sheets',
                 'Бесплатный хостинг на Render',
@@ -1233,12 +1264,12 @@ function Portfolio() {
           flexWrap: 'wrap', gap: 20,
         }}>
           <div>
-            <Eyebrow number="(03)">Портфолио · 15 дизайнов</Eyebrow>
+            <Eyebrow number="(03)">Портфолио · 16 дизайнов</Eyebrow>
             <h2 className="serif" style={{
               fontSize: 'clamp(40px, 5vw, 72px)', lineHeight: 0.98,
               letterSpacing: '-0.025em', margin: '20px 0 0', fontWeight: 400,
             }}>
-              Пятнадцать разных<br/><span style={{ fontStyle: 'italic' }}>миров</span>.
+              Шестнадцать разных<br/><span style={{ fontStyle: 'italic' }}>миров</span>.
             </h2>
           </div>
           <NavLink to="/templates">Все с фильтрами →</NavLink>
@@ -1247,7 +1278,7 @@ function Portfolio() {
         <div className="grid-3" style={{
           display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 'clamp(16px, 1.6vw, 22px)',
         }}>
-          {TEMPLATES.slice(0, 12).map((t, i) => (
+          {TEMPLATES.map((t, i) => (
             <TemplateCard key={t.slug} t={t} idx={i} />
           ))}
         </div>
@@ -1580,6 +1611,34 @@ function TemplatePreview({ template: t }) {
         </div>
       </div>
     ),
+    // Odyssey — scrapbook page: polaroid + stamp + dotted route
+    odyssey: (
+      <div style={{ height: '100%', background: P.bg || '#fdf6ea', overflow: 'hidden', position: 'relative', padding: 14, fontFamily: "'Fraunces', serif" }}>
+        {/* Paper grid hint */}
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, backgroundImage: `linear-gradient(${P.ink || '#2a3142'}08 1px, transparent 1px), linear-gradient(90deg, ${P.ink || '#2a3142'}08 1px, transparent 1px)`, backgroundSize: '16px 16px', pointerEvents: 'none' }} />
+        {/* Dotted route */}
+        <svg viewBox="0 0 100 100" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} aria-hidden="true">
+          <path d="M 12 82 Q 40 30 88 18" stroke={P.coral || '#e36b4c'} strokeWidth="0.8" fill="none" strokeDasharray="2 2" />
+          <circle cx="12" cy="82" r="1.5" fill={P.coral || '#e36b4c'} />
+          <polygon points="88,18 84,22 87,15" fill={P.coral || '#e36b4c'} />
+        </svg>
+        {/* Polaroid */}
+        <div style={{ position: 'absolute', top: 16, right: 12, width: '38%', background: '#fff', padding: '5px 5px 18px', transform: 'rotate(5deg)', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
+          <div style={{ aspectRatio: '1/1', background: `linear-gradient(135deg, ${P.ocean || '#5b8ea8'}66, ${P.mustard || '#e4a11b'}44)` }} />
+          <div style={{ position: 'absolute', top: -6, left: '30%', width: '40%', height: 10, background: `${P.mustard || '#e4a11b'}88`, transform: 'rotate(-3deg)' }} />
+        </div>
+        {/* Stamp */}
+        <div style={{ position: 'absolute', bottom: 10, right: 10, width: 36, height: 36, borderRadius: '50%', border: `1.2px solid ${P.ocean || '#5b8ea8'}`, display: 'flex', alignItems: 'center', justifyContent: 'center', transform: 'rotate(-15deg)', color: P.ocean || '#5b8ea8', fontSize: 7, letterSpacing: '0.05em', fontFamily: "'JetBrains Mono', monospace", textAlign: 'center', lineHeight: 1.1, opacity: 0.85 }}>
+          2026<br/>✈
+        </div>
+        {/* Title */}
+        <div style={{ position: 'absolute', bottom: 14, left: 14, zIndex: 1 }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 7, letterSpacing: '0.3em', textTransform: 'uppercase', color: P.coral || '#e36b4c', marginBottom: 4 }}>Odyssey ✶</div>
+          <div style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(18px, 3.4vw, 26px)', fontStyle: 'italic', fontWeight: 400, color: P.ink || '#2a3142', lineHeight: 1.05 }}>{a}<br/>&amp; {b}</div>
+          <div style={{ marginTop: 6, fontFamily: "'JetBrains Mono', monospace", fontSize: 7, letterSpacing: '0.2em', color: P.ink2 || '#5f6377' }}>{t.dateMono} · {t.city}</div>
+        </div>
+      </div>
+    ),
   };
 
   return previews[t.slug] || null;
@@ -1793,7 +1852,7 @@ function TemplatesIndex() {
       <main id="main">
         <section style={{ padding: 'clamp(48px, 7vw, 72px) var(--pad-x) 36px' }}>
           <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto' }}>
-            <Eyebrow>Portfolio · 15 works</Eyebrow>
+            <Eyebrow>Portfolio · 16 works</Eyebrow>
             <h1 className="serif page-title" style={{
               fontSize: 'clamp(48px, 7.2vw, 108px)', lineHeight: 0.96,
               letterSpacing: '-0.035em', margin: '24px 0 0', fontWeight: 400,
@@ -1804,7 +1863,7 @@ function TemplatesIndex() {
               marginTop: 28, maxWidth: 560, color: 'var(--ink-2)',
               fontSize: 'clamp(16px, 1.4vw, 18px)', lineHeight: 1.55,
             }}>
-              Пятнадцать продуманных от начала до конца миров.
+              Шестнадцать продуманных от начала до конца миров.
               Каждый можно открыть как полноценное демо
               с реальными данными вымышленной пары.
             </p>
@@ -6507,6 +6566,423 @@ function BotanicalRSVP({ rsvp, t, P }) {
 Object.assign(browserGlobal, { TemplateBotanical });
 
 
+// ===== src/template-odyssey.jsx =====
+// 16 · Odyssey — adventure/love scrapbook with compass, stamps, polaroids, route
+
+function CompassSVG({ color, accent, size = 140 }) {
+  return (
+    <svg viewBox="0 0 200 200" style={{ width: size, height: size }} aria-hidden="true">
+      <circle cx="100" cy="100" r="94" fill="none" stroke={color} strokeWidth="1.5" />
+      <circle cx="100" cy="100" r="82" fill="none" stroke={color} strokeWidth="0.6" opacity="0.5" />
+      <circle cx="100" cy="100" r="62" fill="none" stroke={color} strokeWidth="0.5" opacity="0.4" />
+      {Array.from({ length: 32 }).map((_, i) => {
+        const angle = (i * 360 / 32) * Math.PI / 180;
+        const outer = 92;
+        const inner = i % 4 === 0 ? 78 : i % 2 === 0 ? 84 : 88;
+        return <line key={i} x1={100 + Math.cos(angle) * inner} y1={100 + Math.sin(angle) * inner} x2={100 + Math.cos(angle) * outer} y2={100 + Math.sin(angle) * outer} stroke={color} strokeWidth={i % 4 === 0 ? 1 : 0.5} opacity={i % 4 === 0 ? 0.9 : 0.5} />;
+      })}
+      {/* Cardinal letters */}
+      {['N', 'E', 'S', 'W'].map((d, i) => {
+        const angle = (i * 90 - 90) * Math.PI / 180;
+        return <text key={d} x={100 + Math.cos(angle) * 72} y={100 + Math.sin(angle) * 72} textAnchor="middle" dominantBaseline="central" fill={color} fontSize="14" fontFamily="'JetBrains Mono', monospace" fontWeight="700">{d}</text>;
+      })}
+      {/* Needle */}
+      <polygon points="100,28 110,100 100,106 90,100" fill={accent} />
+      <polygon points="100,172 90,100 100,94 110,100" fill={color} opacity="0.85" />
+      <circle cx="100" cy="100" r="6" fill={color} />
+      <circle cx="100" cy="100" r="2.5" fill={accent} />
+    </svg>
+  );
+}
+
+function PaperPlaneSVG({ color, size = 40, rotate = 0, style: ex }) {
+  return (
+    <svg viewBox="0 0 48 48" style={{ width: size, height: size, transform: `rotate(${rotate}deg)`, ...ex }} aria-hidden="true">
+      <path d="M2 24 L46 4 L38 44 L22 30 L46 4" fill={color} opacity="0.9" />
+      <path d="M22 30 L28 40 L38 44" stroke={color} strokeWidth="1" fill="none" opacity="0.5" />
+    </svg>
+  );
+}
+
+function MountainsSVG({ color, accent, width = 280, height = 100 }) {
+  return (
+    <svg viewBox="0 0 400 100" style={{ width, height, display: 'block' }} preserveAspectRatio="none" aria-hidden="true">
+      <polygon points="0,100 60,40 90,55 140,15 190,60 240,30 300,70 360,25 400,45 400,100" fill={color} opacity="0.9" />
+      <polygon points="140,15 155,28 170,20 165,32 190,60 140,35" fill="#ffffff" opacity="0.35" />
+      <polygon points="240,30 255,45 270,35 265,48 248,42" fill="#ffffff" opacity="0.3" />
+      <circle cx="330" cy="20" r="8" fill={accent} opacity="0.9" />
+    </svg>
+  );
+}
+
+function PassportStamp({ color, rotate = -12, children }) {
+  return (
+    <div style={{ display: 'inline-block', padding: '10px 16px', border: `2px solid ${color}`, borderRadius: 4, color, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 700, transform: `rotate(${rotate}deg)`, background: 'transparent', opacity: 0.85, lineHeight: 1.4 }}>
+      {children}
+    </div>
+  );
+}
+
+function PolaroidPhoto({ rotate = 0, gradient, caption, size = '100%', tape, P }) {
+  return (
+    <div style={{ display: 'inline-block', background: '#fff', padding: '10px 10px 32px', transform: `rotate(${rotate}deg)`, boxShadow: '0 4px 12px rgba(0,0,0,0.12), 0 20px 40px -20px rgba(0,0,0,0.2)', width: size, position: 'relative' }}>
+      {tape && <div style={{ position: 'absolute', top: -8, left: '38%', width: '28%', height: 18, background: `${P.mustard}aa`, transform: 'rotate(-4deg)', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }} />}
+      <div style={{ width: '100%', aspectRatio: '1/1', background: gradient, position: 'relative', overflow: 'hidden' }}>
+        {/* Faint photo icon */}
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <svg viewBox="0 0 48 48" style={{ width: 38, height: 38, opacity: 0.35 }} aria-hidden="true">
+            <circle cx="24" cy="26" r="9" fill="none" stroke="#fff" strokeWidth="1.4" />
+            <path d="M8 18 L14 10 L34 10 L40 18 L44 18 L46 20 L46 38 L44 40 L4 40 L2 38 L2 20 L4 18 Z" fill="none" stroke="#fff" strokeWidth="1.4" />
+          </svg>
+        </div>
+      </div>
+      <div style={{ marginTop: 8, fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontSize: 13, color: '#2a3142', textAlign: 'center' }}>{caption}</div>
+    </div>
+  );
+}
+
+function TemplateOdyssey() {
+  const t = TEMPLATES.find((x) => x.slug === 'odyssey');
+  const P = t.palette;
+  const [a, b] = t.couple.split('&').map((s) => s.trim());
+  const cd = useCountdown(t.dateIso);
+  const rsvp = useRsvp();
+
+  // Paper grid background
+  const paperGrid = `linear-gradient(${P.ink}10 1px, transparent 1px), linear-gradient(90deg, ${P.ink}10 1px, transparent 1px)`;
+
+  return (
+    <div style={{ background: P.bg, color: P.ink, minHeight: '100vh', overflowX: 'hidden', fontFamily: "'Fraunces', Georgia, serif", position: 'relative' }}>
+      {/* Paper grid overlay */}
+      <div style={{ position: 'fixed', inset: 0, backgroundImage: paperGrid, backgroundSize: '24px 24px', pointerEvents: 'none', zIndex: 1, opacity: 0.4 }} />
+      <DemoBar t={t} />
+
+      {/* Hero — scrapbook page */}
+      <section style={{ padding: '70px 32px 100px', position: 'relative', maxWidth: 1360, margin: '0 auto' }}>
+        {/* Top passport bar */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 18, borderBottom: `1.5px solid ${P.ink}33`, paddingBottom: 18, marginBottom: 56, position: 'relative', zIndex: 2 }}>
+          <div style={{ width: 36, height: 36, borderRadius: '50%', background: P.coral, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18 }}>✈</div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.coral }}>Odyssey · Wedding Expedition N° 016</div>
+            <div style={{ fontFamily: "'Fraunces', serif", fontSize: 15, fontStyle: 'italic', color: P.ink2, marginTop: 3 }}>from everywhere, with love · с любовью отовсюду</div>
+          </div>
+          <div style={{ textAlign: 'right', fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', color: P.ocean, lineHeight: 1.7 }}>
+            <div>61°47′N · 34°20′E</div>
+            <div>{t.dateMono}</div>
+          </div>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 64, alignItems: 'center', position: 'relative', zIndex: 2 }}>
+          {/* Left: title */}
+          <div style={{ position: 'relative' }}>
+            <div style={{ position: 'absolute', top: -20, left: -40 }}>
+              <PassportStamp color={P.ocean} rotate={-12}>Visa<br/>Love · 2026</PassportStamp>
+            </div>
+            <div style={{ marginTop: 40 }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: P.coral, marginBottom: 18 }}>
+                ✶ Our Greatest Adventure ✶
+              </div>
+              <h1 style={{ fontSize: 'clamp(72px, 11vw, 168px)', fontStyle: 'italic', fontWeight: 400, lineHeight: 0.86, letterSpacing: '-0.03em', margin: 0, color: P.ink }}>
+                {a}
+              </h1>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 20, margin: '22px 0' }}>
+                <PaperPlaneSVG color={P.coral} size={32} rotate={-15} />
+                <div style={{ fontSize: 36, fontStyle: 'italic', fontWeight: 300, color: P.coral, fontFamily: "'Fraunces', serif" }}>&amp;</div>
+                <div style={{ flex: 1, height: 0, borderTop: `2px dashed ${P.coral}88` }} />
+              </div>
+              <h1 style={{ fontSize: 'clamp(72px, 11vw, 168px)', fontStyle: 'italic', fontWeight: 400, lineHeight: 0.86, letterSpacing: '-0.03em', margin: 0, color: P.ink }}>
+                {b}
+              </h1>
+              <div style={{ marginTop: 40, display: 'inline-flex', alignItems: 'center', gap: 14, padding: '14px 22px', border: `2px dashed ${P.coral}`, borderRadius: 6, background: `${P.paper}99` }}>
+                <span style={{ fontSize: 20 }}>♥</span>
+                <div>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.coral }}>Destination · день X</div>
+                  <div style={{ fontFamily: "'Fraunces', serif", fontSize: 22, fontStyle: 'italic', fontWeight: 400, color: P.ink, marginTop: 2 }}>{t.dateLong} · {t.city}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right: polaroids + stamps */}
+          <div style={{ position: 'relative', minHeight: 520 }}>
+            {/* Polaroid 1 — main */}
+            <div style={{ position: 'absolute', top: 0, right: '10%', width: '80%', zIndex: 2 }}>
+              <PolaroidPhoto rotate={-4} gradient={`linear-gradient(135deg, ${P.ocean}, ${P.forest})`} caption={`${a} & ${b}, Тбилиси 2023`} tape P={P} />
+            </div>
+            {/* Polaroid 2 */}
+            <div style={{ position: 'absolute', bottom: '6%', left: '-4%', width: '45%', zIndex: 3 }}>
+              <PolaroidPhoto rotate={7} gradient={`linear-gradient(135deg, ${P.mustard}, ${P.coral})`} caption="Марокко '24" tape P={P} />
+            </div>
+            {/* Stamps */}
+            <div style={{ position: 'absolute', bottom: '18%', right: '-4%', zIndex: 4 }}>
+              <PassportStamp color={P.mustard} rotate={10}>Baikal<br/>'22 · ✓</PassportStamp>
+            </div>
+            <div style={{ position: 'absolute', top: '36%', right: '-8%', zIndex: 4 }}>
+              <PassportStamp color={P.forest} rotate={-6}>Lisboa<br/>2025</PassportStamp>
+            </div>
+            {/* Paper plane */}
+            <div style={{ position: 'absolute', top: 12, right: -20, zIndex: 5 }}>
+              <PaperPlaneSVG color={P.coral} size={52} rotate={25} />
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom: dashed route to story */}
+        <div style={{ marginTop: 80, position: 'relative', zIndex: 2 }}>
+          <svg viewBox="0 0 1000 60" style={{ width: '100%', height: 60 }} aria-hidden="true" preserveAspectRatio="none">
+            <path d="M 30 50 Q 250 5 500 40 T 970 20" stroke={P.coral} strokeWidth="2" fill="none" strokeDasharray="6 6" />
+            <circle cx="30" cy="50" r="5" fill={P.coral} />
+            <circle cx="500" cy="40" r="4" fill={P.mustard} />
+            <polygon points="970,20 960,28 968,14" fill={P.coral} />
+          </svg>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.25em', color: P.ink2, textTransform: 'uppercase' }}>
+            <span>2019 · первая встреча</span>
+            <span>2024 · сказали «да»</span>
+            <span>2026 · свадьба →</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Photo + Compass — signature section */}
+      <section style={{ padding: '100px 32px', background: P.bg2, borderTop: `1.5px solid ${P.ink}22`, borderBottom: `1.5px solid ${P.ink}22`, position: 'relative' }}>
+        <div style={{ maxWidth: 1180, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 72, alignItems: 'center', position: 'relative', zIndex: 2 }}>
+          {/* Photo scrapbook cluster */}
+          <div style={{ position: 'relative', minHeight: 480 }}>
+            {/* Main photo frame */}
+            <div style={{ position: 'relative', background: '#fff', padding: '14px 14px 56px', transform: 'rotate(-2deg)', boxShadow: '0 8px 24px rgba(0,0,0,0.15), 0 32px 60px -30px rgba(0,0,0,0.25)', width: '82%', margin: '0 auto' }}>
+              <div style={{ position: 'absolute', top: -12, left: '42%', width: 74, height: 22, background: `${P.mustard}aa`, transform: 'rotate(-3deg)', zIndex: 2 }} />
+              <div style={{ position: 'relative', aspectRatio: '4/5', background: `linear-gradient(135deg, ${P.ocean}bb, ${P.forest}99)`, overflow: 'hidden' }}>
+                {/* Mountains silhouette */}
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, opacity: 0.7 }}>
+                  <MountainsSVG color={P.ink} accent={P.mustard} width="100%" height={120} />
+                </div>
+                {/* Photo label */}
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, color: '#fff' }}>
+                  <svg viewBox="0 0 48 48" style={{ width: 44, height: 44, opacity: 0.45 }} aria-hidden="true">
+                    <circle cx="24" cy="26" r="9" fill="none" stroke="#fff" strokeWidth="1.4" />
+                    <path d="M8 18 L14 10 L34 10 L40 18 L44 18 L46 20 L46 38 L44 40 L4 40 L2 38 L2 20 L4 18 Z" fill="none" stroke="#fff" strokeWidth="1.4" />
+                  </svg>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase', opacity: 0.85 }}>Photo · N° 01</div>
+                </div>
+              </div>
+              <div style={{ position: 'absolute', bottom: 14, left: 0, right: 0, textAlign: 'center', fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontSize: 18, color: P.ink }}>
+                {a} &amp; {b}, где-то по пути ♥
+              </div>
+            </div>
+            {/* Stamp overlay */}
+            <div style={{ position: 'absolute', top: 30, right: 0, zIndex: 3 }}>
+              <PassportStamp color={P.coral} rotate={15}>Forever<br/>together</PassportStamp>
+            </div>
+            <div style={{ position: 'absolute', bottom: 40, left: -10, zIndex: 3 }}>
+              <PassportStamp color={P.ocean} rotate={-8}>Expedition<br/>N° 2026</PassportStamp>
+            </div>
+          </div>
+
+          {/* Right: compass + quote */}
+          <div>
+            <div style={{ marginBottom: 32 }}>
+              <CompassSVG color={P.ink} accent={P.coral} size={180} />
+            </div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: P.coral, marginBottom: 18 }}>
+              Курс · true north
+            </div>
+            <blockquote style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(28px, 3.8vw, 46px)', fontStyle: 'italic', fontWeight: 400, lineHeight: 1.25, color: P.ink, margin: '0 0 28px', position: 'relative' }}>
+              <span style={{ position: 'absolute', left: -22, top: -14, fontSize: 68, color: P.coral, opacity: 0.45 }}>“</span>
+              {t.quote.text}
+            </blockquote>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+              <PaperPlaneSVG color={P.coral} size={22} rotate={-10} />
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.coral }}>{t.quote.author}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Story — travel journal entries */}
+      <section style={{ padding: '100px 32px', position: 'relative' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 2 }}>
+          <div style={{ textAlign: 'center', marginBottom: 60 }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', color: P.coral, marginBottom: 10 }}>✶ Travel Journal ✶</div>
+            <div style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(36px, 5vw, 56px)', fontStyle: 'italic', fontWeight: 400, color: P.ink }}>
+              Наш дневник
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 40 }}>
+            {t.story.map((s, i) => {
+              const c = [P.coral, P.ocean][i];
+              const gradients = [`linear-gradient(135deg, ${P.coral}dd, ${P.mustard}cc)`, `linear-gradient(135deg, ${P.ocean}dd, ${P.forest}cc)`];
+              return (
+                <div key={i} style={{ background: P.paper, padding: '28px 32px 36px', position: 'relative', boxShadow: '0 2px 0 rgba(0,0,0,0.04), 0 24px 48px -22px rgba(0,0,0,0.22)', border: `1px solid ${P.ink}11`, transform: `rotate(${i % 2 === 0 ? -0.8 : 0.8}deg)` }}>
+                  {/* Tape */}
+                  <div style={{ position: 'absolute', top: -10, left: 32, width: 84, height: 20, background: `${c}66`, transform: `rotate(${i % 2 === 0 ? -4 : 4}deg)`, zIndex: 2 }} />
+                  {/* Small polaroid inside */}
+                  <div style={{ float: 'right', marginLeft: 20, marginBottom: 8, background: '#fff', padding: '5px 5px 18px', width: 130, transform: `rotate(${i % 2 === 0 ? 4 : -3}deg)`, boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}>
+                    <div style={{ width: '100%', aspectRatio: '1/1', background: gradients[i] }} />
+                    <div style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontSize: 10, textAlign: 'center', marginTop: 4 }}>{['Стамбул', 'Хибины'][i]}</div>
+                  </div>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: c, marginBottom: 6 }}>Entry 0{i + 1} · {['2019', '2020–24'][i]}</div>
+                  <div style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(22px, 2.6vw, 30px)', fontStyle: 'italic', fontWeight: 400, margin: '10px 0 16px', lineHeight: 1.2, color: P.ink }}>{s.heading}</div>
+                  <p style={{ fontSize: 16, lineHeight: 1.7, color: P.ink2, fontFamily: "'Fraunces', serif" }}>{s.body}</p>
+                  <div style={{ marginTop: 24, paddingTop: 14, borderTop: `1.5px dashed ${c}55`, display: 'flex', justifyContent: 'space-between', fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.2em', color: c, textTransform: 'uppercase', clear: 'both' }}>
+                    <span>— {a} &amp; {b}</span>
+                    <span>{['✈ ✈ ✈', '♥ ♥ ♥'][i]}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Countdown — boarding pass timer */}
+      <section style={{ padding: '100px 32px', background: P.ink, color: P.bg, position: 'relative', overflow: 'hidden' }}>
+        {/* Mountain silhouette bg */}
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, opacity: 0.15 }}>
+          <MountainsSVG color={P.coral} accent={P.mustard} width="100%" height={200} />
+        </div>
+        <div style={{ maxWidth: 980, margin: '0 auto', position: 'relative', zIndex: 2 }}>
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.45em', textTransform: 'uppercase', color: P.mustard, marginBottom: 12 }}>⬤ Boarding Pass · посадочный ⬤</div>
+            <div style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(32px, 4.5vw, 48px)', fontStyle: 'italic', fontWeight: 400 }}>До вылета</div>
+          </div>
+          {/* Boarding pass layout */}
+          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 2fr 1fr 2fr', gap: 0, background: P.paper, color: P.ink, borderRadius: 8, overflow: 'hidden', boxShadow: '0 24px 60px rgba(0,0,0,0.4)' }}>
+            {[['ДНЕЙ', cd.days, 'DEP'], ['ЧАСОВ', cd.hours, 'STOP'], ['МИНУТ', cd.minutes, 'ARR']].map(([l, v, code], i) => (
+              <React.Fragment key={l}>
+                <div style={{ padding: '36px 24px 28px', textAlign: 'center', borderLeft: i > 0 ? `2px dashed ${P.ink}55` : 'none' }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.35em', color: P.ink2, marginBottom: 10 }}>{code}</div>
+                  <div style={{ fontSize: 'clamp(60px, 9vw, 96px)', fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontWeight: 400, lineHeight: 1, color: P.coral, letterSpacing: '-0.03em' }}>{v}</div>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', marginTop: 10, color: P.ink }}>{l}</div>
+                </div>
+                {i < 2 && (
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <PaperPlaneSVG color={P.coral} size={28} rotate={0} />
+                  </div>
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+          <div style={{ marginTop: 18, display: 'flex', justifyContent: 'space-between', fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', color: P.mustard, textTransform: 'uppercase' }}>
+            <span>Passenger · {a} &amp; {b}</span>
+            <span>Flight · LOVE-{t.dateMono.replace(/\./g, '')}</span>
+            <span>Gate · {t.city}</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Programme — itinerary */}
+      <section style={{ padding: '100px 32px', background: P.bg2, borderTop: `1.5px solid ${P.ink}22` }}>
+        <div style={{ maxWidth: 820, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: 56 }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: P.coral, marginBottom: 10 }}>✶ Itinerary · маршрут дня ✶</div>
+            <div style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(36px, 5vw, 52px)', fontStyle: 'italic', fontWeight: 400, color: P.ink }}>
+              Программа
+            </div>
+          </div>
+          <div style={{ position: 'relative' }}>
+            {/* Central dashed line */}
+            <div style={{ position: 'absolute', left: 96, top: 30, bottom: 30, borderLeft: `2px dashed ${P.coral}66` }} />
+            {t.program.map((p, i) => {
+              const icons = ['⚓', '✶', '🔥', '☾'];
+              const colors = [P.ocean, P.coral, P.mustard, P.forest];
+              return (
+                <div key={i} style={{ display: 'grid', gridTemplateColumns: '80px 48px 1fr', gap: 20, alignItems: 'flex-start', padding: '20px 0' }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: colors[i], fontWeight: 700, textAlign: 'right', paddingTop: 12 }}>{p.time}</div>
+                  <div style={{ width: 40, height: 40, borderRadius: '50%', background: P.paper, border: `2px solid ${colors[i]}`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: colors[i], fontSize: 18, zIndex: 1 }}>{icons[i % icons.length]}</div>
+                  <div style={{ background: P.paper, padding: '16px 20px', border: `1px solid ${P.ink}11`, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', position: 'relative' }}>
+                    <div style={{ position: 'absolute', top: -6, right: 16, fontFamily: "'JetBrains Mono', monospace", fontSize: 8, letterSpacing: '0.25em', color: colors[i], background: P.paper, padding: '0 6px' }}>STOP 0{i + 1}</div>
+                    <div style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(22px, 2.6vw, 28px)', fontStyle: 'italic', fontWeight: 400, color: P.ink, lineHeight: 1.2 }}>{p.title}</div>
+                    <div style={{ fontFamily: "'Fraunces', serif", fontSize: 15, fontStyle: 'italic', color: P.ink2, marginTop: 4 }}>{p.place}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Details — packing list */}
+      <section style={{ padding: '100px 32px', position: 'relative' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto', position: 'relative', zIndex: 2 }}>
+          <div style={{ background: P.paper, padding: '56px 48px', border: `2px dashed ${P.coral}`, position: 'relative' }}>
+            <div style={{ position: 'absolute', top: -16, left: 40, background: P.bg, padding: '4px 14px' }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: P.coral }}>✶ Packing List · детали ✶</div>
+            </div>
+            <div style={{ position: 'absolute', top: 40, right: 40 }}>
+              <PassportStamp color={P.ocean} rotate={12}>check ✓</PassportStamp>
+            </div>
+            <div style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(30px, 4vw, 42px)', fontStyle: 'italic', fontWeight: 400, color: P.ink, marginBottom: 32 }}>Возьмите с собой</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 32 }}>
+              {[['Дресс-код', t.details.dressCode, P.coral, '👕'], ['Подарки', t.details.gift, P.mustard, '✉'], ['Дети', t.details.kids, P.forest, '☺'], ['Трансфер', t.details.transfer, P.ocean, '✈']].map(([l, v, c, ico]) => (
+                <div key={l} style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+                  <div style={{ fontSize: 22, flexShrink: 0, width: 32, height: 32, borderRadius: '50%', background: `${c}22`, color: c, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{ico}</div>
+                  <div>
+                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: c, marginBottom: 6 }}>{l}</div>
+                    <div style={{ fontSize: 15, lineHeight: 1.6, color: P.ink, fontFamily: "'Fraunces', serif" }}>{v}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* RSVP */}
+      <OdysseyRSVP rsvp={rsvp} t={t} P={P} a={a} b={b} />
+    </div>
+  );
+}
+
+function OdysseyRSVP({ rsvp, t, P, a, b }) {
+  if (rsvp.sent) {
+    return (
+      <section style={{ padding: '120px 32px', textAlign: 'center', position: 'relative', overflow: 'hidden', background: P.bg2 }}>
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.12, pointerEvents: 'none' }}>
+          <CompassSVG color={P.ink} accent={P.coral} size={420} />
+        </div>
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.45em', textTransform: 'uppercase', color: P.coral, marginBottom: 18 }}>✶ Ticket Booked · билет оформлен ✶</div>
+          <div style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(48px, 7vw, 92px)', fontStyle: 'italic', fontWeight: 400, color: P.ink }}>Ждём на борту!</div>
+          <div style={{ marginTop: 24, fontFamily: "'Fraunces', serif", fontSize: 20, fontStyle: 'italic', color: P.ink2 }}>— {a} &amp; {b}, {t.dateLong}</div>
+          <div style={{ marginTop: 32, display: 'inline-flex', alignItems: 'center', gap: 18 }}>
+            <PaperPlaneSVG color={P.coral} size={40} rotate={-12} />
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.3em', color: P.ocean, textTransform: 'uppercase' }}>Пункт назначения · {t.city}</span>
+          </div>
+        </div>
+      </section>
+    );
+  }
+  return (
+    <section style={{ padding: '100px 32px 120px', position: 'relative', overflow: 'hidden', background: P.bg2 }}>
+      <div style={{ position: 'absolute', top: 40, right: 40, opacity: 0.25 }}>
+        <CompassSVG color={P.ink} accent={P.coral} size={220} />
+      </div>
+      <div style={{ maxWidth: 580, margin: '0 auto', position: 'relative', zIndex: 2, background: P.paper, padding: '48px 40px', boxShadow: '0 16px 48px -20px rgba(0,0,0,0.25)', border: `1px solid ${P.ink}22`, position: 'relative' }}>
+        <div style={{ position: 'absolute', top: -14, right: 32 }}>
+          <PassportStamp color={P.coral} rotate={-10}>RSVP · 2026</PassportStamp>
+        </div>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: P.coral, marginBottom: 10 }}>✶ Boarding Pass ✶</div>
+        <div style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(36px, 5vw, 54px)', fontStyle: 'italic', fontWeight: 400, marginBottom: 6, color: P.ink }}>Полетите с нами?</div>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.25em', color: P.ink2, marginBottom: 40, textTransform: 'uppercase' }}>Регистрация до {t.rsvpDeadline}</div>
+        <form onSubmit={rsvp.submit} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+          <input placeholder="Ваше имя, путешественник" value={rsvp.state.name} onChange={(e) => rsvp.update('name', e.target.value)} required style={{ width: '100%', background: 'transparent', border: 0, borderBottom: `2px dashed ${P.coral}`, padding: '10px 0', fontFamily: "'Fraunces', serif", fontSize: 22, fontStyle: 'italic', color: P.ink, outline: 'none' }} />
+          <div style={{ display: 'flex', gap: 12 }}>
+            {['yes', 'no'].map((v) => (
+              <button key={v} type="button" onClick={() => rsvp.update('attending', v)} style={{ flex: 1, padding: '14px 0', background: rsvp.state.attending === v ? P.coral : 'transparent', color: rsvp.state.attending === v ? '#fff' : P.coral, border: `2px solid ${P.coral}`, cursor: 'pointer', fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.25em', textTransform: 'uppercase', fontWeight: 700 }}>{v === 'yes' ? '♥ Буду' : 'Не смогу'}</button>
+            ))}
+          </div>
+          <button type="submit" style={{ background: P.ink, color: P.paper, border: 0, padding: '18px 40px', cursor: 'pointer', fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', alignSelf: 'flex-start', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
+            Отправить <PaperPlaneSVG color={P.coral} size={16} />
+          </button>
+        </form>
+      </div>
+    </section>
+  );
+}
+
+Object.assign(browserGlobal, { TemplateOdyssey });
+
+
 // ===== src/app.jsx =====
 // Root app — routes
 
@@ -6531,6 +7007,7 @@ function App() {
     if (slug === 'groovy') return <TemplateGroovy />;
     if (slug === 'neon') return <TemplateNeon />;
     if (slug === 'botanical') return <TemplateBotanical />;
+    if (slug === 'odyssey') return <TemplateOdyssey />;
     return <NotFound />;
   }
 
