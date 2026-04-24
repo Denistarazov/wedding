@@ -4420,10 +4420,154 @@ Object.assign(browserGlobal, { TemplateArtDeco });
 
 function TemplateBauhaus() {
   const t = TEMPLATES.find((x) => x.slug === 'bauhaus');
-  return <div style={{ padding: 80, fontFamily: 'sans-serif', fontSize: 24 }}>BAUHAUS: {t ? t.name : 'NOT FOUND'}</div>;
+  const P = t.palette;
+  const [a, b] = t.couple.split('&').map((s) => s.trim());
+  const cd = useCountdown(t.dateIso);
+  const rsvp = useRsvp();
+
+  const BLOCKS = [
+    { bg: P.red, color: '#fff' },
+    { bg: P.blue, color: '#fff' },
+    { bg: P.yellow, color: P.ink },
+    { bg: P.ink, color: P.bg },
+  ];
+
+  return (
+    <div style={{ background: P.bg, color: P.ink, minHeight: '100vh', overflowX: 'hidden', fontFamily: "'Archivo Black', sans-serif" }}>
+      <DemoBar t={t} />
+
+      {/* Hero: full-width grid with colored sidebar */}
+      <section style={{ display: 'grid', gridTemplateColumns: '64px 1fr', minHeight: '100vh', borderBottom: `4px solid ${P.ink}` }}>
+        {/* Left sidebar — vertical label */}
+        <div style={{ background: P.red, display: 'flex', alignItems: 'center', justifyContent: 'center', writingMode: 'vertical-rl', textOrientation: 'mixed', transform: 'rotate(180deg)', color: '#fff', fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', fontFamily: "'JetBrains Mono', monospace" }}>
+          STRUK · {t.dateMono} · {t.city}
+        </div>
+
+        {/* Main hero content */}
+        <div style={{ padding: '80px 60px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
+          {/* Red accent block */}
+          <div style={{ position: 'absolute', top: 0, right: 0, width: 220, height: 220, background: P.red }} />
+          <div style={{ position: 'absolute', top: 220, right: 220, width: 80, height: 80, background: P.yellow }} />
+
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', opacity: 0.55, marginBottom: 32 }}>
+            Форма · Функция · Чувство
+          </div>
+          <h1 style={{ fontSize: 'clamp(72px, 10vw, 148px)', lineHeight: 0.88, letterSpacing: '-0.04em', fontWeight: 900, margin: 0, position: 'relative' }}>
+            {a}<br /><span style={{ color: P.red }}>×</span><br />{b}
+          </h1>
+          <div style={{ marginTop: 48, display: 'flex', gap: 0, alignItems: 'stretch' }}>
+            {[t.dateLong, t.venue, t.city].map((v, i) => (
+              <div key={i} style={{ padding: '14px 24px', borderLeft: `3px solid ${[P.red, P.blue, P.yellow][i]}`, marginLeft: i > 0 ? 24 : 0 }}>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', opacity: 0.5 }}>{['Дата', 'Место', 'Город'][i]}</div>
+                <div style={{ fontSize: 16, marginTop: 4 }}>{v}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Colored bands — story */}
+      {t.story.map((s, i) => (
+        <section key={i} style={{ display: 'grid', gridTemplateColumns: '64px 1fr', borderBottom: `4px solid ${P.ink}` }}>
+          <div style={{ background: BLOCKS[i].bg }} />
+          <div style={{ padding: '80px 60px', background: i % 2 === 0 ? P.bg2 : P.bg, display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 60, alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: 'clamp(80px, 10vw, 120px)', fontWeight: 900, lineHeight: 1, color: BLOCKS[i].bg, WebkitTextStroke: `2px ${BLOCKS[i].bg}` }}>0{i + 1}</div>
+              <div style={{ fontSize: 22, fontWeight: 900, marginTop: 16, textTransform: 'uppercase', letterSpacing: '-0.02em' }}>{s.heading}</div>
+            </div>
+            <p style={{ fontSize: 20, lineHeight: 1.65, fontFamily: "'Inter', sans-serif", fontWeight: 400, color: P.ink2 }}>{s.body}</p>
+          </div>
+        </section>
+      ))}
+
+      {/* Countdown — primary color blocks */}
+      <section style={{ display: 'grid', gridTemplateColumns: '64px 1fr', borderBottom: `4px solid ${P.ink}` }}>
+        <div style={{ background: P.yellow }} />
+        <div style={{ padding: '80px 60px' }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', opacity: 0.55, marginBottom: 40 }}>Отсчёт</div>
+          <div style={{ display: 'flex', gap: 0 }}>
+            {[['Дней', cd.days, P.red], ['Часов', cd.hours, P.blue], ['Минут', cd.minutes, P.yellow]].map(([l, v, c]) => (
+              <div key={l} style={{ flex: 1, padding: '40px 32px', background: c, color: c === P.yellow ? P.ink : '#fff', borderRight: `4px solid ${P.ink}` }}>
+                <div style={{ fontSize: 'clamp(72px, 10vw, 120px)', fontWeight: 900, lineHeight: 1 }}>{v}</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', marginTop: 8, opacity: 0.7 }}>{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Programme */}
+      <section style={{ display: 'grid', gridTemplateColumns: '64px 1fr', borderBottom: `4px solid ${P.ink}` }}>
+        <div style={{ background: P.blue }} />
+        <div style={{ padding: '80px 60px' }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', opacity: 0.55, marginBottom: 40 }}>Программа</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+            {t.program.map((p, i) => (
+              <div key={i} style={{ display: 'grid', gridTemplateColumns: '120px 1fr', alignItems: 'center', borderTop: `2px solid ${P.ink}`, padding: '24px 0' }}>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 22, letterSpacing: '-0.02em', color: [P.red, P.blue, P.yellow, P.red][i % 4] }}>{p.time}</div>
+                <div>
+                  <div style={{ fontSize: 20, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em' }}>{p.title}</div>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, opacity: 0.55, marginTop: 4, letterSpacing: '0.15em' }}>{p.place}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Details grid */}
+      <section style={{ display: 'grid', gridTemplateColumns: '64px 1fr', borderBottom: `4px solid ${P.ink}` }}>
+        <div style={{ background: P.ink }} />
+        <div style={{ padding: '80px 60px', background: P.bg2 }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', opacity: 0.55, marginBottom: 40 }}>Детали</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 0 }}>
+            {[['Дресс-код', t.details.dressCode, P.red], ['Подарки', t.details.gift, P.blue], ['Дети', t.details.kids, P.yellow], ['Трансфер', t.details.transfer, P.ink]].map(([l, v, c]) => (
+              <div key={l} style={{ padding: '32px 28px', borderTop: `4px solid ${c}`, borderRight: `2px solid ${P.ink}22` }}>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', opacity: 0.5 }}>{l}</div>
+                <div style={{ fontSize: 16, marginTop: 12, fontFamily: "'Inter', sans-serif", lineHeight: 1.5 }}>{v}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* RSVP */}
+      <BauhausRSVP rsvp={rsvp} t={t} P={P} />
+    </div>
+  );
 }
 
-function BauhausRSVP() { return null; }
+function BauhausRSVP({ rsvp, t, P }) {
+  if (rsvp.sent) {
+    return (
+      <section style={{ display: 'grid', gridTemplateColumns: '64px 1fr', borderBottom: `4px solid ${P.ink}` }}>
+        <div style={{ background: P.red }} />
+        <div style={{ padding: '80px 60px', textAlign: 'center' }}>
+          <div style={{ fontSize: 'clamp(64px, 8vw, 120px)', fontWeight: 900, lineHeight: 1 }}>Принято</div>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, letterSpacing: '0.2em', marginTop: 24, opacity: 0.6 }}>Ждём вас {t.dateLong}</div>
+        </div>
+      </section>
+    );
+  }
+  return (
+    <section style={{ display: 'grid', gridTemplateColumns: '64px 1fr' }}>
+      <div style={{ background: P.red }} />
+      <div style={{ padding: '80px 60px' }}>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', opacity: 0.55, marginBottom: 40 }}>RSVP · до {t.rsvpDeadline}</div>
+        <form onSubmit={rsvp.submit} style={{ maxWidth: 600, display: 'flex', flexDirection: 'column', gap: 0 }}>
+          <input placeholder="Ваше имя" value={rsvp.state.name} onChange={(e) => rsvp.update('name', e.target.value)} required style={{ width: '100%', background: 'transparent', border: 0, borderBottom: `3px solid ${P.ink}`, padding: '16px 0', fontSize: 24, fontFamily: "'Archivo Black', sans-serif", outline: 'none', marginBottom: 32 }} />
+          <div style={{ display: 'flex', gap: 0, marginBottom: 32 }}>
+            {['yes', 'no'].map((v) => (
+              <button key={v} type="button" onClick={() => rsvp.update('attending', v)} style={{ flex: 1, padding: '20px 0', background: rsvp.state.attending === v ? P.ink : 'transparent', color: rsvp.state.attending === v ? P.bg : P.ink, border: `3px solid ${P.ink}`, cursor: 'pointer', fontSize: 14, fontFamily: "'Archivo Black', sans-serif", letterSpacing: '0.1em', textTransform: 'uppercase', marginRight: v === 'yes' ? 4 : 0 }}>{v === 'yes' ? 'Буду' : 'Не смогу'}</button>
+            ))}
+          </div>
+          <button type="submit" style={{ background: P.red, color: '#fff', border: 0, padding: '24px 48px', fontSize: 16, fontFamily: "'Archivo Black', sans-serif", letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'pointer', alignSelf: 'flex-start' }}>Отправить →</button>
+        </form>
+      </div>
+    </section>
+  );
+}
+
 Object.assign(browserGlobal, { TemplateBauhaus });
 
 
@@ -4456,10 +4600,140 @@ function MoonSVG({ color, size = 56 }) {
 
 function TemplateCelestial() {
   const t = TEMPLATES.find((x) => x.slug === 'celestial');
-  return <div style={{ padding: 80, fontFamily: 'sans-serif', fontSize: 24, background: '#060714', color: '#c9a84c' }}>CELESTIAL: {t ? t.name : 'NOT FOUND'}</div>;
+  const P = t.palette;
+  const [a, b] = t.couple.split('&').map((s) => s.trim());
+  const cd = useCountdown(t.dateIso);
+  const rsvp = useRsvp();
+
+  return (
+    <div style={{ background: P.bg, color: P.ink, minHeight: '100vh', overflowX: 'hidden' }}>
+      <DemoBar t={t} theme="dark" />
+
+      {/* Hero — full viewport, dark sky */}
+      <section style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden', padding: '80px 28px', textAlign: 'center' }}>
+        <Constellation style={{ opacity: 0.7 }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <MoonSVG color={P.accent} size={72} />
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginTop: 28, marginBottom: 24, opacity: 0.8 }}>
+            Солнцестояние · {t.dateMono}
+          </div>
+          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(64px, 11vw, 160px)', fontWeight: 300, fontStyle: 'italic', lineHeight: 0.9, letterSpacing: '-0.02em', margin: 0, color: P.ink }}>
+            {a}<br /><span style={{ color: P.accent, fontSize: '0.55em', fontStyle: 'normal', letterSpacing: '0.5em' }}>&</span><br />{b}
+          </h1>
+          <div style={{ marginTop: 48, fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: P.ink2, letterSpacing: '0.05em' }}>
+            {t.dateLong} · {t.venue} · {t.city}
+          </div>
+        </div>
+        {/* Decorative rings */}
+        <div style={{ position: 'absolute', width: 400, height: 400, border: `1px solid ${P.accent}22`, borderRadius: '50%', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', width: 600, height: 600, border: `1px solid ${P.accent}11`, borderRadius: '50%', pointerEvents: 'none' }} />
+      </section>
+
+      {/* Quote */}
+      <section style={{ padding: '80px 28px', textAlign: 'center', borderTop: `1px solid ${P.accent}22`, borderBottom: `1px solid ${P.accent}22`, position: 'relative', overflow: 'hidden' }}>
+        <Constellation style={{ opacity: 0.25 }} />
+        <blockquote style={{ position: 'relative', zIndex: 1, fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(28px, 4vw, 48px)', fontStyle: 'italic', fontWeight: 300, color: P.ink, margin: '0 auto', maxWidth: 700, lineHeight: 1.4 }}>
+          «{t.quote.text}»
+        </blockquote>
+        <div style={{ marginTop: 24, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', color: P.accent, textTransform: 'uppercase' }}>{t.quote.author}</div>
+      </section>
+
+      {/* Story */}
+      {t.story.map((s, i) => (
+        <section key={i} style={{ padding: '80px 28px', maxWidth: 860, margin: '0 auto', display: 'grid', gridTemplateColumns: i % 2 === 0 ? '1fr 2fr' : '2fr 1fr', gap: 60, alignItems: 'center', borderBottom: `1px solid ${P.accent}22` }}>
+          {i % 2 !== 0 && <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, lineHeight: 1.75, color: P.ink2 }}>{s.body}</p>}
+          <div style={{ order: i % 2 === 0 ? 0 : 1 }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginBottom: 16 }}>0{i + 1}</div>
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(36px, 5vw, 56px)', fontWeight: 300, fontStyle: 'italic', lineHeight: 1.1, color: P.ink }}>{s.heading}</div>
+            {i % 2 === 0 && <MoonSVG color={P.accent} size={40} />}
+          </div>
+          {i % 2 === 0 && <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, lineHeight: 1.75, color: P.ink2 }}>{s.body}</p>}
+        </section>
+      ))}
+
+      {/* Countdown */}
+      <section style={{ padding: '100px 28px', textAlign: 'center', position: 'relative', overflow: 'hidden', borderBottom: `1px solid ${P.accent}22` }}>
+        <Constellation style={{ opacity: 0.3 }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginBottom: 48 }}>До солнцестояния</div>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 48, flexWrap: 'wrap' }}>
+            {[['дней', cd.days], ['часов', cd.hours], ['минут', cd.minutes]].map(([l, v]) => (
+              <div key={l} style={{ position: 'relative' }}>
+                <div style={{ fontSize: 'clamp(72px, 12vw, 120px)', fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, lineHeight: 1, color: P.ink }}>{v}</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginTop: 8 }}>{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Programme */}
+      <section style={{ padding: '80px 28px', maxWidth: 680, margin: '0 auto', borderBottom: `1px solid ${P.accent}22` }}>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginBottom: 48 }}>Программа вечера</div>
+        {t.program.map((p, i) => (
+          <div key={i} style={{ display: 'flex', gap: 32, alignItems: 'baseline', borderBottom: `1px solid ${P.accent}22`, padding: '24px 0' }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 16, color: P.accent, minWidth: 60 }}>{p.time}</div>
+            <div>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, fontStyle: 'italic', color: P.ink }}>{p.title}</div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: P.ink2, marginTop: 4, letterSpacing: '0.15em' }}>{p.place}</div>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {/* Details */}
+      <section style={{ padding: '80px 28px', maxWidth: 860, margin: '0 auto', borderBottom: `1px solid ${P.accent}22` }}>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginBottom: 48 }}>Детали</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40 }}>
+          {[['Дресс-код', t.details.dressCode], ['Подарки', t.details.gift], ['Дети', t.details.kids], ['Трансфер', t.details.transfer]].map(([l, v]) => (
+            <div key={l}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: P.accent, marginBottom: 12 }}>{l}</div>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, lineHeight: 1.55, color: P.ink2 }}>{v}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* RSVP */}
+      <CelestialRSVP rsvp={rsvp} t={t} P={P} />
+    </div>
+  );
 }
 
-function CelestialRSVP() { return null; }
+function CelestialRSVP({ rsvp, t, P }) {
+  if (rsvp.sent) {
+    return (
+      <section style={{ padding: '100px 28px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+        <Constellation style={{ opacity: 0.4 }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <MoonSVG color={P.accent} size={56} />
+          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(48px, 7vw, 88px)', fontStyle: 'italic', fontWeight: 300, marginTop: 32, color: P.ink }}>Ждём вас под звёздами</div>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, letterSpacing: '0.25em', color: P.accent, marginTop: 24 }}>{t.dateLong} · {t.city}</div>
+        </div>
+      </section>
+    );
+  }
+  return (
+    <section style={{ padding: '100px 28px', position: 'relative', overflow: 'hidden' }}>
+      <Constellation style={{ opacity: 0.2 }} />
+      <div style={{ position: 'relative', zIndex: 1, maxWidth: 520, margin: '0 auto' }}>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginBottom: 12 }}>RSVP</div>
+        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(36px, 5vw, 56px)', fontStyle: 'italic', fontWeight: 300, marginBottom: 48, color: P.ink }}>Подтвердите присутствие</div>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.2em', color: P.ink2, marginBottom: 40 }}>до {t.rsvpDeadline}</div>
+        <form onSubmit={rsvp.submit} style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+          <input placeholder="Ваше имя" value={rsvp.state.name} onChange={(e) => rsvp.update('name', e.target.value)} required style={{ width: '100%', background: 'transparent', border: 0, borderBottom: `1px solid ${P.accent}55`, padding: '12px 0', fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: P.ink, outline: 'none' }} />
+          <div style={{ display: 'flex', gap: 12 }}>
+            {['yes', 'no'].map((v) => (
+              <button key={v} type="button" onClick={() => rsvp.update('attending', v)} style={{ flex: 1, padding: '14px 0', background: rsvp.state.attending === v ? P.accent : 'transparent', color: rsvp.state.attending === v ? P.bg : P.accent, border: `1px solid ${P.accent}55`, cursor: 'pointer', fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase' }}>{v === 'yes' ? 'Буду' : 'Не смогу'}</button>
+            ))}
+          </div>
+          <button type="submit" style={{ background: 'transparent', color: P.accent, border: `1px solid ${P.accent}`, padding: '16px 40px', cursor: 'pointer', fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', alignSelf: 'flex-start' }}>Отправить →</button>
+        </form>
+      </div>
+    </section>
+  );
+}
+
 Object.assign(browserGlobal, { TemplateCelestial });
 
 
@@ -4468,10 +4742,155 @@ Object.assign(browserGlobal, { TemplateCelestial });
 
 function TemplateMediterranean() {
   const t = TEMPLATES.find((x) => x.slug === 'mediterranean');
-  return <div style={{ padding: 80, fontFamily: 'sans-serif', fontSize: 24, background: '#fefcf7', color: '#c9622a' }}>MEDITERRANEAN: {t ? t.name : 'NOT FOUND'}</div>;
+  const P = t.palette;
+  const [a, b] = t.couple.split('&').map((s) => s.trim());
+  const cd = useCountdown(t.dateIso);
+  const rsvp = useRsvp();
+
+  const archStyle = (c) => ({
+    width: '100%', paddingTop: '140%', background: c,
+    borderRadius: '50% 50% 0 0 / 40% 40% 0 0',
+    position: 'relative',
+  });
+
+  return (
+    <div style={{ background: P.bg, color: P.ink, minHeight: '100vh', overflowX: 'hidden', fontFamily: "'Cormorant Garamond', serif" }}>
+      <DemoBar t={t} />
+
+      {/* Hero */}
+      <section style={{ padding: '100px 28px 80px', maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
+        <div>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginBottom: 28, opacity: 0.8 }}>
+            {t.city} · {t.dateMono}
+          </div>
+          <h1 style={{ fontSize: 'clamp(64px, 9vw, 128px)', fontWeight: 300, fontStyle: 'italic', lineHeight: 0.9, letterSpacing: '-0.02em', margin: '0 0 32px' }}>
+            {a}<br /><span style={{ color: P.accent }}>&</span><br />{b}
+          </h1>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, color: P.ink2, lineHeight: 1.8 }}>
+            <div>{t.dateLong}</div>
+            <div>{t.venue}</div>
+            <div>{t.city}</div>
+          </div>
+        </div>
+
+        {/* Arch decorations */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, padding: '20px 0' }}>
+          <div style={{ ...archStyle(P.accent), opacity: 0.85 }} />
+          <div style={{ ...archStyle(P.sea), opacity: 0.7, marginTop: 40 }} />
+          <div style={{ ...archStyle(P.sage), opacity: 0.6, marginTop: -60 }} />
+          <div style={{ ...archStyle(P.bg2), border: `2px solid ${P.accent}44`, marginTop: -20 }} />
+        </div>
+      </section>
+
+      {/* Story cards */}
+      <section style={{ padding: '60px 28px', borderTop: `1px solid ${P.accent}22`, background: P.bg2 }}>
+        <div style={{ maxWidth: 960, margin: '0 auto' }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginBottom: 48 }}>История</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 28 }}>
+            {t.story.map((s, i) => (
+              <div key={i} style={{ background: P.bg, padding: '40px 36px', borderRadius: '50% 50% 0 0 / 12% 12% 0 0', borderTop: `4px solid ${[P.accent, P.sea][i]}`, boxShadow: '0 2px 24px rgba(0,0,0,0.04)' }}>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: P.accent, marginBottom: 16 }}>0{i + 1}</div>
+                <div style={{ fontSize: 'clamp(24px, 3vw, 32px)', fontStyle: 'italic', fontWeight: 300, marginBottom: 20, lineHeight: 1.2, color: P.ink }}>{s.heading}</div>
+                <p style={{ fontSize: 17, lineHeight: 1.75, color: P.ink2, fontFamily: "'Inter', sans-serif", fontWeight: 400 }}>{s.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Quote */}
+      <section style={{ padding: '80px 28px', textAlign: 'center', borderBottom: `1px solid ${P.accent}22` }}>
+        <div style={{ maxWidth: 640, margin: '0 auto' }}>
+          <div style={{ width: 48, height: 48, background: P.accent, borderRadius: '50% 50% 0 0 / 50%', margin: '0 auto 32px' }} />
+          <blockquote style={{ fontSize: 'clamp(26px, 3.5vw, 40px)', fontStyle: 'italic', fontWeight: 300, lineHeight: 1.45, color: P.ink, margin: 0 }}>
+            «{t.quote.text}»
+          </blockquote>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: P.accent, letterSpacing: '0.3em', textTransform: 'uppercase', marginTop: 24 }}>{t.quote.author}</div>
+        </div>
+      </section>
+
+      {/* Countdown */}
+      <section style={{ padding: '80px 28px', background: P.accent, color: '#fff' }}>
+        <div style={{ maxWidth: 860, margin: '0 auto', textAlign: 'center' }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', opacity: 0.75, marginBottom: 48 }}>До церемонии</div>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 48, flexWrap: 'wrap' }}>
+            {[['дней', cd.days], ['часов', cd.hours], ['минут', cd.minutes]].map(([l, v]) => (
+              <div key={l} style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: 'clamp(72px, 10vw, 108px)', fontWeight: 300, lineHeight: 1 }}>{v}</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase', marginTop: 8, opacity: 0.75 }}>{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Programme */}
+      <section style={{ padding: '80px 28px', borderBottom: `1px solid ${P.accent}22` }}>
+        <div style={{ maxWidth: 700, margin: '0 auto' }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginBottom: 48 }}>Программа</div>
+          {t.program.map((p, i) => (
+            <div key={i} style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: 32, alignItems: 'baseline', padding: '24px 0', borderBottom: `1px solid ${P.accent}22` }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, color: P.accent }}>{p.time}</div>
+              <div>
+                <div style={{ fontSize: 24, fontStyle: 'italic', fontWeight: 300 }}>{p.title}</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: P.ink2, marginTop: 6, letterSpacing: '0.15em' }}>{p.place}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Details */}
+      <section style={{ padding: '80px 28px', background: P.bg2, borderBottom: `1px solid ${P.accent}22` }}>
+        <div style={{ maxWidth: 860, margin: '0 auto' }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginBottom: 48 }}>Детали</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 32 }}>
+            {[['Дресс-код', t.details.dressCode, P.accent], ['Подарки', t.details.gift, P.sea], ['Дети', t.details.kids, P.sage], ['Трансфер', t.details.transfer, P.accent]].map(([l, v, c]) => (
+              <div key={l} style={{ borderTop: `3px solid ${c}`, paddingTop: 20 }}>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: c, marginBottom: 12 }}>{l}</div>
+                <div style={{ fontSize: 17, lineHeight: 1.55, color: P.ink2, fontFamily: "'Inter', sans-serif" }}>{v}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* RSVP */}
+      <RivaRSVP rsvp={rsvp} t={t} P={P} />
+    </div>
+  );
 }
 
-function RivaRSVP() { return null; }
+function RivaRSVP({ rsvp, t, P }) {
+  if (rsvp.sent) {
+    return (
+      <section style={{ padding: '100px 28px', textAlign: 'center' }}>
+        <div style={{ width: 64, height: 64, background: P.accent, borderRadius: '50% 50% 0 0 / 50%', margin: '0 auto 40px' }} />
+        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(48px, 7vw, 80px)', fontStyle: 'italic', fontWeight: 300 }}>Ждём вас у моря</div>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, letterSpacing: '0.25em', color: P.accent, marginTop: 24 }}>{t.dateLong} · {t.city}</div>
+      </section>
+    );
+  }
+  return (
+    <section style={{ padding: '100px 28px' }}>
+      <div style={{ maxWidth: 540, margin: '0 auto' }}>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginBottom: 12 }}>RSVP</div>
+        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(36px, 5vw, 56px)', fontStyle: 'italic', fontWeight: 300, marginBottom: 12 }}>Будете?</div>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.2em', color: P.ink2, marginBottom: 48 }}>до {t.rsvpDeadline}</div>
+        <form onSubmit={rsvp.submit} style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+          <input placeholder="Ваше имя" value={rsvp.state.name} onChange={(e) => rsvp.update('name', e.target.value)} required style={{ width: '100%', background: 'transparent', border: 0, borderBottom: `1px solid ${P.accent}55`, padding: '12px 0', fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: P.ink, outline: 'none' }} />
+          <div style={{ display: 'flex', gap: 12 }}>
+            {['yes', 'no'].map((v) => (
+              <button key={v} type="button" onClick={() => rsvp.update('attending', v)} style={{ flex: 1, padding: '14px 0', background: rsvp.state.attending === v ? P.accent : 'transparent', color: rsvp.state.attending === v ? '#fff' : P.accent, border: `1px solid ${P.accent}55`, cursor: 'pointer', fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', borderRadius: '50% 50% 0 0 / 25%' }}>{v === 'yes' ? 'Буду' : 'Не смогу'}</button>
+            ))}
+          </div>
+          <button type="submit" style={{ background: P.accent, color: '#fff', border: 0, padding: '18px 48px', cursor: 'pointer', fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', alignSelf: 'flex-start', borderRadius: '50% 50% 0 0 / 40%' }}>Отправить →</button>
+        </form>
+      </div>
+    </section>
+  );
+}
+
 Object.assign(browserGlobal, { TemplateMediterranean });
 
 
@@ -4480,12 +4899,10 @@ Object.assign(browserGlobal, { TemplateMediterranean });
 
 function App() {
   const route = useRoute();
-  if (typeof window !== 'undefined') console.log('[App] route:', JSON.stringify(route));
 
   // /templates/[slug]
   if (route.startsWith('/templates/')) {
     const slug = route.slice('/templates/'.length);
-    if (typeof window !== 'undefined') console.log('[App] slug:', JSON.stringify(slug));
     if (slug === 'editorial') return <TemplateEditorial />;
     if (slug === 'swiss') return <TemplateSwiss />;
     if (slug === 'garden') return <TemplateGarden />;
