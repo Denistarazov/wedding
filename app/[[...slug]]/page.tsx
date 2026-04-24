@@ -13,6 +13,9 @@ const templateSlugs = [
   "bauhaus",
   "celestial",
   "mediterranean",
+  "groovy",
+  "neon",
+  "botanical",
 ];
 
 export const dynamicParams = false;
