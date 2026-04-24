@@ -1793,7 +1793,7 @@ function TemplatesIndex() {
       <main id="main">
         <section style={{ padding: 'clamp(48px, 7vw, 72px) var(--pad-x) 36px' }}>
           <div style={{ maxWidth: 'var(--max-w)', margin: '0 auto' }}>
-            <Eyebrow>Portfolio · 09 works</Eyebrow>
+            <Eyebrow>Portfolio · 15 works</Eyebrow>
             <h1 className="serif page-title" style={{
               fontSize: 'clamp(48px, 7.2vw, 108px)', lineHeight: 0.96,
               letterSpacing: '-0.035em', margin: '24px 0 0', fontWeight: 400,
@@ -1804,7 +1804,7 @@ function TemplatesIndex() {
               marginTop: 28, maxWidth: 560, color: 'var(--ink-2)',
               fontSize: 'clamp(16px, 1.4vw, 18px)', lineHeight: 1.55,
             }}>
-              Девять продуманных от начала до конца миров.
+              Пятнадцать продуманных от начала до конца миров.
               Каждый можно открыть как полноценное демо
               с реальными данными вымышленной пары.
             </p>
