@@ -5079,13 +5079,26 @@ function TemplateGroovy() {
         </div>
       </section>
 
-      {/* Quote */}
-      <section style={{ padding: '80px 28px', background: P.orange, color: '#fff', position: 'relative', overflow: 'hidden', textAlign: 'center' }}>
-        <Blob size={300} top={-80} right={-60} color="#fff" opacity={0.06} />
-        <blockquote style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 'clamp(22px, 3vw, 36px)', lineHeight: 1.35, margin: '0 auto', maxWidth: 700, position: 'relative', zIndex: 1 }}>
-          «{t.quote.text}»
-        </blockquote>
-        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', marginTop: 24, opacity: 0.7 }}>{t.quote.author}</div>
+      {/* Couple photo */}
+      <section style={{ padding: '60px 28px', background: P.bg2 }}>
+        <div style={{ maxWidth: 960, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 28, alignItems: 'center' }}>
+          <div style={{ position: 'relative', borderRadius: 48, overflow: 'hidden', aspectRatio: '3/4', background: P.cream }}>
+            <Blob size={260} top={-60} right={-60} color={P.orange} opacity={0.18} />
+            <Blob size={180} bottom={-40} left={-40} color={P.mustard} opacity={0.2} />
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16, zIndex: 1 }}>
+              <svg viewBox="0 0 48 48" style={{ width: 56, height: 56, opacity: 0.35 }} aria-hidden="true">
+                <circle cx="24" cy="26" r="10" fill="none" stroke={P.orange} strokeWidth="2" />
+                <path d="M8 18 L14 10 L34 10 L40 18 L44 18 A2 2 0 0 1 46 20 L46 38 A2 2 0 0 1 44 40 L4 40 A2 2 0 0 1 2 38 L2 20 A2 2 0 0 1 4 18 Z" fill="none" stroke={P.orange} strokeWidth="2" />
+              </svg>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', color: P.orange, opacity: 0.6 }}>фото пары</div>
+            </div>
+            <div style={{ position: 'absolute', inset: 0, border: `3px dashed ${P.orange}33`, borderRadius: 48, zIndex: 2, pointerEvents: 'none' }} />
+          </div>
+          <div>
+            <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 'clamp(36px, 5vw, 56px)', lineHeight: 0.95, letterSpacing: '-0.03em', marginBottom: 24 }}>{t.quote.text}</div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, letterSpacing: '0.25em', textTransform: 'uppercase', color: P.orange }}>{t.quote.author}</div>
+          </div>
+        </div>
       </section>
 
       {/* Story */}
@@ -5237,6 +5250,36 @@ function TemplateNeon() {
 
         {/* Neon bottom bar */}
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${P.accent}, ${P.cyan}, ${P.purple})` }} />
+      </section>
+
+      {/* Couple photo */}
+      <section style={{ padding: '80px 40px', borderTop: `1px solid ${P.accent}33`, position: 'relative', overflow: 'hidden' }}>
+        <GridLines />
+        <div style={{ maxWidth: 960, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'center', position: 'relative', zIndex: 1 }}>
+          <div style={{ position: 'relative', aspectRatio: '3/4', background: P.bg2, border: `1px solid ${P.accent}66`, overflow: 'hidden' }}>
+            {/* Scanlines overlay */}
+            <div aria-hidden="true" style={{ position: 'absolute', inset: 0, backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 3px, ${P.accent}06 3px, ${P.accent}06 4px)`, pointerEvents: 'none', zIndex: 2 }} />
+            {/* Corner brackets */}
+            {[[0,0,'nw'],[0,'auto','ne'],['auto',0,'sw'],['auto','auto','se']].map(([t2,r,id]) => (
+              <div key={id} aria-hidden="true" style={{ position: 'absolute', top: t2 === 0 ? 12 : 'auto', bottom: t2 === 'auto' ? 12 : 'auto', left: r === 0 ? 12 : 'auto', right: r === 'auto' ? 12 : 'auto', width: 20, height: 20, borderTop: id.includes('n') ? `2px solid ${P.accent}` : 'none', borderBottom: id.includes('s') ? `2px solid ${P.accent}` : 'none', borderLeft: id.includes('w') ? `2px solid ${P.accent}` : 'none', borderRight: id.includes('e') ? `2px solid ${P.accent}` : 'none', zIndex: 3 }} />
+            ))}
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16, zIndex: 1 }}>
+              <svg viewBox="0 0 48 48" style={{ width: 52, height: 52 }} aria-hidden="true">
+                <circle cx="24" cy="26" r="10" fill="none" stroke={P.accent} strokeWidth="1.5" opacity="0.6" />
+                <path d="M8 18 L14 10 L34 10 L40 18 L44 18 A2 2 0 0 1 46 20 L46 38 A2 2 0 0 1 44 40 L4 40 A2 2 0 0 1 2 38 L2 20 A2 2 0 0 1 4 18 Z" fill="none" stroke={P.accent} strokeWidth="1.5" opacity="0.5" />
+              </svg>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', color: P.accent, opacity: 0.7 }}>// фото пары</div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, color: P.cyan, opacity: 0.5, letterSpacing: '0.2em' }}>img.load(couple.jpg)</div>
+            </div>
+            {/* Neon glow bottom */}
+            <div aria-hidden="true" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${P.accent}, ${P.cyan})`, zIndex: 3 }} />
+          </div>
+          <div>
+            <div style={{ fontSize: 10, letterSpacing: '0.4em', color: P.purple, marginBottom: 24 }}>{'// quote'}</div>
+            <p style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 'clamp(20px, 2.5vw, 30px)', lineHeight: 1.35, color: P.ink, marginBottom: 24 }}>«{t.quote.text}»</p>
+            <div style={{ fontSize: 11, color: P.accent, letterSpacing: '0.3em', textShadow: `0 0 8px ${P.accent}88` }}>— {t.quote.author}</div>
+          </div>
+        </div>
       </section>
 
       {/* Story — terminal style */}
@@ -5403,18 +5446,49 @@ function TemplateBotanical() {
         </div>
       </section>
 
-      {/* Quote */}
-      <section style={{ padding: '80px 28px', background: P.sage, color: '#fff', position: 'relative', overflow: 'hidden', textAlign: 'center' }}>
-        <div style={{ position: 'absolute', top: -20, right: -20, pointerEvents: 'none', opacity: 0.25 }}>
-          <LeafSVG color="#fff" rotate={20} size={140} />
+      {/* Couple photo + quote */}
+      <section style={{ padding: '80px 28px', background: P.bg2 }}>
+        <div style={{ maxWidth: 1040, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: 56, alignItems: 'center' }}>
+          {/* Photo placeholder */}
+          <div style={{ position: 'relative', aspectRatio: '3/4', borderRadius: 8, overflow: 'hidden', background: P.cream }}>
+            {/* Leaf corner decorations */}
+            <div style={{ position: 'absolute', top: -8, left: -8, pointerEvents: 'none', zIndex: 2 }}>
+              <LeafSVG color={P.sage} rotate={-30} size={80} style={{ opacity: 0.5 }} />
+            </div>
+            <div style={{ position: 'absolute', top: -8, right: -8, pointerEvents: 'none', zIndex: 2 }}>
+              <LeafSVG color={P.rose} rotate={30} size={64} style={{ opacity: 0.45 }} />
+            </div>
+            <div style={{ position: 'absolute', bottom: -8, left: -8, pointerEvents: 'none', zIndex: 2 }}>
+              <LeafSVG color={P.blush} rotate={-145} size={60} style={{ opacity: 0.4 }} />
+            </div>
+            <div style={{ position: 'absolute', bottom: -8, right: -8, pointerEvents: 'none', zIndex: 2 }}>
+              <LeafSVG color={P.sage} rotate={145} size={72} style={{ opacity: 0.4 }} />
+            </div>
+            {/* Inner frame */}
+            <div style={{ position: 'absolute', inset: 16, border: `1px solid ${P.sage}44`, borderRadius: 4, zIndex: 1, pointerEvents: 'none' }} />
+            {/* Camera icon + label */}
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16 }}>
+              <svg viewBox="0 0 48 48" style={{ width: 52, height: 52, opacity: 0.3 }} aria-hidden="true">
+                <circle cx="24" cy="26" r="10" fill="none" stroke={P.sage} strokeWidth="1.5" />
+                <path d="M8 18 L14 10 L34 10 L40 18 L44 18 A2 2 0 0 1 46 20 L46 38 A2 2 0 0 1 44 40 L4 40 A2 2 0 0 1 2 38 L2 20 A2 2 0 0 1 4 18 Z" fill="none" stroke={P.sage} strokeWidth="1.5" />
+              </svg>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.sage, opacity: 0.55 }}>фото пары</div>
+            </div>
+          </div>
+          {/* Quote */}
+          <div>
+            <div style={{ width: 40, height: 2, background: P.sage, marginBottom: 32 }} />
+            <blockquote style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(26px, 3.5vw, 44px)', fontStyle: 'italic', fontWeight: 300, lineHeight: 1.4, color: P.ink, margin: '0 0 32px' }}>
+              «{t.quote.text}»
+            </blockquote>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.sage }}>{t.quote.author}</div>
+            <div style={{ marginTop: 40, display: 'flex', gap: 12 }}>
+              <div style={{ width: 10, height: 10, borderRadius: '50%', background: P.sage }} />
+              <div style={{ width: 10, height: 10, borderRadius: '50%', background: P.rose }} />
+              <div style={{ width: 10, height: 10, borderRadius: '50%', background: P.blush }} />
+            </div>
+          </div>
         </div>
-        <div style={{ position: 'absolute', bottom: -20, left: -20, pointerEvents: 'none', opacity: 0.2 }}>
-          <LeafSVG color="#fff" rotate={-160} size={120} />
-        </div>
-        <blockquote style={{ position: 'relative', zIndex: 1, fontFamily: "'Fraunces', serif", fontSize: 'clamp(24px, 3.5vw, 44px)', fontStyle: 'italic', fontWeight: 300, lineHeight: 1.4, margin: '0 auto', maxWidth: 680 }}>
-          «{t.quote.text}»
-        </blockquote>
-        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', marginTop: 28, opacity: 0.75 }}>{t.quote.author}</div>
       </section>
 
       {/* Story */}
