@@ -846,6 +846,99 @@ const TEMPLATES = [
     ],
     details: { dressCode: 'White tie · gold accents welcome', gift: 'Wish list на сайте отеля', kids: 'Adults only', transfer: 'Трансфер от аэропорта Сочи включён' },
   },
+  {
+    slug: 'bauhaus',
+    name: 'Struk',
+    style: 'Bauhaus / Constructivist',
+    styleRu: 'Bauhaus / конструктивизм',
+    structure: 'Вертикальный скролл с чередующимися цветными блоками и геометрией',
+    tagline: 'Первичные цвета, жёсткая сетка, гротеск, без украшений',
+    couple: 'Женя & Артём',
+    coupleShort: 'Ж · А',
+    date: '22.08.2026',
+    dateIso: '2026-08-22T15:00:00',
+    dateLong: '22 августа 2026',
+    dateMono: '22.08.2026',
+    venue: 'Музей Гаража современного искусства',
+    city: 'Москва',
+    rsvpDeadline: '01 августа 2026',
+    palette: { bg: '#f2f0e8', bg2: '#e8e4d8', ink: '#0a0a0a', ink2: '#444444', accent: '#d63b2f', paper: '#ffffff', red: '#d63b2f', blue: '#1d4f8c', yellow: '#f5c400' },
+    accent: '#d63b2f', ink: '#0a0a0a', previewBg: '#f2f0e8',
+    quote: { text: 'Форма следует функции. Мы следуем чувству.', author: 'Ж · А' },
+    story: [
+      { heading: 'Типографика', body: 'Женя преподаёт шрифтовой дизайн в Вышке, Артём — архитектор с берлинским дипломом. Познакомились на воркшопе по сетке в 2022 году, когда не сошлись во мнениях о ширине модуля.' },
+      { heading: 'Конструкция', body: 'Три года компромиссов и споров о пропорциях привели к единственному логичному решению — построить что-то вместе. Навсегда.' },
+    ],
+    program: [
+      { time: '15:00', title: 'Регистрация', place: 'Атриум · Гараж' },
+      { time: '17:00', title: 'Церемония', place: 'Зал А · красный блок' },
+      { time: '19:00', title: 'Ужин', place: 'Парковая терраса' },
+      { time: '22:00', title: 'Вечеринка', place: 'Basement · до последнего' },
+    ],
+    details: { dressCode: 'Primary colors only · no grey', gift: 'Книги об архитектуре или деньги на Bauhaus-trip', kids: 'Дети с 15:00 до 20:00', transfer: 'Метро «Парк культуры» · 5 мин пешком' },
+  },
+  {
+    slug: 'celestial',
+    name: 'Solstice',
+    style: 'Celestial / Stargazer',
+    styleRu: 'Celestial / звёзды',
+    structure: 'Тёмные snap-scroll секции с SVG-созвездиями и луной',
+    tagline: 'Индиго, золото, звёздное небо, фазы луны, italic serif',
+    couple: 'Ника & Даниил',
+    coupleShort: 'Н · Д',
+    date: '21.06.2026',
+    dateIso: '2026-06-21T22:00:00',
+    dateLong: '21 июня 2026',
+    dateMono: '21.06.2026',
+    venue: 'Крымская астрофизическая обсерватория',
+    city: 'Крым',
+    rsvpDeadline: '01 июня 2026',
+    palette: { bg: '#060714', bg2: '#0f1035', ink: '#e8e4f5', ink2: '#9990c5', accent: '#c9a84c', paper: '#0f1035' },
+    accent: '#c9a84c', ink: '#060714', previewBg: '#060714',
+    quote: { text: 'Мы встретились под небом, которое не знает расстояний.', author: 'Н · Д' },
+    story: [
+      { heading: 'Первое созвездие', body: 'Ника и Даниил познакомились в 2021 на ночной экскурсии по Алтаю. Он показывал ей Персеиды. Она уже нашла их сама, но промолчала.' },
+      { heading: 'Летнее солнцестояние', body: 'Мы выбрали 21 июня не случайно — самую длинную ночь в году. Под этим же небом, где однажды начали смотреть в одну сторону.' },
+    ],
+    program: [
+      { time: '20:00', title: 'Встреча гостей', place: 'Главный купол' },
+      { time: '22:00', title: 'Церемония', place: 'Под открытым небом' },
+      { time: '23:30', title: 'Ужин', place: 'Панорамная терраса' },
+      { time: '01:00', title: 'Наблюдение звёзд', place: 'Телескоп открыт для гостей' },
+    ],
+    details: { dressCode: 'Dark tones · midnight blue, gold, black', gift: 'Звезда в каталоге или ваше тепло', kids: 'Дети старше 10 лет', transfer: 'Автобус от Симферополя в 18:30' },
+  },
+  {
+    slug: 'mediterranean',
+    name: 'Riva',
+    style: 'Mediterranean / Coastal',
+    styleRu: 'Средиземноморье',
+    structure: 'Светлые открытки-карточки, терракота, лазурь, летний бриз',
+    tagline: 'Белёные стены, терракота, олива, морской воздух — летнее счастье',
+    couple: 'Катя & Антон',
+    coupleShort: 'К · А',
+    date: '05.09.2026',
+    dateIso: '2026-09-05T18:00:00',
+    dateLong: '5 сентября 2026',
+    dateMono: '05.09.2026',
+    venue: 'Вилла Монтенегро · Будва',
+    city: 'Черногория',
+    rsvpDeadline: '15 августа 2026',
+    palette: { bg: '#fefcf7', bg2: '#f5ede0', ink: '#1a1a14', ink2: '#5a4e3a', accent: '#c9622a', sea: '#3a7cba', sage: '#687d5f', paper: '#fff9f0' },
+    accent: '#c9622a', ink: '#1a1a14', previewBg: '#fefcf7',
+    quote: { text: 'Море не спрашивает, зачем. Оно просто приходит.', author: 'К · А' },
+    story: [
+      { heading: 'Хорватия, 2022', body: 'Катя и Антон встретились на паруснике у Сплита в августе 2022. Он был шкипером, она — случайным пассажиром с неправильным билетом. Четыре дня перехода хватило на всё остальное.' },
+      { heading: 'Три года у воды', body: 'С тех пор — каждое лето вдоль побережья. Дубровник, Котор, Будва. В этот раз — последняя остановка и первый якорь.' },
+    ],
+    program: [
+      { time: '17:00', title: 'Aperitivo', place: 'Терраса у бассейна' },
+      { time: '18:30', title: 'Церемония', place: 'Сад с видом на море' },
+      { time: '20:00', title: 'Ужин', place: 'Длинный стол под оливами' },
+      { time: '23:00', title: 'Танцы', place: 'До рассвета · у воды' },
+    ],
+    details: { dressCode: 'Mediterranean summer · белый, терракота, лён', gift: 'Ваше присутствие дороже всего', kids: 'Только взрослые', transfer: 'Трансфер от аэропорта Тиват включён' },
+  },
 ];
 
 Object.assign(browserGlobal, { TEMPLATES });
@@ -1280,6 +1373,65 @@ function TemplatePreview({ template: t }) {
           <div style={{ fontSize: 'clamp(14px, 2.6vw, 22px)', letterSpacing: '0.18em', margin: '6px 0', lineHeight: 1.1 }}>{a.toUpperCase()}<br/><span style={{ opacity: 0.6, fontSize: '0.7em' }}>&</span><br/>{b.toUpperCase()}</div>
           <div style={{ fontSize: 7, letterSpacing: '0.35em', marginTop: 6 }}>{t.dateMono}</div>
         </div>
+      </div>
+    ),
+    // Struk — Bauhaus: colored grid blocks + bold geometry
+    bauhaus: (() => {
+      const red = P.red || '#d63b2f';
+      const blue = P.blue || '#1d4f8c';
+      const yellow = P.yellow || '#f5c400';
+      return (
+        <div style={{ height: '100%', display: 'grid', gridTemplateRows: '55% 45%', fontFamily: "'Inter', sans-serif" }}>
+          <div style={{ background: red, display: 'grid', gridTemplateColumns: '1fr 1fr', color: '#fff' }}>
+            <div style={{ padding: 12, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div style={{ fontWeight: 900, fontSize: 7, letterSpacing: '0.25em', textTransform: 'uppercase', opacity: 0.8 }}>STRUK</div>
+              <div style={{ fontWeight: 900, fontSize: 'clamp(20px, 4.5vw, 36px)', lineHeight: 0.85, letterSpacing: '-0.04em' }}>{a}<br/>&amp;<br/>{b}</div>
+            </div>
+            <div style={{ background: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 36, height: 36, borderRadius: '50%', background: yellow }} />
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '40% 60%' }}>
+            <div style={{ background: blue, padding: 10, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+              <div style={{ fontWeight: 900, fontSize: 7, color: '#fff', letterSpacing: '0.2em', textTransform: 'uppercase' }}>{t.dateMono}</div>
+            </div>
+            <div style={{ background: yellow, padding: 10, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div style={{ fontWeight: 900, fontSize: 7, color: '#0a0a0a', letterSpacing: '0.15em', textTransform: 'uppercase', opacity: 0.7 }}>{t.venue.split('·')[0].trim()}</div>
+            </div>
+          </div>
+        </div>
+      );
+    })(),
+    // Solstice — Celestial: dark indigo + gold stars SVG
+    celestial: (
+      <div style={{ height: '100%', background: bg, color: P.accent || '#c9a84c', position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', padding: 16 }}>
+        {/* star dots */}
+        {[[12, 18], [72, 8], [48, 32], [28, 56], [82, 44], [60, 68], [18, 72], [90, 20], [40, 14]].map(([x, y], i) => (
+          <div key={i} aria-hidden="true" style={{ position: 'absolute', left: `${x}%`, top: `${y}%`, width: i % 3 === 0 ? 2 : 1.5, height: i % 3 === 0 ? 2 : 1.5, borderRadius: '50%', background: P.accent || '#c9a84c', opacity: i % 2 === 0 ? 0.9 : 0.5 }} />
+        ))}
+        {/* moon crescent */}
+        <svg viewBox="0 0 40 40" style={{ width: 28, height: 28, marginBottom: 10 }} aria-hidden="true">
+          <path d="M20 4 A16 16 0 1 0 20 36 A10 10 0 1 1 20 4Z" fill={P.accent || '#c9a84c'} />
+        </svg>
+        <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(16px, 3vw, 22px)', fontStyle: 'italic', textAlign: 'center', lineHeight: 1.1 }}>{a}<br/><span style={{ fontSize: '0.6em', opacity: 0.6 }}>&amp;</span><br/>{b}</div>
+        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 7, letterSpacing: '0.3em', opacity: 0.6, marginTop: 10 }}>{t.dateMono}</div>
+      </div>
+    ),
+    // Riva — Mediterranean: warm card with terracotta stripe + arch
+    mediterranean: (
+      <div style={{ height: '100%', background: bg, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        <div style={{ background: P.accent || '#c9622a', height: 6 }} />
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 16, position: 'relative' }}>
+          {/* arch shape */}
+          <svg viewBox="0 0 80 90" style={{ position: 'absolute', top: 8, right: 12, width: 40, height: 45, opacity: 0.12 }} aria-hidden="true">
+            <path d="M5 90 L5 40 Q5 5 40 5 Q75 5 75 40 L75 90Z" fill={P.accent || '#c9622a'} />
+          </svg>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 7, letterSpacing: '0.25em', color: P.accent || '#c9622a', textTransform: 'uppercase', marginBottom: 8 }}>Riva</div>
+          <div style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontSize: 'clamp(18px, 3.5vw, 26px)', textAlign: 'center', color: fg, lineHeight: 1.15 }}>{a}<br/><span style={{ fontSize: '0.55em', opacity: 0.5 }}>&</span><br/>{b}</div>
+          <div style={{ marginTop: 10, fontFamily: "'JetBrains Mono', monospace", fontSize: 7, letterSpacing: '0.18em', color: fg, opacity: 0.5 }}>{t.dateMono}</div>
+          <div style={{ marginTop: 4, fontFamily: "'JetBrains Mono', monospace", fontSize: 6, letterSpacing: '0.12em', color: P.accent || '#c9622a', opacity: 0.8 }}>{t.city.toUpperCase()}</div>
+        </div>
+        <div style={{ background: P.sea || '#3a7cba', height: 8, opacity: 0.7 }} />
       </div>
     ),
   };
@@ -4263,6 +4415,546 @@ function ArtDecoRSVP({ rsvp, t }) {
 Object.assign(browserGlobal, { TemplateArtDeco });
 
 
+// ===== src/template-bauhaus.jsx =====
+// 10 · Struk — Bauhaus/Constructivist: vertical colored blocks, left sidebar nav
+
+function TemplateBauhaus() {
+  const t = TEMPLATES.find((x) => x.slug === 'bauhaus');
+  const P = t.palette;
+  const cd = useCountdown(t.dateIso);
+  const rsvp = useRsvp();
+  const [a, b] = t.couple.split('&').map((s) => s.trim());
+  const [section, setSection] = useState(0);
+
+  const sections = [
+    { id: 'cover', label: 'COVER' },
+    { id: 'invite', label: 'INVITE' },
+    { id: 'story', label: 'STORY' },
+    { id: 'count', label: 'COUNT' },
+    { id: 'program', label: 'PROG' },
+    { id: 'rsvp', label: 'RSVP' },
+  ];
+
+  const colors = [P.red, P.bg, P.blue, P.ink, P.yellow, P.red];
+  const textColors = ['#fff', P.ink, '#fff', P.yellow, P.ink, '#fff'];
+
+  useEffect(() => {
+    const handler = () => {
+      const idx = sections.findIndex((s) => {
+        const el = document.getElementById(`bauhaus-${s.id}`);
+        if (!el) return false;
+        const rect = el.getBoundingClientRect();
+        return rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
+      });
+      if (idx >= 0) setSection(idx);
+    };
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
+
+  const goTo = (id) => {
+    const el = document.getElementById(`bauhaus-${id}`);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const mono = { fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.15em', textTransform: 'uppercase' as const };
+  const black = { fontFamily: "'Archivo Black', sans-serif" };
+
+  return (
+    <div style={{ background: P.bg, color: P.ink, fontFamily: "'Inter', sans-serif" }}>
+      <DemoBar t={t} />
+
+      {/* Left sidebar nav */}
+      <nav aria-label="Разделы" style={{
+        position: 'fixed', left: 'clamp(10px, 1.5vw, 20px)', top: '50%', transform: 'translateY(-50%)', zIndex: 50,
+        display: 'flex', flexDirection: 'column', gap: 6,
+      }}>
+        {sections.map((s, i) => (
+          <button key={s.id} type="button" onClick={() => goTo(s.id)} aria-label={s.label} aria-current={section === i}
+            style={{ width: 8, height: section === i ? 28 : 8, background: colors[i], border: 0, cursor: 'pointer', transition: 'height 250ms', padding: 0 }} />
+        ))}
+      </nav>
+
+      {/* 0 — Cover */}
+      <section id="bauhaus-cover" style={{ minHeight: '100vh', background: P.red, color: '#fff', display: 'grid', gridTemplateRows: '1fr auto', padding: 'clamp(80px, 8vw, 120px) clamp(48px, 6vw, 80px) clamp(40px, 5vw, 60px)' }}>
+        <div>
+          <div style={{ ...mono, fontSize: 'clamp(9px, 1vw, 11px)', opacity: 0.75, marginBottom: 32 }}>§ 00 / STRUK — BAUHAUS SERIES</div>
+          <div style={{ ...black, fontSize: 'clamp(72px, 14vw, 200px)', lineHeight: 0.82, letterSpacing: '-0.05em' }}>
+            {a.toUpperCase()}<br />
+            <span style={{ color: P.yellow, WebkitTextStroke: '0px' }}>&amp;</span><br />
+            {b.toUpperCase()}
+          </div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+          <div style={{ ...black, fontSize: 'clamp(14px, 2.5vw, 22px)' }}>{t.dateMono}</div>
+          <div style={{ width: 60, height: 60, borderRadius: '50%', background: P.yellow }} aria-hidden="true" />
+          <div style={{ ...mono, fontSize: 'clamp(9px, 1vw, 11px)', textAlign: 'right', opacity: 0.8 }}>{t.city}<br />{t.venue.split('·')[0].trim()}</div>
+        </div>
+      </section>
+
+      {/* 1 — Invite */}
+      <section id="bauhaus-invite" style={{ minHeight: '100vh', background: P.bg, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 'clamp(60px, 8vw, 100px) clamp(48px, 6vw, 80px)' }}>
+        <div style={{ ...mono, fontSize: 'clamp(9px, 1vw, 11px)', opacity: 0.5, marginBottom: 32 }}>§ 01 / EINLADUNG</div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
+          {[['ДАТА', t.dateLong], ['МЕСТО', t.venue], ['ДРЕССКОД', t.details.dressCode], ['CITY', t.city]].map(([k, v], i) => (
+            <div key={k} style={{ padding: 'clamp(20px, 3vw, 36px) clamp(16px, 2vw, 28px)', borderTop: '3px solid ' + P.ink, borderLeft: i % 2 === 1 ? '3px solid ' + P.ink : 'none' }}>
+              <div style={{ ...mono, fontSize: 10, opacity: 0.5, marginBottom: 8 }}>{k}</div>
+              <div style={{ ...black, fontSize: 'clamp(18px, 2.5vw, 28px)', lineHeight: 1.1 }}>{v}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop: 40, padding: 'clamp(20px, 3vw, 32px)', background: P.blue, color: '#fff' }}>
+          <div style={{ ...mono, fontSize: 10, opacity: 0.7, marginBottom: 12 }}>— МАНИФЕСТ —</div>
+          <div style={{ ...black, fontSize: 'clamp(20px, 3vw, 32px)', lineHeight: 1 }}>{t.quote.text}</div>
+        </div>
+      </section>
+
+      {/* 2 — Story */}
+      <section id="bauhaus-story" style={{ minHeight: '100vh', background: P.blue, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 'clamp(60px, 8vw, 100px) clamp(48px, 6vw, 80px)' }}>
+        <div style={{ ...mono, fontSize: 'clamp(9px, 1vw, 11px)', opacity: 0.6, marginBottom: 32 }}>§ 02 / GESCHICHTE</div>
+        {t.story.map((s, i) => (
+          <div key={i} style={{ display: 'grid', gridTemplateColumns: '3px 1fr', gap: 28, marginBottom: 40 }}>
+            <div style={{ background: i === 0 ? P.red : P.yellow, alignSelf: 'stretch' }} aria-hidden="true" />
+            <div>
+              <div style={{ ...black, fontSize: 'clamp(22px, 3.5vw, 40px)', marginBottom: 12 }}>{s.heading.toUpperCase()}</div>
+              <div style={{ fontSize: 'clamp(15px, 1.5vw, 18px)', lineHeight: 1.6, opacity: 0.85 }}>{s.body}</div>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {/* 3 — Countdown */}
+      <section id="bauhaus-count" style={{ minHeight: '100vh', background: P.ink, color: P.yellow, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 'clamp(60px, 8vw, 100px) clamp(48px, 6vw, 80px)' }}>
+        <div style={{ ...mono, fontSize: 'clamp(9px, 1vw, 11px)', opacity: 0.6, marginBottom: 32, color: P.yellow }}>§ 03 / COUNTDOWN</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0 }}>
+          {[['ДНИ', cd.days], ['ЧАС', cd.hours], ['МИН', cd.minutes], ['СЕК', cd.seconds]].map(([k, v], i) => (
+            <div key={k} style={{ padding: 'clamp(20px, 3vw, 36px) clamp(10px, 1.5vw, 20px)', borderLeft: i > 0 ? '2px solid #ffffff22' : 'none' }}>
+              <div style={{ ...mono, fontSize: 9, opacity: 0.6, marginBottom: 8 }}>{k}</div>
+              <div style={{ ...black, fontSize: 'clamp(48px, 8vw, 120px)', lineHeight: 0.9, fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.04em' }}>{String(v).padStart(2, '0')}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop: 40, height: 3, background: P.red }} aria-hidden="true" />
+      </section>
+
+      {/* 4 — Program */}
+      <section id="bauhaus-program" style={{ minHeight: '100vh', background: P.yellow, color: P.ink, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 'clamp(60px, 8vw, 100px) clamp(48px, 6vw, 80px)' }}>
+        <div style={{ ...mono, fontSize: 'clamp(9px, 1vw, 11px)', opacity: 0.6, marginBottom: 32 }}>§ 04 / PROGRAMM</div>
+        {t.program.map((p, i) => (
+          <div key={i} style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 24, borderTop: '3px solid ' + P.ink, padding: 'clamp(16px, 2vw, 24px) 0', alignItems: 'baseline' }}>
+            <div style={{ ...black, fontSize: 'clamp(20px, 3vw, 36px)', minWidth: 100 }}>{p.time}</div>
+            <div>
+              <div style={{ ...black, fontSize: 'clamp(20px, 3vw, 36px)' }}>{p.title.toUpperCase()}</div>
+              <div style={{ ...mono, fontSize: 10, opacity: 0.6, marginTop: 4 }}>{p.place}</div>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {/* 5 — RSVP */}
+      <section id="bauhaus-rsvp" style={{ minHeight: '100vh', background: P.red, color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 'clamp(60px, 8vw, 100px) clamp(48px, 6vw, 80px)' }}>
+        <div style={{ ...mono, fontSize: 'clamp(9px, 1vw, 11px)', opacity: 0.75, marginBottom: 32 }}>§ 05 / R.S.V.P.</div>
+        <div style={{ ...black, fontSize: 'clamp(40px, 7vw, 100px)', lineHeight: 0.88, marginBottom: 40 }}>ОТВЕТЬТЕ<br />ДО {t.rsvpDeadline.toUpperCase()}</div>
+        <BauhausRSVP rsvp={rsvp} t={t} />
+      </section>
+    </div>
+  );
+}
+
+function BauhausRSVP({ rsvp, t }) {
+  const P = t.palette;
+  const black = { fontFamily: "'Archivo Black', sans-serif" };
+  const mono = { fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.15em', textTransform: 'uppercase' as const };
+  if (rsvp.sent) return <div style={{ ...black, fontSize: 'clamp(24px, 4vw, 48px)', lineHeight: 1.1 }}>DANKE, {(rsvp.state.name || 'ГОСТЬ').toUpperCase()}.<br /><span style={{ color: P.yellow }}>ЖДЁМ ВАС.</span></div>;
+  return (
+    <form onSubmit={rsvp.submit} style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 480 }}>
+      <input required placeholder="ВАШ ЯРЛЫК (ИМЯ)" value={rsvp.state.name} onChange={(e) => rsvp.update('name', e.target.value)}
+        style={{ ...black, fontSize: 20, background: 'transparent', border: 0, borderBottom: '3px solid #fff', color: '#fff', padding: '12px 0', outline: 'none' }} />
+      <div style={{ display: 'flex', gap: 0 }}>
+        {[['yes', 'ДА'], ['no', 'НЕТ']].map(([v, l]) => (
+          <button type="button" key={v} onClick={() => rsvp.update('attending', v)}
+            style={{ flex: 1, padding: 20, background: rsvp.state.attending === v ? P.yellow : 'transparent', color: rsvp.state.attending === v ? P.ink : '#fff', border: '3px solid ' + (rsvp.state.attending === v ? P.yellow : '#fff'), cursor: 'pointer', ...black, fontSize: 20 }}>{l}</button>
+        ))}
+      </div>
+      <button type="submit" style={{ padding: 20, background: P.ink, color: P.yellow, border: 0, cursor: 'pointer', ...black, fontSize: 16, letterSpacing: '0.1em' }}>ОТПРАВИТЬ →</button>
+    </form>
+  );
+}
+
+Object.assign(browserGlobal, { TemplateBauhaus });
+
+
+// ===== src/template-celestial.jsx =====
+// 11 · Solstice — Dark snap-scroll with SVG constellations and gold accents
+
+const STARS = [[8,12],[15,28],[22,8],[35,42],[48,15],[52,68],[61,32],[70,10],[78,55],[85,22],[90,38],[28,72],[42,85],[68,78],[55,5],[5,60],[94,65],[38,18]];
+
+function Constellation({ style }: { style?: React.CSSProperties }) {
+  return (
+    <svg viewBox="0 0 100 100" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', ...style }} aria-hidden="true">
+      {STARS.map(([x, y], i) => (
+        <circle key={i} cx={x} cy={y} r={i % 4 === 0 ? 1.2 : 0.7} fill="#c9a84c" opacity={i % 3 === 0 ? 0.9 : 0.4} />
+      ))}
+      {[[0,4],[4,7],[7,2],[2,10],[10,14],[14,8],[8,16]].map(([a, b], i) => (
+        <line key={i} x1={STARS[a][0]} y1={STARS[a][1]} x2={STARS[b][0]} y2={STARS[b][1]} stroke="#c9a84c" strokeWidth="0.3" opacity="0.25" />
+      ))}
+    </svg>
+  );
+}
+
+function MoonSVG({ color, size = 56 }: { color: string; size?: number }) {
+  return (
+    <svg viewBox="0 0 56 56" style={{ width: size, height: size }} aria-hidden="true">
+      <circle cx="28" cy="28" r="24" fill="none" stroke={color} strokeWidth="1" opacity="0.3" />
+      <path d="M28 6 A22 22 0 1 0 28 50 A14 14 0 1 1 28 6Z" fill={color} />
+    </svg>
+  );
+}
+
+function TemplateCelestial() {
+  const t = TEMPLATES.find((x) => x.slug === 'celestial');
+  const P = t.palette;
+  const cd = useCountdown(t.dateIso);
+  const rsvp = useRsvp();
+  const [a, b] = t.couple.split('&').map((s) => s.trim());
+  const scrollerRef = useRef(null);
+  const [active, setActive] = useState(0);
+
+  const slides = [
+    { id: 'cover', label: 'Обложка' },
+    { id: 'invite', label: 'Приглашение' },
+    { id: 'story', label: 'История' },
+    { id: 'count', label: 'До события' },
+    { id: 'program', label: 'Вечер' },
+    { id: 'rsvp', label: 'Ответ' },
+  ];
+
+  useEffect(() => {
+    const el = scrollerRef.current as HTMLElement | null;
+    if (!el) return;
+    const sections = el.querySelectorAll('[data-cel]');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.cel)); });
+    }, { root: el, threshold: 0.5 });
+    sections.forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, []);
+
+  const goTo = (i: number) => {
+    const el = scrollerRef.current as HTMLElement | null;
+    if (!el) return;
+    const target = el.querySelector(`[data-cel="${i}"]`) as HTMLElement | null;
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const serif = { fontFamily: "'Cormorant Garamond', serif" };
+  const mono = { fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.2em' };
+  const slide = { minHeight: '100vh', scrollSnapAlign: 'start' as const, display: 'flex' as const, flexDirection: 'column' as const, justifyContent: 'center' as const, padding: 'clamp(60px, 8vw, 100px) clamp(40px, 6vw, 80px)', position: 'relative' as const, overflow: 'hidden' as const };
+
+  return (
+    <div style={{ background: P.bg, color: P.ink }}>
+      <DemoBar t={t} theme="dark" />
+
+      {/* Dot navigation */}
+      <nav aria-label="Разделы" style={{ position: 'fixed', right: 'clamp(14px, 2vw, 28px)', top: '50%', transform: 'translateY(-50%)', zIndex: 40, display: 'flex', flexDirection: 'column', gap: 14 }}>
+        {slides.map((s, i) => (
+          <button key={s.id} type="button" onClick={() => goTo(i)} aria-label={s.label} aria-current={active === i}
+            style={{ width: 8, height: 8, borderRadius: '50%', border: `1px solid ${P.accent}`, background: active === i ? P.accent : 'transparent', cursor: 'pointer', padding: 0, transition: 'background 200ms, transform 200ms', transform: active === i ? 'scale(1.4)' : 'scale(1)' }} />
+        ))}
+      </nav>
+
+      <div ref={scrollerRef} style={{ height: '100vh', overflowY: 'auto', scrollSnapType: 'y mandatory' }}>
+        {/* 0 — Cover */}
+        <section data-cel="0" style={{ ...slide, textAlign: 'center', alignItems: 'center' }}>
+          <Constellation />
+          <MoonSVG color={P.accent} size={64} />
+          <div style={{ ...serif, fontSize: 'clamp(52px, 9vw, 120px)', fontStyle: 'italic', lineHeight: 0.9, margin: '24px 0', color: P.ink }}>
+            {a}<br /><span style={{ color: P.accent, fontSize: '0.55em' }}>&amp;</span><br />{b}
+          </div>
+          <div style={{ ...mono, fontSize: 10, color: P.accent, opacity: 0.8 }}>{t.dateMono}</div>
+          <div style={{ ...mono, fontSize: 9, color: P.ink2, marginTop: 8, textTransform: 'uppercase' as const }}>{t.venue}</div>
+        </section>
+
+        {/* 1 — Invite */}
+        <section data-cel="1" style={{ ...slide }}>
+          <Constellation style={{ opacity: 0.4 }} />
+          <div style={{ ...mono, fontSize: 9, color: P.accent, opacity: 0.7, marginBottom: 24, textTransform: 'uppercase' as const }}>— Приглашение —</div>
+          <div style={{ ...serif, fontSize: 'clamp(20px, 3vw, 28px)', fontStyle: 'italic', lineHeight: 1.55, color: P.ink, maxWidth: 560, marginBottom: 36 }}>
+            {a} и {b} приглашают вас разделить с ними этот особый вечер — в ночь летнего солнцестояния, под звёздным небом Крыма.
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1, background: P.accent + '33', maxWidth: 480 }}>
+            {[['Дата', t.dateLong], ['Место', t.venue], ['Дресскод', t.details.dressCode], ['Трансфер', t.details.transfer]].map(([k, v]) => (
+              <div key={k} style={{ background: P.bg2, padding: 'clamp(14px, 2vw, 20px)' }}>
+                <div style={{ ...mono, fontSize: 8, color: P.accent, opacity: 0.8, marginBottom: 6, textTransform: 'uppercase' as const }}>{k}</div>
+                <div style={{ ...serif, fontSize: 15, color: P.ink }}>{v}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 2 — Story */}
+        <section data-cel="2" style={{ ...slide, background: P.bg2 }}>
+          <Constellation style={{ opacity: 0.5 }} />
+          <div style={{ ...mono, fontSize: 9, color: P.accent, opacity: 0.7, marginBottom: 32, textTransform: 'uppercase' as const }}>— История —</div>
+          {t.story.map((s, i) => (
+            <div key={i} style={{ marginBottom: 36, paddingLeft: 24, borderLeft: `1px solid ${P.accent}55` }}>
+              <div style={{ ...serif, fontSize: 'clamp(22px, 3.5vw, 36px)', fontStyle: 'italic', color: P.accent, marginBottom: 10 }}>{s.heading}</div>
+              <div style={{ ...serif, fontSize: 'clamp(16px, 1.8vw, 20px)', color: P.ink, lineHeight: 1.65 }}>{s.body}</div>
+            </div>
+          ))}
+          <div style={{ ...serif, fontSize: 'clamp(18px, 2.5vw, 26px)', fontStyle: 'italic', color: P.ink2, marginTop: 8 }}>«{t.quote.text}»</div>
+        </section>
+
+        {/* 3 — Countdown */}
+        <section data-cel="3" style={{ ...slide, alignItems: 'center', textAlign: 'center' }}>
+          <Constellation />
+          <div style={{ ...mono, fontSize: 9, color: P.accent, opacity: 0.7, marginBottom: 32, textTransform: 'uppercase' as const }}>— До события —</div>
+          <div style={{ display: 'flex', gap: 'clamp(20px, 4vw, 48px)', justifyContent: 'center' }}>
+            {[['дней', cd.days], ['часов', cd.hours], ['минут', cd.minutes], ['секунд', cd.seconds]].map(([k, v]) => (
+              <div key={k} style={{ textAlign: 'center' }}>
+                <div style={{ ...serif, fontSize: 'clamp(52px, 9vw, 100px)', fontStyle: 'italic', color: P.accent, lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{String(v).padStart(2, '0')}</div>
+                <div style={{ ...mono, fontSize: 8, color: P.ink2, opacity: 0.7, marginTop: 6, textTransform: 'uppercase' as const }}>{k}</div>
+              </div>
+            ))}
+          </div>
+          <MoonSVG color={P.accent} size={40} />
+        </section>
+
+        {/* 4 — Program */}
+        <section data-cel="4" style={{ ...slide }}>
+          <Constellation style={{ opacity: 0.35 }} />
+          <div style={{ ...mono, fontSize: 9, color: P.accent, opacity: 0.7, marginBottom: 32, textTransform: 'uppercase' as const }}>— Вечер —</div>
+          {t.program.map((p, i) => (
+            <div key={i} style={{ display: 'flex', gap: 24, marginBottom: 28, paddingBottom: 28, borderBottom: `1px solid ${P.accent}22` }}>
+              <div style={{ ...serif, fontSize: 'clamp(22px, 3vw, 32px)', color: P.accent, fontStyle: 'italic', minWidth: 80 }}>{p.time}</div>
+              <div>
+                <div style={{ ...serif, fontSize: 'clamp(18px, 2.5vw, 26px)', color: P.ink, fontStyle: 'italic' }}>{p.title}</div>
+                <div style={{ ...mono, fontSize: 9, color: P.ink2, opacity: 0.7, marginTop: 4, textTransform: 'uppercase' as const }}>{p.place}</div>
+              </div>
+            </div>
+          ))}
+        </section>
+
+        {/* 5 — RSVP */}
+        <section data-cel="5" style={{ ...slide, alignItems: 'center', textAlign: 'center' }}>
+          <Constellation />
+          <MoonSVG color={P.accent} size={48} />
+          <div style={{ ...mono, fontSize: 9, color: P.accent, opacity: 0.7, marginBottom: 20, textTransform: 'uppercase' as const }}>— Ответьте до {t.rsvpDeadline} —</div>
+          <div style={{ ...serif, fontSize: 'clamp(32px, 5vw, 60px)', fontStyle: 'italic', color: P.ink, marginBottom: 36 }}>Вы придёте?</div>
+          <CelestialRSVP rsvp={rsvp} t={t} />
+        </section>
+      </div>
+    </div>
+  );
+}
+
+function CelestialRSVP({ rsvp, t }) {
+  const P = t.palette;
+  const serif = { fontFamily: "'Cormorant Garamond', serif" };
+  const mono = { fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.18em', textTransform: 'uppercase' as const };
+  if (rsvp.sent) return <div style={{ ...serif, fontSize: 'clamp(22px, 3.5vw, 36px)', fontStyle: 'italic', color: P.accent }}>Благодарим, {rsvp.state.name || 'друг'}.<br />Ждём вас под звёздами.</div>;
+  return (
+    <form onSubmit={rsvp.submit} style={{ display: 'flex', flexDirection: 'column', gap: 20, width: '100%', maxWidth: 400, textAlign: 'left' }}>
+      <input required placeholder="Ваше имя" value={rsvp.state.name} onChange={(e) => rsvp.update('name', e.target.value)}
+        style={{ ...serif, fontSize: 20, background: 'transparent', border: 0, borderBottom: `1px solid ${P.accent}66`, color: P.ink, padding: '10px 0', outline: 'none', fontStyle: 'italic' }} />
+      <div style={{ display: 'flex', gap: 10 }}>
+        {[['yes', 'Буду'], ['no', 'Не смогу']].map(([v, l]) => (
+          <button type="button" key={v} onClick={() => rsvp.update('attending', v)}
+            style={{ flex: 1, padding: 14, background: rsvp.state.attending === v ? P.accent : 'transparent', color: rsvp.state.attending === v ? P.bg : P.accent, border: `1px solid ${P.accent}`, cursor: 'pointer', ...serif, fontSize: 18, fontStyle: 'italic' }}>{l}</button>
+        ))}
+      </div>
+      <button type="submit" style={{ padding: 16, background: 'transparent', color: P.accent, border: `1px solid ${P.accent}66`, cursor: 'pointer', ...mono, fontSize: 10 }}>Отправить ✦</button>
+    </form>
+  );
+}
+
+Object.assign(browserGlobal, { TemplateCelestial });
+
+
+// ===== src/template-mediterranean.jsx =====
+// 12 · Riva — Mediterranean coastal: light airy cards, terracotta, arch motifs
+
+function TemplateMediterranean() {
+  const t = TEMPLATES.find((x) => x.slug === 'mediterranean');
+  const P = t.palette;
+  const cd = useCountdown(t.dateIso);
+  const rsvp = useRsvp();
+  const [a, b] = t.couple.split('&').map((s) => s.trim());
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const sections = [
+    { id: 'hero', label: 'Home' },
+    { id: 'invitation', label: 'Приглашение' },
+    { id: 'story', label: 'История' },
+    { id: 'program', label: 'Программа' },
+    { id: 'details', label: 'Детали' },
+    { id: 'rsvp', label: 'RSVP' },
+  ];
+
+  const goTo = (id: string) => {
+    const el = document.getElementById(`riva-${id}`);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    setMenuOpen(false);
+  };
+
+  const serif = { fontFamily: "'Fraunces', serif" };
+  const mono = { fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.14em' };
+
+  return (
+    <div style={{ background: P.bg, color: P.ink, fontFamily: "'Inter', sans-serif" }}>
+      <DemoBar t={t} />
+
+      {/* Sticky top nav */}
+      <nav aria-label="Разделы" style={{ position: 'sticky', top: 0, zIndex: 40, background: P.bg + 'ee', backdropFilter: 'blur(12px)', borderBottom: `2px solid ${P.accent}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 clamp(20px, 4vw, 48px)', height: 52 }}>
+        <span style={{ ...serif, fontStyle: 'italic', fontSize: 20, color: P.accent }}>{t.name}</span>
+        <div className="riva-navlinks" style={{ display: 'flex', gap: 'clamp(12px, 2vw, 28px)' }}>
+          {sections.map((s) => (
+            <button key={s.id} type="button" onClick={() => goTo(s.id)}
+              style={{ background: 'none', border: 0, cursor: 'pointer', ...mono, fontSize: 10, textTransform: 'uppercase' as const, color: P.ink2, padding: 0 }}>{s.label}</button>
+          ))}
+        </div>
+      </nav>
+
+      {/* Hero */}
+      <section id="riva-hero" style={{ minHeight: '90vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 'clamp(48px, 6vw, 80px)', background: `linear-gradient(180deg, ${P.bg2} 0%, ${P.bg} 100%)`, position: 'relative', overflow: 'hidden' }}>
+        {/* Arch decoration */}
+        <svg viewBox="0 0 300 400" aria-hidden="true" style={{ position: 'absolute', right: '-5%', top: '-5%', width: 'min(55%, 400px)', opacity: 0.07, pointerEvents: 'none' }}>
+          <path d="M20 400 L20 160 Q20 20 150 20 Q280 20 280 160 L280 400Z" fill={P.accent} />
+        </svg>
+        <svg viewBox="0 0 160 200" aria-hidden="true" style={{ position: 'absolute', left: '5%', bottom: '15%', width: 'min(25%, 160px)', opacity: 0.05, pointerEvents: 'none' }}>
+          <path d="M10 200 L10 80 Q10 10 80 10 Q150 10 150 80 L150 200Z" fill={P.sea} />
+        </svg>
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{ ...mono, fontSize: 10, color: P.accent, textTransform: 'uppercase' as const, marginBottom: 16, opacity: 0.8 }}>{t.city} · {t.dateMono}</div>
+          <h1 style={{ ...serif, fontSize: 'clamp(56px, 10vw, 140px)', fontStyle: 'italic', fontWeight: 300, lineHeight: 0.9, margin: '0 0 32px', letterSpacing: '-0.02em' }}>
+            {a}<br /><span style={{ color: P.accent }}>&</span><br />{b}
+          </h1>
+          <div style={{ display: 'flex', gap: 12 }}>
+            <button type="button" onClick={() => goTo('invitation')} style={{ padding: '14px 28px', background: P.accent, color: '#fff', border: 0, cursor: 'pointer', ...mono, fontSize: 10, textTransform: 'uppercase' as const }}>Открыть приглашение →</button>
+            <button type="button" onClick={() => goTo('rsvp')} style={{ padding: '14px 28px', background: 'transparent', color: P.accent, border: `1px solid ${P.accent}`, cursor: 'pointer', ...mono, fontSize: 10, textTransform: 'uppercase' as const }}>RSVP</button>
+          </div>
+        </div>
+        {/* Sea stripe at bottom */}
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 6, background: P.sea || '#3a7cba', opacity: 0.6 }} aria-hidden="true" />
+      </section>
+
+      {/* Invitation */}
+      <section id="riva-invitation" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(40px, 6vw, 80px)', borderTop: `4px solid ${P.accent}` }}>
+        <div style={{ ...mono, fontSize: 9, color: P.accent, textTransform: 'uppercase' as const, marginBottom: 24, opacity: 0.8 }}>— Приглашение —</div>
+        <div style={{ maxWidth: 680 }}>
+          <p style={{ ...serif, fontSize: 'clamp(20px, 2.5vw, 28px)', fontStyle: 'italic', lineHeight: 1.6, color: P.ink, margin: '0 0 32px' }}>
+            {a} и {b} рады пригласить вас разделить радость их свадьбы в {t.venue} {t.dateLong} года.
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 2, background: P.accent + '22' }}>
+            {[['Дата', t.dateLong], ['Место', t.venue], ['Дресскод', t.details.dressCode], ['Трансфер', t.details.transfer]].map(([k, v]) => (
+              <div key={k} style={{ background: P.bg, padding: 'clamp(16px, 2.5vw, 24px)' }}>
+                <div style={{ ...mono, fontSize: 8, color: P.accent, textTransform: 'uppercase' as const, marginBottom: 6 }}>{k}</div>
+                <div style={{ ...serif, fontStyle: 'italic', fontSize: 17, color: P.ink, lineHeight: 1.4 }}>{v}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Story */}
+      <section id="riva-story" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(40px, 6vw, 80px)', background: P.bg2 }}>
+        <div style={{ ...mono, fontSize: 9, color: P.accent, textTransform: 'uppercase' as const, marginBottom: 24, opacity: 0.8 }}>— История —</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'clamp(24px, 4vw, 48px)' }}>
+          {t.story.map((s, i) => (
+            <div key={i} style={{ borderTop: `3px solid ${P.accent}`, paddingTop: 20 }}>
+              <h3 style={{ ...serif, fontStyle: 'italic', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 300, margin: '0 0 14px', color: P.accent }}>{s.heading}</h3>
+              <p style={{ fontSize: 16, lineHeight: 1.7, color: P.ink2, margin: 0 }}>{s.body}</p>
+            </div>
+          ))}
+        </div>
+        <blockquote style={{ ...serif, fontStyle: 'italic', fontSize: 'clamp(20px, 2.5vw, 28px)', color: P.ink, borderLeft: `4px solid ${P.accent}`, paddingLeft: 24, margin: 'clamp(36px, 5vw, 60px) 0 0' }}>
+          «{t.quote.text}»
+          <footer style={{ ...mono, fontSize: 9, color: P.accent, marginTop: 10, fontStyle: 'normal', textTransform: 'uppercase' as const }}>{t.quote.author}</footer>
+        </blockquote>
+      </section>
+
+      {/* Countdown */}
+      <section style={{ padding: 'clamp(48px, 6vw, 72px) clamp(40px, 6vw, 80px)', borderTop: `1px solid ${P.accent}33`, borderBottom: `1px solid ${P.accent}33`, display: 'flex', gap: 'clamp(24px, 5vw, 60px)', justifyContent: 'center', flexWrap: 'wrap' }}>
+        {[['дней', cd.days], ['часов', cd.hours], ['минут', cd.minutes]].map(([k, v]) => (
+          <div key={k} style={{ textAlign: 'center' }}>
+            <div style={{ ...serif, fontSize: 'clamp(52px, 9vw, 96px)', fontStyle: 'italic', color: P.accent, lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}>{String(v).padStart(2, '0')}</div>
+            <div style={{ ...mono, fontSize: 9, color: P.ink2, textTransform: 'uppercase' as const, marginTop: 6 }}>{k}</div>
+          </div>
+        ))}
+      </section>
+
+      {/* Program */}
+      <section id="riva-program" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(40px, 6vw, 80px)' }}>
+        <div style={{ ...mono, fontSize: 9, color: P.accent, textTransform: 'uppercase' as const, marginBottom: 32, opacity: 0.8 }}>— Программа вечера —</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 0, maxWidth: 600 }}>
+          {t.program.map((p, i) => (
+            <div key={i} style={{ display: 'grid', gridTemplateColumns: '100px 1fr', gap: 20, padding: 'clamp(18px, 2.5vw, 24px) 0', borderBottom: `1px solid ${P.accent}22` }}>
+              <div style={{ ...mono, fontSize: 13, color: P.accent }}>{p.time}</div>
+              <div>
+                <div style={{ ...serif, fontStyle: 'italic', fontSize: 'clamp(18px, 2.5vw, 24px)', color: P.ink }}>{p.title}</div>
+                <div style={{ ...mono, fontSize: 9, color: P.ink2, opacity: 0.7, marginTop: 4, textTransform: 'uppercase' as const }}>{p.place}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Details */}
+      <section id="riva-details" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(40px, 6vw, 80px)', background: P.accent, color: '#fff' }}>
+        <div style={{ ...mono, fontSize: 9, textTransform: 'uppercase' as const, marginBottom: 32, opacity: 0.8 }}>— Детали —</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'clamp(20px, 3vw, 32px)' }}>
+          {[['Дресскод', t.details.dressCode], ['Пожелание', t.details.gift], ['Гости', t.details.kids], ['Трансфер', t.details.transfer]].map(([k, v]) => (
+            <div key={k}>
+              <div style={{ ...mono, fontSize: 8, opacity: 0.75, marginBottom: 8, textTransform: 'uppercase' as const }}>{k}</div>
+              <div style={{ ...serif, fontStyle: 'italic', fontSize: 18, lineHeight: 1.4 }}>{v}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* RSVP */}
+      <section id="riva-rsvp" style={{ padding: 'clamp(60px, 8vw, 100px) clamp(40px, 6vw, 80px)', textAlign: 'center' }}>
+        <div style={{ ...mono, fontSize: 9, color: P.accent, textTransform: 'uppercase' as const, marginBottom: 20, opacity: 0.8 }}>— Ответьте до {t.rsvpDeadline} —</div>
+        <h2 style={{ ...serif, fontStyle: 'italic', fontSize: 'clamp(36px, 6vw, 72px)', fontWeight: 300, margin: '0 0 40px', color: P.ink }}>Ждём вас у моря</h2>
+        <RivaRSVP rsvp={rsvp} t={t} />
+      </section>
+
+      <footer style={{ padding: 'clamp(24px, 3vw, 32px) clamp(40px, 6vw, 80px)', borderTop: `2px solid ${P.accent}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span style={{ ...serif, fontStyle: 'italic', fontSize: 18, color: P.accent }}>{t.name}</span>
+        <span style={{ ...mono, fontSize: 9, color: P.ink2, opacity: 0.6, textTransform: 'uppercase' as const }}>{t.city} · {t.dateMono}</span>
+      </footer>
+    </div>
+  );
+}
+
+function RivaRSVP({ rsvp, t }) {
+  const P = t.palette;
+  const serif = { fontFamily: "'Fraunces', serif" };
+  const mono = { fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.14em', textTransform: 'uppercase' as const };
+  if (rsvp.sent) return (
+    <div style={{ ...serif, fontStyle: 'italic', fontSize: 'clamp(22px, 3.5vw, 36px)', color: P.accent }}>
+      Спасибо, {rsvp.state.name || 'дорогой гость'}.<br />
+      <span style={{ color: P.ink2, fontSize: '0.7em' }}>Ждём вас у моря.</span>
+    </div>
+  );
+  return (
+    <form onSubmit={rsvp.submit} style={{ display: 'inline-flex', flexDirection: 'column', gap: 18, width: '100%', maxWidth: 440, textAlign: 'left' }}>
+      <input required placeholder="Ваше имя" value={rsvp.state.name} onChange={(e) => rsvp.update('name', e.target.value)}
+        style={{ ...serif, fontSize: 20, fontStyle: 'italic', background: 'transparent', border: 0, borderBottom: `2px solid ${P.accent}`, color: P.ink, padding: '12px 0', outline: 'none' }} />
+      <div style={{ display: 'flex', gap: 8 }}>
+        {[['yes', 'Буду с радостью'], ['no', 'К сожалению, нет']].map(([v, l]) => (
+          <button type="button" key={v} onClick={() => rsvp.update('attending', v)}
+            style={{ flex: 1, padding: 14, background: rsvp.state.attending === v ? P.accent : 'transparent', color: rsvp.state.attending === v ? '#fff' : P.accent, border: `1px solid ${P.accent}`, cursor: 'pointer', ...serif, fontSize: 15, fontStyle: 'italic' }}>{l}</button>
+        ))}
+      </div>
+      <button type="submit" style={{ padding: 16, background: P.accent, color: '#fff', border: 0, cursor: 'pointer', ...mono, fontSize: 10 }}>Отправить →</button>
+    </form>
+  );
+}
+
+Object.assign(browserGlobal, { TemplateMediterranean });
+
+
 // ===== src/app.jsx =====
 // Root app — routes
 
@@ -4276,6 +4968,7 @@ function App() {
       editorial: TemplateEditorial, swiss: TemplateSwiss, garden: TemplateGarden,
       dark: TemplateDark, brutalist: TemplateBrutalist, letterpress: TemplateLetterpress,
       wabisabi: TemplateWabiSabi, polaroid: TemplatePolaroid, artdeco: TemplateArtDeco,
+      bauhaus: TemplateBauhaus, celestial: TemplateCelestial, mediterranean: TemplateMediterranean,
     };
     const Tmpl = map[slug];
     if (Tmpl) return <Tmpl />;
