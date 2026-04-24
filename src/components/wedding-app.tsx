@@ -550,7 +550,17 @@ function AssetImage({ src, alt = '', ratio = '4/5', fit = 'cover', position = 'c
   );
 }
 
-Object.assign(browserGlobal, { Placeholder, Portrait, AssetImage });
+function PreviewThumbImage({ src, alt = '' }) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      style={{ display: 'block', width: '100%', aspectRatio: '1 / 1', objectFit: 'cover' }}
+    />
+  );
+}
+
+Object.assign(browserGlobal, { Placeholder, Portrait, AssetImage, PreviewThumbImage });
 
 
 // ===== src/templates-data.jsx =====
@@ -1243,7 +1253,7 @@ function TemplatePreview({ template: t }) {
             ))}
           </div>
           <div style={{ flex: 1, transform: 'rotate(-3deg)', background: P.paper || '#fff', padding: 4, paddingBottom: 10, boxShadow: `0 4px 10px ${fg}22`, border: `1px solid ${fg}15` }}>
-            <AssetImage src="/assets/images/polaroid-montenegro-coast.webp" alt="" ratio="1/1" style={{ height: 'auto' }} />
+            <PreviewThumbImage src="/assets/images/polaroid-montenegro-coast.webp" alt="" />
             <div style={{ fontFamily: "'Caveat', cursive", fontSize: 10, textAlign: 'center', marginTop: 2 }}>{t.dateMono}</div>
           </div>
         </div>
