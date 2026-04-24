@@ -10,6 +10,9 @@ const templateSlugs = [
   "wabisabi",
   "polaroid",
   "artdeco",
+  "bauhaus",
+  "celestial",
+  "mediterranean",
 ];
 
 export const dynamicParams = false;
