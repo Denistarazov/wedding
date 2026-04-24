@@ -4459,8 +4459,6 @@ function TemplateCelestial() {
   return <div style={{ padding: 80, fontFamily: 'sans-serif', fontSize: 24, background: '#060714', color: '#c9a84c' }}>CELESTIAL: {t ? t.name : 'NOT FOUND'}</div>;
 }
 
-function Constellation() { return null; }
-function MoonSVG() { return null; }
 function CelestialRSVP() { return null; }
 Object.assign(browserGlobal, { TemplateCelestial });
 
