@@ -4564,6 +4564,45 @@ Object.assign(browserGlobal, { TemplateArtDeco });
 // ===== src/template-bauhaus.jsx =====
 // 10 · Struk — Bauhaus/Constructivist: vertical colored blocks, left sidebar nav
 
+// Bauhaus primitives — pure geometric shapes in primary colors
+function BauhausCircle({ color, size = 80, style: ex }) {
+  return <div style={{ width: size, height: size, borderRadius: '50%', background: color, ...ex }} />;
+}
+function BauhausTriangle({ color, size = 80, style: ex }) {
+  return (
+    <svg viewBox="0 0 100 100" style={{ width: size, height: size, display: 'block', ...ex }} aria-hidden="true">
+      <polygon points="50,8 92,92 8,92" fill={color} />
+    </svg>
+  );
+}
+function BauhausComposition({ P, variant = 0 }) {
+  // Lissitzky-style poster compositions
+  const compositions = [
+    <svg key={0} viewBox="0 0 200 280" style={{ width: '100%', height: '100%', display: 'block' }} aria-hidden="true">
+      <rect x="0" y="0" width="200" height="280" fill={P.bg2} />
+      <circle cx="140" cy="90" r="55" fill={P.red} />
+      <rect x="20" y="160" width="120" height="80" fill={P.blue} />
+      <polygon points="170,190 200,260 140,260" fill={P.yellow} />
+      <rect x="90" y="40" width="4" height="180" fill={P.ink} />
+    </svg>,
+    <svg key={1} viewBox="0 0 200 280" style={{ width: '100%', height: '100%', display: 'block' }} aria-hidden="true">
+      <rect x="0" y="0" width="200" height="280" fill={P.paper} />
+      <rect x="20" y="20" width="100" height="100" fill={P.yellow} />
+      <circle cx="140" cy="180" r="50" fill={P.blue} />
+      <polygon points="40,170 100,260 0,260" fill={P.red} />
+      <line x1="0" y1="140" x2="200" y2="140" stroke={P.ink} strokeWidth="3" />
+    </svg>,
+    <svg key={2} viewBox="0 0 200 280" style={{ width: '100%', height: '100%', display: 'block' }} aria-hidden="true">
+      <rect x="0" y="0" width="200" height="280" fill={P.bg} />
+      <polygon points="0,0 140,0 0,140" fill={P.red} />
+      <circle cx="130" cy="180" r="60" fill={P.blue} />
+      <rect x="50" y="220" width="120" height="6" fill={P.ink} />
+      <rect x="160" y="40" width="30" height="30" fill={P.yellow} />
+    </svg>,
+  ];
+  return compositions[variant % compositions.length];
+}
+
 function TemplateBauhaus() {
   const t = TEMPLATES.find((x) => x.slug === 'bauhaus');
   const P = t.palette;
@@ -4582,60 +4621,163 @@ function TemplateBauhaus() {
     <div style={{ background: P.bg, color: P.ink, minHeight: '100vh', overflowX: 'hidden', fontFamily: "'Archivo Black', sans-serif" }}>
       <DemoBar t={t} />
 
-      {/* Hero: full-width grid with colored sidebar */}
+      {/* Hero: constructivist poster composition */}
       <section style={{ display: 'grid', gridTemplateColumns: '64px 1fr', minHeight: '100vh', borderBottom: `4px solid ${P.ink}` }}>
         {/* Left sidebar — vertical label */}
         <div style={{ background: P.red, display: 'flex', alignItems: 'center', justifyContent: 'center', writingMode: 'vertical-rl', textOrientation: 'mixed', transform: 'rotate(180deg)', color: '#fff', fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', fontFamily: "'JetBrains Mono', monospace" }}>
           STRUK · {t.dateMono} · {t.city}
         </div>
 
-        {/* Main hero content */}
-        <div style={{ padding: '80px 60px', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
-          {/* Red accent block */}
-          <div style={{ position: 'absolute', top: 0, right: 0, width: 220, height: 220, background: P.red }} />
-          <div style={{ position: 'absolute', top: 220, right: 220, width: 80, height: 80, background: P.yellow }} />
-
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', opacity: 0.55, marginBottom: 32 }}>
-            Форма · Функция · Чувство
-          </div>
-          <h1 style={{ fontSize: 'clamp(72px, 10vw, 148px)', lineHeight: 0.88, letterSpacing: '-0.04em', fontWeight: 900, margin: 0, position: 'relative' }}>
-            {a}<br /><span style={{ color: P.red }}>×</span><br />{b}
-          </h1>
-          <div style={{ marginTop: 48, display: 'flex', gap: 0, alignItems: 'stretch' }}>
-            {[t.dateLong, t.venue, t.city].map((v, i) => (
-              <div key={i} style={{ padding: '14px 24px', borderLeft: `3px solid ${[P.red, P.blue, P.yellow][i]}`, marginLeft: i > 0 ? 24 : 0 }}>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', opacity: 0.5 }}>{['Дата', 'Место', 'Город'][i]}</div>
-                <div style={{ fontSize: 16, marginTop: 4 }}>{v}</div>
+        {/* Main hero — editorial poster grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', position: 'relative' }}>
+          {/* Left column — typography */}
+          <div style={{ padding: '60px 60px 40px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'relative', borderRight: `4px solid ${P.ink}`, minHeight: '100vh' }}>
+            {/* Top: manifest header */}
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 40 }}>
+                <BauhausCircle color={P.red} size={28} />
+                <BauhausTriangle color={P.blue} size={28} />
+                <div style={{ width: 28, height: 28, background: P.yellow }} />
+                <div style={{ flex: 1, height: 1, background: P.ink }} />
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase' }}>Nr. 011 / 2026</div>
               </div>
-            ))}
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', opacity: 0.6, marginBottom: 28 }}>
+                Форма · Функция · Чувство
+              </div>
+              <h1 style={{ fontSize: 'clamp(80px, 11vw, 180px)', lineHeight: 0.82, letterSpacing: '-0.045em', fontWeight: 900, margin: 0 }}>
+                {a}<br /><span style={{ display: 'inline-flex', alignItems: 'center', gap: 16 }}><span style={{ color: P.red }}>×</span></span><br />{b}
+              </h1>
+            </div>
+
+            {/* Bottom: spec table */}
+            <div style={{ marginTop: 40, borderTop: `3px solid ${P.ink}`, paddingTop: 24 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 0 }}>
+                {[['DATUM', t.dateMono, P.red], ['ORT', t.venue, P.blue], ['STADT', t.city, P.yellow]].map(([l, v, c], i) => (
+                  <div key={i} style={{ borderLeft: i > 0 ? `2px solid ${P.ink}` : 'none', paddingLeft: i > 0 ? 20 : 0, paddingRight: 20 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                      <div style={{ width: 12, height: 12, background: c }} />
+                      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase', opacity: 0.6 }}>{l}</div>
+                    </div>
+                    <div style={{ fontSize: 15, fontFamily: "'Inter', sans-serif", fontWeight: 600, lineHeight: 1.3 }}>{v}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Right column — photo placeholder + composition */}
+          <div style={{ display: 'grid', gridTemplateRows: '1.3fr 1fr', minHeight: '100vh' }}>
+            {/* Photo frame */}
+            <div style={{ position: 'relative', background: P.paper, borderBottom: `4px solid ${P.ink}`, overflow: 'hidden' }}>
+              {/* Primary color markers */}
+              <div style={{ position: 'absolute', top: 0, left: 0, width: 40, height: 40, background: P.red }} />
+              <div style={{ position: 'absolute', top: 0, right: 0, width: 40, height: 40, background: P.blue }} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, width: 40, height: 40, background: P.yellow }} />
+              <div style={{ position: 'absolute', bottom: 0, right: 0, width: 40, height: 40, background: P.ink }} />
+              {/* Photo area */}
+              <div style={{ position: 'absolute', inset: 40, background: P.bg2, border: `2px solid ${P.ink}`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <BauhausCircle color={P.red} size={14} />
+                  <BauhausTriangle color={P.blue} size={14} />
+                  <div style={{ width: 14, height: 14, background: P.yellow }} />
+                </div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase', opacity: 0.5 }}>PORTRÄT · N° 01</div>
+                <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: 32, opacity: 0.5 }}>{t.coupleShort}</div>
+              </div>
+            </div>
+            {/* Poster composition */}
+            <div style={{ position: 'relative', background: P.bg2 }}>
+              <BauhausComposition P={P} variant={0} />
+              <div style={{ position: 'absolute', bottom: 12, left: 12, right: 12, fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.3em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', color: P.ink }}>
+                <span>Plakat 01</span><span>Kreis · Quadrat · Dreieck</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Colored bands — story */}
+      {/* Manifest — colored band row */}
+      <section style={{ display: 'grid', gridTemplateColumns: '64px 1fr', borderBottom: `4px solid ${P.ink}` }}>
+        <div style={{ background: P.yellow }} />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', borderBottom: 0 }}>
+          {[
+            { n: 'I', word: 'FORM', ru: 'форма', c: P.red },
+            { n: 'II', word: 'FUNKTION', ru: 'функция', c: P.blue },
+            { n: 'III', word: 'GEFÜHL', ru: 'чувство', c: P.yellow },
+          ].map((m, i) => (
+            <div key={i} style={{ padding: '48px 36px', background: m.c, color: m.c === P.yellow ? P.ink : '#fff', borderRight: i < 2 ? `4px solid ${P.ink}` : 'none', position: 'relative', overflow: 'hidden', minHeight: 240 }}>
+              <div style={{ position: 'absolute', top: 12, right: 12, opacity: 0.35 }}>
+                {i === 0 && <BauhausCircle color="#fff" size={52} />}
+                {i === 1 && <BauhausTriangle color="#fff" size={52} />}
+                {i === 2 && <div style={{ width: 52, height: 52, background: P.ink }} />}
+              </div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em' }}>{m.n}.</div>
+              <div style={{ fontSize: 48, fontWeight: 900, marginTop: 48, letterSpacing: '-0.03em', lineHeight: 0.9 }}>{m.word}</div>
+              <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 14, marginTop: 8, opacity: 0.8 }}>/ {m.ru}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Story — poster + text grid */}
       {t.story.map((s, i) => (
         <section key={i} style={{ display: 'grid', gridTemplateColumns: '64px 1fr', borderBottom: `4px solid ${P.ink}` }}>
           <div style={{ background: BLOCKS[i].bg }} />
-          <div style={{ padding: '80px 60px', background: i % 2 === 0 ? P.bg2 : P.bg, display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 60, alignItems: 'center' }}>
-            <div>
-              <div style={{ fontSize: 'clamp(80px, 10vw, 120px)', fontWeight: 900, lineHeight: 1, color: BLOCKS[i].bg, WebkitTextStroke: `2px ${BLOCKS[i].bg}` }}>0{i + 1}</div>
-              <div style={{ fontSize: 22, fontWeight: 900, marginTop: 16, textTransform: 'uppercase', letterSpacing: '-0.02em' }}>{s.heading}</div>
-            </div>
-            <p style={{ fontSize: 20, lineHeight: 1.65, fontFamily: "'Inter', sans-serif", fontWeight: 400, color: P.ink2 }}>{s.body}</p>
+          <div style={{ background: i % 2 === 0 ? P.bg2 : P.bg, display: 'grid', gridTemplateColumns: i % 2 === 0 ? '1fr 1.8fr' : '1.8fr 1fr', minHeight: 420 }}>
+            {i % 2 === 0 ? (
+              <>
+                <div style={{ position: 'relative', borderRight: `4px solid ${P.ink}`, background: P.paper }}>
+                  <BauhausComposition P={P} variant={i + 1} />
+                </div>
+                <div style={{ padding: '64px 60px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 20, marginBottom: 24 }}>
+                    <div style={{ fontSize: 'clamp(80px, 10vw, 140px)', fontWeight: 900, lineHeight: 0.9, color: BLOCKS[i].bg, letterSpacing: '-0.04em' }}>0{i + 1}</div>
+                    <div style={{ flex: 1, height: 4, background: P.ink }} />
+                  </div>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase', color: BLOCKS[i].bg, marginBottom: 12 }}>Kapitel · глава</div>
+                  <div style={{ fontSize: 28, fontWeight: 900, marginBottom: 24, textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1 }}>{s.heading}</div>
+                  <p style={{ fontSize: 19, lineHeight: 1.65, fontFamily: "'Inter', sans-serif", fontWeight: 400, color: P.ink2, maxWidth: 540 }}>{s.body}</p>
+                </div>
+              </>
+            ) : (
+              <>
+                <div style={{ padding: '64px 60px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 20, marginBottom: 24 }}>
+                    <div style={{ flex: 1, height: 4, background: P.ink }} />
+                    <div style={{ fontSize: 'clamp(80px, 10vw, 140px)', fontWeight: 900, lineHeight: 0.9, color: BLOCKS[i].bg, letterSpacing: '-0.04em' }}>0{i + 1}</div>
+                  </div>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase', color: BLOCKS[i].bg, marginBottom: 12, textAlign: 'right' }}>Kapitel · глава</div>
+                  <div style={{ fontSize: 28, fontWeight: 900, marginBottom: 24, textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 1, textAlign: 'right' }}>{s.heading}</div>
+                  <p style={{ fontSize: 19, lineHeight: 1.65, fontFamily: "'Inter', sans-serif", fontWeight: 400, color: P.ink2, marginLeft: 'auto', maxWidth: 540, textAlign: 'right' }}>{s.body}</p>
+                </div>
+                <div style={{ position: 'relative', borderLeft: `4px solid ${P.ink}`, background: P.paper }}>
+                  <BauhausComposition P={P} variant={i + 1} />
+                </div>
+              </>
+            )}
           </div>
         </section>
       ))}
 
-      {/* Countdown — primary color blocks */}
+      {/* Countdown — mega numerals with shape overlays */}
       <section style={{ display: 'grid', gridTemplateColumns: '64px 1fr', borderBottom: `4px solid ${P.ink}` }}>
         <div style={{ background: P.yellow }} />
-        <div style={{ padding: '80px 60px' }}>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', opacity: 0.55, marginBottom: 40 }}>Отсчёт</div>
-          <div style={{ display: 'flex', gap: 0 }}>
-            {[['Дней', cd.days, P.red], ['Часов', cd.hours, P.blue], ['Минут', cd.minutes, P.yellow]].map(([l, v, c]) => (
-              <div key={l} style={{ flex: 1, padding: '40px 32px', background: c, color: c === P.yellow ? P.ink : '#fff', borderRight: `4px solid ${P.ink}` }}>
-                <div style={{ fontSize: 'clamp(72px, 10vw, 120px)', fontWeight: 900, lineHeight: 1 }}>{v}</div>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.3em', textTransform: 'uppercase', marginTop: 8, opacity: 0.7 }}>{l}</div>
+        <div style={{ padding: '60px 60px 80px' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 48 }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', opacity: 0.7 }}>Отсчёт · Countdown</div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', opacity: 0.5 }}>{t.dateMono}</div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', border: `4px solid ${P.ink}` }}>
+            {[['TAGE', cd.days, P.red, 'circle'], ['STUNDEN', cd.hours, P.blue, 'triangle'], ['MINUTEN', cd.minutes, P.yellow, 'square']].map(([l, v, c, shape], i) => (
+              <div key={l} style={{ position: 'relative', padding: '32px 28px 28px', background: c, color: c === P.yellow ? P.ink : '#fff', borderRight: i < 2 ? `4px solid ${P.ink}` : 'none', overflow: 'hidden', minHeight: 220 }}>
+                <div style={{ position: 'absolute', top: -30, right: -30, opacity: 0.3 }}>
+                  {shape === 'circle' && <BauhausCircle color="#fff" size={140} />}
+                  {shape === 'triangle' && <BauhausTriangle color="#fff" size={140} />}
+                  {shape === 'square' && <div style={{ width: 140, height: 140, background: P.ink }} />}
+                </div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', opacity: 0.8, marginBottom: 8 }}>N° 0{i + 1}</div>
+                <div style={{ fontSize: 'clamp(80px, 11vw, 140px)', fontWeight: 900, lineHeight: 1, letterSpacing: '-0.05em', position: 'relative', zIndex: 1 }}>{String(v).padStart(2, '0')}</div>
+                <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 700, letterSpacing: '0.2em', marginTop: 16, textTransform: 'uppercase' }}>{l}</div>
               </div>
             ))}
           </div>
@@ -4744,6 +4886,56 @@ function MoonSVG({ color, size = 56 }) {
   );
 }
 
+// Celestial signatures — astronomical chart elements
+function MoonPhase({ phase, color, size = 32 }) {
+  // phase 0..7: new, waxing crescent, first quarter, waxing gibbous, full, waning gibbous, last quarter, waning crescent
+  const r = size / 2 - 1;
+  return (
+    <svg viewBox={`0 0 ${size} ${size}`} style={{ width: size, height: size }} aria-hidden="true">
+      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color} strokeWidth="0.8" opacity="0.5" />
+      {phase === 0 && null}
+      {phase === 4 && <circle cx={size / 2} cy={size / 2} r={r - 1} fill={color} />}
+      {phase === 2 && <path d={`M ${size / 2} ${1} A ${r} ${r} 0 0 1 ${size / 2} ${size - 1} Z`} fill={color} />}
+      {phase === 6 && <path d={`M ${size / 2} ${1} A ${r} ${r} 0 0 0 ${size / 2} ${size - 1} Z`} fill={color} />}
+      {phase === 1 && <path d={`M ${size / 2} ${1} A ${r} ${r} 0 0 1 ${size / 2} ${size - 1} A ${r * 0.5} ${r} 0 0 0 ${size / 2} ${1} Z`} fill={color} />}
+      {phase === 3 && <path d={`M ${size / 2} ${1} A ${r} ${r} 0 0 1 ${size / 2} ${size - 1} A ${r * 0.5} ${r} 0 0 1 ${size / 2} ${1} Z`} fill={color} />}
+      {phase === 5 && <path d={`M ${size / 2} ${1} A ${r * 0.5} ${r} 0 0 0 ${size / 2} ${size - 1} A ${r} ${r} 0 0 0 ${size / 2} ${1} Z`} fill={color} />}
+      {phase === 7 && <path d={`M ${size / 2} ${1} A ${r * 0.5} ${r} 0 0 1 ${size / 2} ${size - 1} A ${r} ${r} 0 0 0 ${size / 2} ${1} Z`} fill={color} />}
+    </svg>
+  );
+}
+
+function ZodiacWheel({ color, size = 260 }) {
+  // 12 sectors of a wheel with tick marks
+  return (
+    <svg viewBox="0 0 300 300" style={{ width: size, height: size }} aria-hidden="true">
+      <circle cx="150" cy="150" r="148" fill="none" stroke={color} strokeWidth="0.6" opacity="0.4" />
+      <circle cx="150" cy="150" r="120" fill="none" stroke={color} strokeWidth="0.4" opacity="0.3" />
+      <circle cx="150" cy="150" r="90" fill="none" stroke={color} strokeWidth="0.4" opacity="0.2" />
+      {Array.from({ length: 36 }).map((_, i) => {
+        const angle = (i * 10 * Math.PI) / 180;
+        const outer = i % 3 === 0 ? 148 : 142;
+        const inner = i % 3 === 0 ? 128 : 134;
+        const x1 = 150 + Math.cos(angle) * inner;
+        const y1 = 150 + Math.sin(angle) * inner;
+        const x2 = 150 + Math.cos(angle) * outer;
+        const y2 = 150 + Math.sin(angle) * outer;
+        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth={i % 3 === 0 ? 0.8 : 0.4} opacity={i % 3 === 0 ? 0.6 : 0.35} />;
+      })}
+      {/* Zodiac glyphs */}
+      {['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'].map((g, i) => {
+        const angle = ((i * 30 - 75) * Math.PI) / 180;
+        const x = 150 + Math.cos(angle) * 108;
+        const y = 150 + Math.sin(angle) * 108;
+        return <text key={i} x={x} y={y} textAnchor="middle" dominantBaseline="central" fill={color} fontSize="14" opacity="0.7">{g}</text>;
+      })}
+      {/* Crosshairs */}
+      <line x1="150" y1="0" x2="150" y2="300" stroke={color} strokeWidth="0.3" opacity="0.15" />
+      <line x1="0" y1="150" x2="300" y2="150" stroke={color} strokeWidth="0.3" opacity="0.15" />
+    </svg>
+  );
+}
+
 function TemplateCelestial() {
   const t = TEMPLATES.find((x) => x.slug === 'celestial');
   const P = t.palette;
@@ -4755,24 +4947,101 @@ function TemplateCelestial() {
     <div style={{ background: P.bg, color: P.ink, minHeight: '100vh', overflowX: 'hidden' }}>
       <DemoBar t={t} theme="dark" />
 
-      {/* Hero — full viewport, dark sky */}
+      {/* Hero — full viewport, dark sky with zodiac wheel */}
       <section style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden', padding: '80px 28px', textAlign: 'center' }}>
         <Constellation style={{ opacity: 0.7 }} />
+        {/* Ephemeris corner labels */}
+        <div style={{ position: 'absolute', top: 24, left: 32, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', color: P.accent, opacity: 0.65, zIndex: 2 }}>44°44′N · 34°00′E</div>
+        <div style={{ position: 'absolute', top: 24, right: 32, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', color: P.accent, opacity: 0.65, zIndex: 2 }}>N° 012 · MMXXVI</div>
+        <div style={{ position: 'absolute', bottom: 24, left: 32, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', color: P.accent, opacity: 0.65, zIndex: 2 }}>SOLSTITIUM AESTIVUM</div>
+        <div style={{ position: 'absolute', bottom: 24, right: 32, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', color: P.accent, opacity: 0.65, zIndex: 2 }}>ALT +32° · AZ 180°</div>
+
+        {/* Zodiac wheel behind */}
+        <div style={{ position: 'absolute', opacity: 0.35, pointerEvents: 'none' }}>
+          <ZodiacWheel color={P.accent} size={680} />
+        </div>
+
         <div style={{ position: 'relative', zIndex: 1 }}>
           <MoonSVG color={P.accent} size={72} />
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginTop: 28, marginBottom: 24, opacity: 0.8 }}>
-            Солнцестояние · {t.dateMono}
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: P.accent, marginTop: 28, marginBottom: 24, opacity: 0.9 }}>
+            ☉ Солнцестояние · {t.dateMono} ☾
           </div>
           <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(64px, 11vw, 160px)', fontWeight: 300, fontStyle: 'italic', lineHeight: 0.9, letterSpacing: '-0.02em', margin: 0, color: P.ink }}>
             {a}<br /><span style={{ color: P.accent, fontSize: '0.55em', fontStyle: 'normal', letterSpacing: '0.5em' }}>&</span><br />{b}
           </h1>
-          <div style={{ marginTop: 48, fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: P.ink2, letterSpacing: '0.05em' }}>
+          <div style={{ marginTop: 40, display: 'flex', justifyContent: 'center', gap: 18 }}>
+            {[0, 1, 2, 3, 4, 5, 6, 7].map((p) => (
+              <MoonPhase key={p} phase={p} color={P.accent} size={22} />
+            ))}
+          </div>
+          <div style={{ marginTop: 36, fontFamily: "'Cormorant Garamond', serif", fontSize: 20, color: P.ink2, letterSpacing: '0.05em' }}>
             {t.dateLong} · {t.venue} · {t.city}
           </div>
         </div>
-        {/* Decorative rings */}
-        <div style={{ position: 'absolute', width: 400, height: 400, border: `1px solid ${P.accent}22`, borderRadius: '50%', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', width: 600, height: 600, border: `1px solid ${P.accent}11`, borderRadius: '50%', pointerEvents: 'none' }} />
+      </section>
+
+      {/* Astronomical chart — photo placeholder + ephemeris */}
+      <section style={{ padding: '100px 28px', borderTop: `1px solid ${P.accent}22`, borderBottom: `1px solid ${P.accent}22`, position: 'relative', overflow: 'hidden' }}>
+        <Constellation style={{ opacity: 0.2 }} />
+        <div style={{ maxWidth: 1080, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 72, alignItems: 'center', position: 'relative', zIndex: 1 }}>
+          {/* Telescope viewport photo placeholder */}
+          <div style={{ position: 'relative', aspectRatio: '1/1' }}>
+            {/* Outer ring */}
+            <div style={{ position: 'absolute', inset: 0, border: `1px solid ${P.accent}55`, borderRadius: '50%' }} />
+            <div style={{ position: 'absolute', inset: 20, border: `1px solid ${P.accent}33`, borderRadius: '50%' }} />
+            <div style={{ position: 'absolute', inset: 40, border: `1px dashed ${P.accent}55`, borderRadius: '50%' }} />
+            {/* Degree ticks */}
+            <svg viewBox="0 0 300 300" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} aria-hidden="true">
+              {Array.from({ length: 24 }).map((_, i) => {
+                const angle = (i * 15 * Math.PI) / 180;
+                const x1 = 150 + Math.cos(angle) * 148;
+                const y1 = 150 + Math.sin(angle) * 148;
+                const x2 = 150 + Math.cos(angle) * 140;
+                const y2 = 150 + Math.sin(angle) * 140;
+                return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={P.accent} strokeWidth={i % 6 === 0 ? 1 : 0.5} opacity={i % 6 === 0 ? 0.8 : 0.4} />;
+              })}
+              {/* Crosshairs */}
+              <line x1="150" y1="60" x2="150" y2="240" stroke={P.accent} strokeWidth="0.4" opacity="0.5" />
+              <line x1="60" y1="150" x2="240" y2="150" stroke={P.accent} strokeWidth="0.4" opacity="0.5" />
+              <circle cx="150" cy="150" r="3" fill={P.accent} opacity="0.6" />
+            </svg>
+            {/* Photo area inside */}
+            <div style={{ position: 'absolute', inset: 60, borderRadius: '50%', background: P.bg2, overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14, border: `1px solid ${P.accent}44` }}>
+              <MoonSVG color={P.accent} size={44} />
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, opacity: 0.6 }}>OBSERVATIO · N° 01</div>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, fontStyle: 'italic', color: P.ink, opacity: 0.5 }}>{t.coupleShort}</div>
+            </div>
+            {/* Corner azimuth labels */}
+            {['N', 'E', 'S', 'W'].map((d, i) => (
+              <div key={d} style={{ position: 'absolute', fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.25em', color: P.accent, opacity: 0.7,
+                top: i === 0 ? -6 : i === 2 ? 'auto' : '50%',
+                bottom: i === 2 ? -6 : 'auto',
+                left: i === 3 ? -10 : i === 1 ? 'auto' : '50%',
+                right: i === 1 ? -10 : 'auto',
+                transform: i === 0 || i === 2 ? 'translateX(-50%)' : 'translateY(-50%)',
+              }}>{d}</div>
+            ))}
+          </div>
+
+          {/* Ephemeris data */}
+          <div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', color: P.accent, marginBottom: 16 }}>Ephemeris · данные наблюдения</div>
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(36px, 4.5vw, 56px)', fontStyle: 'italic', fontWeight: 300, color: P.ink, marginBottom: 36, lineHeight: 1.1 }}>
+              Под сиянием<br /><span style={{ color: P.accent }}>солнцестояния</span>
+            </div>
+            <div style={{ borderTop: `1px solid ${P.accent}33`, paddingTop: 24 }}>
+              {[
+                ['Дата', '21.06.2026'], ['Местное время', '22:13 UT+3'], ['Фаза луны', 'Полнолуние 98.2%'],
+                ['Созвездие', 'Лира · α Lyr (Vega)'], ['Склонение', '+38° 47′ 01″'], ['Прямое восх.', '18h 36m 56s'],
+              ].map(([k, v]) => (
+                <div key={k} style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', padding: '12px 0', borderBottom: `1px solid ${P.accent}22`, fontFamily: "'JetBrains Mono', monospace", fontSize: 12 }}>
+                  <div style={{ color: P.ink2, letterSpacing: '0.12em', textTransform: 'uppercase', fontSize: 10 }}>{k}</div>
+                  <div style={{ color: P.ink }}>{v}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Quote */}
@@ -4797,15 +5066,26 @@ function TemplateCelestial() {
         </section>
       ))}
 
-      {/* Countdown */}
-      <section style={{ padding: '100px 28px', textAlign: 'center', position: 'relative', overflow: 'hidden', borderBottom: `1px solid ${P.accent}22` }}>
+      {/* Countdown — orbital rings */}
+      <section style={{ padding: '120px 28px', textAlign: 'center', position: 'relative', overflow: 'hidden', borderBottom: `1px solid ${P.accent}22` }}>
         <Constellation style={{ opacity: 0.3 }} />
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', opacity: 0.12, pointerEvents: 'none' }}>
+          <ZodiacWheel color={P.accent} size={640} />
+        </div>
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginBottom: 48 }}>До солнцестояния</div>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 48, flexWrap: 'wrap' }}>
-            {[['дней', cd.days], ['часов', cd.hours], ['минут', cd.minutes]].map(([l, v]) => (
-              <div key={l} style={{ position: 'relative' }}>
-                <div style={{ fontSize: 'clamp(72px, 12vw, 120px)', fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, lineHeight: 1, color: P.ink }}>{v}</div>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: P.accent, marginBottom: 12 }}>⟢ Tempus Fugit ⟣</div>
+          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(32px, 4.5vw, 48px)', fontStyle: 'italic', fontWeight: 300, color: P.ink, marginBottom: 72 }}>
+            До солнцестояния
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 56, flexWrap: 'wrap' }}>
+            {[['дней', cd.days], ['часов', cd.hours], ['минут', cd.minutes]].map(([l, v], i) => (
+              <div key={l} style={{ position: 'relative', width: 200, height: 200, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ position: 'absolute', inset: 0, border: `1px solid ${P.accent}44`, borderRadius: '50%' }} />
+                <div style={{ position: 'absolute', inset: 12, border: `1px dashed ${P.accent}22`, borderRadius: '50%' }} />
+                {/* Orbit dot */}
+                <div style={{ position: 'absolute', width: 8, height: 8, borderRadius: '50%', background: P.accent, top: -4, left: '50%', transform: 'translateX(-50%)', boxShadow: `0 0 12px ${P.accent}` }} />
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.3em', color: P.accent, opacity: 0.7, marginBottom: 8 }}>N° 0{i + 1}</div>
+                <div style={{ fontSize: 'clamp(72px, 10vw, 104px)', fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontStyle: 'italic', lineHeight: 1, color: P.ink }}>{v}</div>
                 <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginTop: 8 }}>{l}</div>
               </div>
             ))}
@@ -4886,6 +5166,73 @@ Object.assign(browserGlobal, { TemplateCelestial });
 // ===== src/template-mediterranean.jsx =====
 // 12 · Riva — Mediterranean coastal: light airy cards, terracotta, arch motifs
 
+// Riva signatures — Mediterranean coastal elements
+function OliveBranchSVG({ color, berry, size = 140, rotate = 0, style: ex }) {
+  return (
+    <svg viewBox="0 0 240 100" style={{ width: size, height: size * (100 / 240), transform: `rotate(${rotate}deg)`, ...ex }} aria-hidden="true">
+      <path d="M10 52 Q 120 40 230 50" stroke={color} strokeWidth="1.2" fill="none" opacity="0.85" />
+      {[[30, 45, -25], [62, 38, 25], [92, 32, -28], [122, 30, 26], [152, 32, -26], [182, 38, 24], [208, 46, -22]].map(([x, y, r], i) => (
+        <g key={i} transform={`translate(${x} ${y}) rotate(${r})`}>
+          <ellipse cx="0" cy="0" rx="18" ry="5" fill={color} opacity="0.82" />
+        </g>
+      ))}
+      {[[45, 58, 22], [80, 60, -20], [140, 62, 20], [195, 58, -22]].map(([x, y, r], i) => (
+        <g key={i} transform={`translate(${x} ${y}) rotate(${r})`}>
+          <ellipse cx="0" cy="0" rx="16" ry="4.5" fill={color} opacity="0.72" />
+        </g>
+      ))}
+      {[[68, 52], [118, 55], [168, 54]].map(([x, y], i) => (
+        <g key={i}>
+          <ellipse cx={x} cy={y} rx="4" ry="5.5" fill={berry} />
+          <ellipse cx={x - 1} cy={y - 2} rx="1" ry="1.3" fill="#ffffff" opacity="0.5" />
+        </g>
+      ))}
+    </svg>
+  );
+}
+function SunOverWaterSVG({ sun, water, size = 180, style: ex }) {
+  return (
+    <svg viewBox="0 0 200 200" style={{ width: size, height: size, ...ex }} aria-hidden="true">
+      <defs>
+        <clipPath id="riva-waterclip"><rect x="0" y="110" width="200" height="90" /></clipPath>
+      </defs>
+      {/* Sky rings */}
+      <circle cx="100" cy="100" r="60" fill="none" stroke={sun} strokeWidth="0.6" opacity="0.4" />
+      <circle cx="100" cy="100" r="78" fill="none" stroke={sun} strokeWidth="0.4" opacity="0.25" />
+      {/* Sun */}
+      <circle cx="100" cy="92" r="38" fill={sun} />
+      {/* Water reflections */}
+      <g clipPath="url(#riva-waterclip)">
+        <circle cx="100" cy="92" r="38" fill={sun} opacity="0.35" />
+        {[120, 132, 144, 156, 168, 180].map((y, i) => (
+          <line key={i} x1={60 + i * 3} y1={y} x2={140 - i * 3} y2={y} stroke={water} strokeWidth="1.2" opacity={0.5 - i * 0.05} />
+        ))}
+      </g>
+      {/* Horizon line */}
+      <line x1="0" y1="112" x2="200" y2="112" stroke={water} strokeWidth="1" opacity="0.6" />
+    </svg>
+  );
+}
+function TerracottaTile({ color, size = 40, pattern = 0 }) {
+  const patterns = [
+    <svg key="0" viewBox="0 0 40 40" style={{ width: size, height: size, display: 'block' }}>
+      <rect width="40" height="40" fill={color} opacity="0.08" />
+      <circle cx="20" cy="20" r="10" fill="none" stroke={color} strokeWidth="0.8" opacity="0.5" />
+      <circle cx="20" cy="20" r="3" fill={color} opacity="0.6" />
+    </svg>,
+    <svg key="1" viewBox="0 0 40 40" style={{ width: size, height: size, display: 'block' }}>
+      <rect width="40" height="40" fill={color} opacity="0.08" />
+      <path d="M0 20 L20 0 L40 20 L20 40 Z" fill="none" stroke={color} strokeWidth="0.8" opacity="0.5" />
+    </svg>,
+    <svg key="2" viewBox="0 0 40 40" style={{ width: size, height: size, display: 'block' }}>
+      <rect width="40" height="40" fill={color} opacity="0.08" />
+      <path d="M0 0 L40 40 M40 0 L0 40" stroke={color} strokeWidth="0.6" opacity="0.4" />
+      <circle cx="20" cy="20" r="5" fill={color} opacity="0.5" />
+    </svg>,
+  ];
+  return patterns[pattern % patterns.length];
+}
+
 function TemplateMediterranean() {
   const t = TEMPLATES.find((x) => x.slug === 'mediterranean');
   const P = t.palette;
@@ -4893,53 +5240,135 @@ function TemplateMediterranean() {
   const cd = useCountdown(t.dateIso);
   const rsvp = useRsvp();
 
-  const archStyle = (c) => ({
-    width: '100%', paddingTop: '140%', background: c,
-    borderRadius: '50% 50% 0 0 / 40% 40% 0 0',
-    position: 'relative',
-  });
-
   return (
     <div style={{ background: P.bg, color: P.ink, minHeight: '100vh', overflowX: 'hidden', fontFamily: "'Cormorant Garamond', serif" }}>
       <DemoBar t={t} />
 
-      {/* Hero */}
-      <section style={{ padding: '100px 28px 80px', maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
-        <div>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginBottom: 28, opacity: 0.8 }}>
-            {t.city} · {t.dateMono}
+      {/* Hero — arched window villa */}
+      <section style={{ padding: '60px 28px 80px', maxWidth: 1280, margin: '0 auto', position: 'relative' }}>
+        {/* Top postcard header */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, paddingBottom: 18, borderBottom: `1px solid ${P.accent}55`, marginBottom: 40 }}>
+          <OliveBranchSVG color={P.sage} berry={P.accent} size={110} />
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.4em', textTransform: 'uppercase', color: P.accent }}>Riva · Costa Adriatica · N° 012</div>
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 16, fontStyle: 'italic', color: P.ink2, marginTop: 4 }}>Da {t.city} con amore</div>
           </div>
-          <h1 style={{ fontSize: 'clamp(64px, 9vw, 128px)', fontWeight: 300, fontStyle: 'italic', lineHeight: 0.9, letterSpacing: '-0.02em', margin: '0 0 32px' }}>
-            {a}<br /><span style={{ color: P.accent }}>&</span><br />{b}
-          </h1>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, color: P.ink2, lineHeight: 1.8 }}>
-            <div>{t.dateLong}</div>
-            <div>{t.venue}</div>
-            <div>{t.city}</div>
+          <div style={{ textAlign: 'right', fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', color: P.accent, lineHeight: 1.8 }}>
+            <div>42°17′N · 18°50′E</div>
+            <div>{t.dateMono}</div>
           </div>
+          <OliveBranchSVG color={P.sage} berry={P.accent} size={110} rotate={180} />
         </div>
 
-        {/* Arch decorations */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, padding: '20px 0' }}>
-          <div style={{ ...archStyle(P.accent), opacity: 0.85 }} />
-          <div style={{ ...archStyle(P.sea), opacity: 0.7, marginTop: 40 }} />
-          <div style={{ ...archStyle(P.sage), opacity: 0.6, marginTop: -60 }} />
-          <div style={{ ...archStyle(P.bg2), border: `2px solid ${P.accent}44`, marginTop: -20 }} />
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: 56, alignItems: 'center' }}>
+          {/* Typography */}
+          <div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: P.accent, marginBottom: 20, opacity: 0.85 }}>
+              ☼ Estate · лето 2026 ☼
+            </div>
+            <h1 style={{ fontSize: 'clamp(64px, 9vw, 132px)', fontWeight: 300, fontStyle: 'italic', lineHeight: 0.9, letterSpacing: '-0.025em', margin: '0 0 28px' }}>
+              {a}
+            </h1>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 28 }}>
+              <div style={{ height: 1, flex: 1, background: P.accent }} />
+              <div style={{ fontSize: 30, fontStyle: 'italic', color: P.accent, fontFamily: "'Cormorant Garamond', serif" }}>&amp;</div>
+              <div style={{ height: 1, flex: 1, background: P.accent }} />
+            </div>
+            <h1 style={{ fontSize: 'clamp(64px, 9vw, 132px)', fontWeight: 300, fontStyle: 'italic', lineHeight: 0.9, letterSpacing: '-0.025em', margin: '0 0 40px' }}>
+              {b}
+            </h1>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, borderTop: `1px solid ${P.accent}44`, paddingTop: 24 }}>
+              {[['Giorno', t.dateLong, P.accent], ['Luogo', t.venue, P.sea], ['Mare', 'Adriatico', P.sea], ['Città', t.city, P.sage]].map(([k, v, c], i) => (
+                <div key={i}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.35em', textTransform: 'uppercase', color: c, marginBottom: 6 }}>{k}</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 17, fontStyle: 'italic', color: P.ink }}>{v}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Arched window photo placeholder */}
+          <div style={{ position: 'relative' }}>
+            {/* Arch frame */}
+            <div style={{ position: 'relative', aspectRatio: '0.78/1', background: P.paper, borderRadius: '50% 50% 6px 6px / 35% 35% 6px 6px', padding: 18, boxShadow: '0 30px 60px -30px rgba(201,98,42,0.35), 0 1px 0 rgba(26,26,20,0.06)', border: `1px solid ${P.accent}33` }}>
+              {/* Inner frame */}
+              <div style={{ position: 'absolute', inset: 18, borderRadius: '50% 50% 3px 3px / 35% 35% 3px 3px', border: `2px solid ${P.accent}66`, pointerEvents: 'none' }} />
+              {/* Keystone */}
+              <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', width: 28, height: 28, background: P.accent, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 13, fontStyle: 'italic', fontFamily: "'Cormorant Garamond', serif", zIndex: 2 }}>☼</div>
+              {/* View */}
+              <div style={{ position: 'relative', width: '100%', height: '100%', borderRadius: '50% 50% 3px 3px / 35% 35% 3px 3px', overflow: 'hidden', background: `linear-gradient(180deg, ${P.bg2} 0%, ${P.bg2} 60%, ${P.sea}22 60%, ${P.sea}11 100%)` }}>
+                {/* Sun over water */}
+                <div style={{ position: 'absolute', top: '18%', left: '50%', transform: 'translateX(-50%)', opacity: 0.35 }}>
+                  <SunOverWaterSVG sun={P.accent} water={P.sea} size={200} />
+                </div>
+                {/* Photo label */}
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, zIndex: 1 }}>
+                  <svg viewBox="0 0 48 48" style={{ width: 40, height: 40, opacity: 0.35 }} aria-hidden="true">
+                    <circle cx="24" cy="26" r="9" fill="none" stroke={P.accent} strokeWidth="1.2" />
+                    <path d="M8 18 L14 10 L34 10 L40 18 L44 18 L46 20 L46 38 L44 40 L4 40 L2 38 L2 20 L4 18 Z" fill="none" stroke={P.accent} strokeWidth="1.2" />
+                  </svg>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, opacity: 0.55 }}>ritratto · N° 01</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontStyle: 'italic', color: P.ink, opacity: 0.4 }}>{t.coupleShort}</div>
+                </div>
+              </div>
+            </div>
+            {/* Olive branches flanking */}
+            <div style={{ position: 'absolute', bottom: -30, left: -60, zIndex: 3 }}>
+              <OliveBranchSVG color={P.sage} berry={P.accent} size={180} rotate={-12} />
+            </div>
+            <div style={{ position: 'absolute', bottom: -20, right: -60, zIndex: 3 }}>
+              <OliveBranchSVG color={P.sage} berry={P.accent} size={180} rotate={192} />
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Story cards */}
-      <section style={{ padding: '60px 28px', borderTop: `1px solid ${P.accent}22`, background: P.bg2 }}>
-        <div style={{ maxWidth: 960, margin: '0 auto' }}>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', color: P.accent, marginBottom: 48 }}>История</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 28 }}>
-            {t.story.map((s, i) => (
-              <div key={i} style={{ background: P.bg, padding: '40px 36px', borderRadius: '50% 50% 0 0 / 12% 12% 0 0', borderTop: `4px solid ${[P.accent, P.sea][i]}`, boxShadow: '0 2px 24px rgba(0,0,0,0.04)' }}>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: P.accent, marginBottom: 16 }}>0{i + 1}</div>
-                <div style={{ fontSize: 'clamp(24px, 3vw, 32px)', fontStyle: 'italic', fontWeight: 300, marginBottom: 20, lineHeight: 1.2, color: P.ink }}>{s.heading}</div>
-                <p style={{ fontSize: 17, lineHeight: 1.75, color: P.ink2, fontFamily: "'Inter', sans-serif", fontWeight: 400 }}>{s.body}</p>
-              </div>
-            ))}
+      {/* Terracotta tile strip */}
+      <section style={{ padding: '0', background: P.accent, borderTop: `1px solid ${P.ink}22`, borderBottom: `1px solid ${P.ink}22` }}>
+        <div style={{ display: 'flex', overflow: 'hidden', padding: '10px 0' }}>
+          {Array.from({ length: 40 }).map((_, i) => (
+            <div key={i} style={{ flexShrink: 0, marginRight: 6 }}>
+              <TerracottaTile color="#fff" size={36} pattern={i % 3} />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Story — arched postcards */}
+      <section style={{ padding: '100px 28px', borderTop: `1px solid ${P.accent}22`, background: P.bg2, position: 'relative' }}>
+        <div style={{ position: 'absolute', top: 40, left: 40, opacity: 0.35, pointerEvents: 'none' }}>
+          <OliveBranchSVG color={P.sage} berry={P.accent} size={200} rotate={-15} />
+        </div>
+        <div style={{ position: 'absolute', bottom: 40, right: 40, opacity: 0.3, pointerEvents: 'none' }}>
+          <OliveBranchSVG color={P.sage} berry={P.accent} size={200} rotate={165} />
+        </div>
+        <div style={{ maxWidth: 1000, margin: '0 auto', position: 'relative' }}>
+          <div style={{ textAlign: 'center', marginBottom: 64 }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', color: P.accent, marginBottom: 12 }}>~ La Storia ~</div>
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(36px, 5vw, 56px)', fontStyle: 'italic', fontWeight: 300, color: P.ink }}>История</div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 36 }}>
+            {t.story.map((s, i) => {
+              const c = [P.accent, P.sea][i];
+              const chapters = ['Capitolo I', 'Capitolo II'];
+              return (
+                <div key={i} style={{ background: P.paper, padding: '52px 40px 44px', borderRadius: '50% 50% 8px 8px / 22% 22% 8px 8px', borderTop: `3px solid ${c}`, boxShadow: '0 1px 0 rgba(26,26,20,0.04), 0 24px 48px -24px rgba(201,98,42,0.25)', position: 'relative', overflow: 'hidden' }}>
+                  {/* Keystone dot */}
+                  <div style={{ position: 'absolute', top: -10, left: '50%', transform: 'translateX(-50%)', width: 20, height: 20, borderRadius: '50%', background: c, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10 }}>☼</div>
+                  {/* Corner tile */}
+                  <div style={{ position: 'absolute', top: 24, right: 24, opacity: 0.4 }}>
+                    <TerracottaTile color={c} size={30} pattern={i} />
+                  </div>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: c, marginBottom: 6 }}>{chapters[i]} · 0{i + 1}</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(26px, 3vw, 34px)', fontStyle: 'italic', fontWeight: 300, margin: '12px 0 20px', lineHeight: 1.15, color: P.ink }}>{s.heading}</div>
+                  <p style={{ fontSize: 17, lineHeight: 1.75, color: P.ink2, fontFamily: "'Inter', sans-serif", fontWeight: 400 }}>{s.body}</p>
+                  <div style={{ marginTop: 28, paddingTop: 16, borderTop: `1px dashed ${c}55`, display: 'flex', justifyContent: 'space-between', fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.25em', color: c, textTransform: 'uppercase' }}>
+                    <span>{a} · {b}</span>
+                    <span>{t.city}</span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -4955,15 +5384,22 @@ function TemplateMediterranean() {
         </div>
       </section>
 
-      {/* Countdown */}
-      <section style={{ padding: '80px 28px', background: P.accent, color: '#fff' }}>
-        <div style={{ maxWidth: 860, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.35em', textTransform: 'uppercase', opacity: 0.75, marginBottom: 48 }}>До церемонии</div>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 48, flexWrap: 'wrap' }}>
-            {[['дней', cd.days], ['часов', cd.hours], ['минут', cd.minutes]].map(([l, v]) => (
-              <div key={l} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: 'clamp(72px, 10vw, 108px)', fontWeight: 300, lineHeight: 1 }}>{v}</div>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.35em', textTransform: 'uppercase', marginTop: 8, opacity: 0.75 }}>{l}</div>
+      {/* Countdown — sun rising over Adriatic */}
+      <section style={{ padding: '100px 28px 120px', background: `linear-gradient(180deg, ${P.accent} 0%, ${P.accent} 55%, ${P.sea} 55%, ${P.sea} 100%)`, color: '#fff', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: '30%', left: '50%', transform: 'translate(-50%, -50%)', opacity: 0.9 }}>
+          <SunOverWaterSVG sun="#ffd6a5" water="#ffffff" size={380} />
+        </div>
+        <div style={{ maxWidth: 960, margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.4em', textTransform: 'uppercase', opacity: 0.9, marginBottom: 12 }}>☼ Conto alla rovescia ☼</div>
+          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 'clamp(36px, 5vw, 56px)', fontStyle: 'italic', fontWeight: 300, marginBottom: 64 }}>
+            До встречи у моря
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 4, background: 'rgba(255,255,255,0.22)', padding: 4, borderRadius: 8 }}>
+            {[['giorni · дней', cd.days], ['ore · часов', cd.hours], ['minuti · минут', cd.minutes]].map(([l, v], i) => (
+              <div key={l} style={{ textAlign: 'center', padding: '40px 20px', background: 'rgba(255,255,255,0.1)', borderRadius: 6, position: 'relative', backdropFilter: 'blur(4px)' }}>
+                <div style={{ position: 'absolute', top: 10, right: 14, fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.3em', opacity: 0.7 }}>0{i + 1}</div>
+                <div style={{ fontSize: 'clamp(72px, 10vw, 120px)', fontFamily: "'Cormorant Garamond', serif", fontWeight: 300, fontStyle: 'italic', lineHeight: 1, letterSpacing: '-0.02em' }}>{v}</div>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.3em', textTransform: 'uppercase', marginTop: 14, opacity: 0.85 }}>{l}</div>
               </div>
             ))}
           </div>
