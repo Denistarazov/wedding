@@ -4960,10 +4960,12 @@ Object.assign(browserGlobal, { TemplateMediterranean });
 
 function App() {
   const route = useRoute();
+  if (typeof window !== 'undefined') console.log('[App] route:', JSON.stringify(route));
 
   // /templates/[slug]
   if (route.startsWith('/templates/')) {
     const slug = route.slice('/templates/'.length);
+    if (typeof window !== 'undefined') console.log('[App] slug:', JSON.stringify(slug));
     if (slug === 'editorial') return <TemplateEditorial />;
     if (slug === 'swiss') return <TemplateSwiss />;
     if (slug === 'garden') return <TemplateGarden />;
